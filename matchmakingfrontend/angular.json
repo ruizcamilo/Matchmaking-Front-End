@@ -117,8 +117,17 @@
               "devServerTarget": "matchmakingfrontend:serve:production"
             }
           }
+        },
+        "deploy": {
+          "builder": "@angular/fire:deploy",
+          "options": {}
         }
       }
-    }},
-  "defaultProject": "matchmakingfrontend"
+    }
+  },
+  "defaultProject": "matchmakingfrontend",
+  "cli": {
+    "defaultCollection": "@ngrx/schematics",
+    "analytics": "a01b899d-b2b9-4cf5-970c-dc39e468dac6"
+  }
 }

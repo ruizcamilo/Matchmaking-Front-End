@@ -3,7 +3,17 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  userServiceBaseUrl: 'http://localhost:8080',
+  firebaseConfig: {
+    apiKey: 'AIzaSyANzM8X0iicUDfNLfnm_kedFoQBon8bEC8',
+    authDomain: 'spring-course-c4e5a.firebaseapp.com',
+    databaseURL: 'https://spring-course-c4e5a.firebaseio.com',
+    projectId: 'spring-course-c4e5a',
+    storageBucket: 'spring-course-c4e5a.appspot.com',
+    messagingSenderId: '684118827128',
+    appId: '1:684118827128:web:69671e429f7937f2814d8d',
+  },
 };
 
 /*
