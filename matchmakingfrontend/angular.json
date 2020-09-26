@@ -128,6 +128,6 @@
   "defaultProject": "matchmakingfrontend",
   "cli": {
     "defaultCollection": "@ngrx/schematics",
-    "analytics": "a01b899d-b2b9-4cf5-970c-dc39e468dac6"
+    "analytics": "cb84bc7d-226c-44b7-ac83-401eb306403a"
   }
 }

@@ -10,12 +10,7 @@ import { UserService } from 'src/app/service/user.service';
   styleUrls: ['./register.component.css'],
 })
 export class RegisterComponent implements OnInit {
-  email: string;
-  password: string;
   confpassword: string;
-  gamertag: string;
-  date: string;
-  nombre: string;
   search: string;
   consolas: string[] = [
     'Playstation 4',
@@ -31,9 +26,18 @@ export class RegisterComponent implements OnInit {
     'Halo 4',
     'CounterStrike',
   ];
+  regions = [
+    { label: 'Norteamerica', value: 1 },
+    { label: 'Sudamerica', value: 2 },
+    { label: 'Europa', value: 3 },
+    { label: 'Asia', value: 4 },
+    { label: 'Oceania', value: 5 },
+    { label: 'Africa', value: 6 }
+  ];
   juegosOpciones: string[] = [];
   juegosEscogidos: string[] = [];
-  userSend: User;
+  selectedRegion: string;
+  userSend: User = new User("",0,0,"","","","","","","","",false);
 
   constructor(
     private route: ActivatedRoute,
@@ -48,35 +52,36 @@ export class RegisterComponent implements OnInit {
   }
 
   async register() {
-    if (!this.email || !this.password) {
-      alert('error');
+    if (!this.userSend.correo || !this.userSend.contrasena) {
+      alert('Falta llenar algunos campos requeridos');
     } else {
-      this.userSend.correo = this.email;
-      this.userSend.contrasena = this.password;
-      this.userSend.fecha_nacimiento = this.date;
-      this.userSend.nombres = this.nombre;
-      this.userService.register(this.userSend);
-      /*try {
-        const result = await this.afAuth.createUserWithEmailAndPassword(
-          this.email,
-          this.password
-        );
-        console.log(
-          this.afAuth.idTokenResult.subscribe((user) => {
-            alert(user.token);
-          })
-        );
-        alert(this.afAuth.idTokenResult);
-        return result;
-      } catch {
-        alert('error');
-      }*/
+      this.userService.register(this.userSend).subscribe
+      (async (result)=>{
+        console.log(result);
+        try {
+          const result = await this.afAuth.signInWithEmailAndPassword(
+            this.userSend.correo,
+            this.userSend.contrasena
+          );
+          this.afAuth.idTokenResult.subscribe
+            ((user) => {
+              sessionStorage.setItem('token', user.token);
+              this.userService.findByToken().subscribe
+                ((user:User) => {
+                sessionStorage.setItem('gamertag', user.nombre_usuario);
+                this.router.navigate(['/profile']);
+                });
+            });
+        } catch {
+          alert('Error ingresando al nuevo perfil');
+        }
+      });
     }
   }
   searchGame() {
     this.juegosEscogidos.push(this.search);
     console.log(this.search);
-    console.log(this.email);
+    console.log(this.selectedRegion);
     //console.log(this.juegosEscogidos);
   }
 }

@@ -1,0 +1,120 @@
+<link
+  rel="stylesheet"
+  href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+/>
+<!-- Toolbar -->
+
+<div class="row">
+  <div class="col">
+    <div class="left">
+      <form>
+        <h1>Actualizar Datos</h1>
+        <div class="form-group">
+          <label class="col-sm-2">GamerTag</label>
+          <div class="col-sm-7">
+            <input
+              type="text"
+              class="form-control"
+              name="gtag"
+              required
+              [(ngModel)]="userSend.nombre_usuario"
+            />
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-sm-2">Fecha de Nacimiento</label>
+          <div class="col-sm-7">
+            <input
+              type="date"
+              class="form-control"
+              name="date"
+              required
+              [(ngModel)]="userSend.fecha_nacimiento"
+            />
+          </div>
+        </div>
+        <div class="input-group">
+          <div class="form-group nombre">
+            <label class="col-sm-2">Nombre</label>
+            <div class="col-sm-12">
+              <input
+                type="text"
+                class="form-control"
+                name="name"
+                required
+                [(ngModel)]="userSend.nombres"
+              />
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-2">Apellido</label>
+            <div class="col-sm-12">
+              <input
+                type="text"
+                class="form-control"
+                name="lastName"
+                [(ngModel)]="userSend.apellidos"
+              />
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+  <div class="col">
+    <div class="right">
+      <form>
+        <div class="form-group">
+          <label class="col-sm-2">Plataforma</label>
+          <div class="col-sm-7" id="consoles">
+            <div
+              class="custom-control custom-checkbox"
+              *ngFor="let consola of consolas"
+            >
+              <div class="checkbox">
+                <input
+                  type="checkbox"
+                  class="custom-control-input"
+                  id="{{ consola }}"
+                />
+                <label class="custom-control-label" for="{{ consola }}">{{
+                  consola
+                }}</label>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-sm">Juegos en los que esta interesado:</label>
+          <form class="form-inline">
+            <input
+              class="form-control mr-sm-2"
+              type="search"
+              placeholder="Buscar..."
+              [(ngModel)]="search"
+            />
+            <button
+              class="btn btn-dark my-2 my-sm-0"
+              type="submit"
+              (click)="searchGame()"
+            >
+              Search
+            </button>
+          </form>
+        </div>
+        <table class="list-group">
+          <ul *ngFor="let juego of juegosEscogidos">
+            <li class="list-group-item" color="blue">{{ juego }}</li>
+          </ul>
+        </table>
+        <div class="form-group">
+          <div class="col-auto">
+            <button type="submit" class="btn btn-dark" (click)="update()">
+              Actualizar
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

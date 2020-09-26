@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { UserService } from '../../service/user.service';
 import { AngularFireAuth, AngularFireAuthModule } from '@angular/fire/auth';
 import { AngularFireModule } from '@angular/fire';
+import { User } from 'src/app/model/user';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -12,7 +13,7 @@ export class LoginComponent implements OnInit {
   email: string;
   password: string;
   tokenName: string;
-  valido: boolean;
+  errorMessage: string;
 
   constructor(
     private route: ActivatedRoute,
@@ -30,19 +31,21 @@ export class LoginComponent implements OnInit {
       alert('error');
     } else {
       try {
-        console.log('sapo soble');
-        alert('sapo doble');
         const result = await this.afAuth.signInWithEmailAndPassword(
           this.email,
           this.password
         );
         this.afAuth.idTokenResult.subscribe
           ((user) => {
-            this.tokenName = 'X-Firebase-Auth';
-            this.userService.login(user.token, this.tokenName);
+            sessionStorage.setItem('token', user.token);
+            this.userService.findByToken().subscribe
+              ((user:User) => {
+              sessionStorage.setItem('gamertag', user.nombre_usuario);
+              this.router.navigate(['/profile']);
+              });
           });
       } catch {
-        alert('error');
+        alert('Error en la autentificación');
       }
     }
   }
