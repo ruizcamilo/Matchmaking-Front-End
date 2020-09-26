@@ -1,1 +1,67 @@
-<p>profile works!</p>
+<html>
+<link rel="stylesheet" href="profile.component.css">
+<script src="https://use.fontawesome.com/d1e5c23823.js"></script>
+
+<body>
+    <div class="profileLeft">
+        <div class="infPlayer">
+          <h1>{{Owner.nombre_usuario}}</h1>
+        </div>
+        <div class="profile">
+            <img src="https://i.ibb.co/H7rLhQr/pic-profile.png" alt="pic-profile">
+        </div>
+        <div class="infPlayer">
+            <p>Experiencia jugando</p>
+            <p>{{Owner.fecha_nacimiento}}</p>
+        </div>
+        <div class="infPlayer">
+            <p>Continente</p>
+            <p>{{Owner.region_id}}</p>
+        </div>
+        <div class="infPlayer">
+            <p>Velocidad del internet</p>
+            <p>{{Owner.jugando_id}}</p>
+        </div>
+        <div class="infPlayer">
+            <p>Calificacion</p>
+            <p>{{Owner.calificacion}}</p>
+        </div>
+        <h4>Sus plataformas:</h4>
+        <table class="table table-dark console">
+          <tbody>
+            <tr *ngFor="let consola of consolas">
+              <td>{{consola.consola}}</td>
+              <td><img src={{consola.url}}></td>
+            </tr>
+          </tbody>
+        </table>
+    </div>
+    <div class="profileRight">
+        <h1>Sus preferidos:</h1>
+        <table class="table table-dark"*ngFor="let juego of juegos">
+          <tbody>
+            <th scope="row">{{juego.juego}}</th>
+            <tr class = "item">
+              <td><img src={{juego.url}} alt="{{juego.juego}}"></td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="uploadMedia">
+            <img src="https://i.ibb.co/H7rLhQr/pic-profile.png" alt="pic-profile">
+            <input class="form-control mr-sm-2 searchbarcont" type="Text" placeholder="¿Desbloqueaste un nuevo logro? ¡Compartelo!" aria-label="Search">
+            <button class="btn" title="Subir Multimedia">
+              <svg width="1.4em" height="1.4em" viewBox="0 0 16 16" class="bi bi-collection-play" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd" d="M14.5 13.5h-13A.5.5 0 0 1 1 13V6a.5.5 0 0 1 .5-.5h13a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-.5.5zm-13 1A1.5 1.5 0 0 1 0 13V6a1.5 1.5 0 0 1 1.5-1.5h13A1.5 1.5 0 0 1 16 6v7a1.5 1.5 0 0 1-1.5 1.5h-13zM2 3a.5.5 0 0 0 .5.5h11a.5.5 0 0 0 0-1h-11A.5.5 0 0 0 2 3zm2-2a.5.5 0 0 0 .5.5h7a.5.5 0 0 0 0-1h-7A.5.5 0 0 0 4 1z"/>
+                <path fill-rule="evenodd" d="M6.258 6.563a.5.5 0 0 1 .507.013l4 2.5a.5.5 0 0 1 0 .848l-4 2.5A.5.5 0 0 1 6 12V7a.5.5 0 0 1 .258-.437z"/>
+              </svg></button>
+            <button class="btn btn-outline-dark my-2 my-sm-0" type="submit">Publicar</button>
+        </div>
+
+        <h1>Publicaciones:</h1>
+        <section class="feedPublications">
+
+        </section>
+    </div>
+  </body>
+</html>

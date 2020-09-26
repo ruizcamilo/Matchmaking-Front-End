@@ -32,7 +32,7 @@ p {
   height: 80px;
   display: flex;
   align-items: center;
-  background-color: #010F21;
+  background-color: #0a0a0a;
   color: white;
   font-weight: 600;
   font-size: large;
@@ -74,6 +74,7 @@ p {
 .right{
   padding-right: 500px;
   padding-top: 50px;
+  left: 45%;
 }
 
 .left, .right{
@@ -81,7 +82,7 @@ p {
   position: fixed;
   height: 100vh;
   width: 100%;
-  background-color: #000000;
+  background-color: #0e141e;
   color: #ffffff;
 }
 
@@ -94,11 +95,24 @@ p {
 .centered{
   width: 50%;
   position: absolute;
-  top: 50%;
-  left: 50%;
+  top: 60%;
+  left: 45%;
   transform: translate(-100%, -100%);
   text-align: center;
   color: white;
   font-size: 70px;
 }
 
+.btn{
+  background-color: #ff962c;
+}
+
+.btn:hover{
+  background-color: #dd8e00;
+  color: white;
+}
+
+h1{
+  padding-top: 10px;
+  padding-bottom: 50px;
+}
