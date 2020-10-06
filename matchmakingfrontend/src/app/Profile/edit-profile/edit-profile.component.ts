@@ -10,13 +10,12 @@ import { tokenName } from '@angular/compiler';
   styleUrls: ['./edit-profile.component.css'],
 })
 export class EditProfileComponent implements OnInit {
+  fileToUpload: File = null;
   search: string;
   consolas: string[] = [
-    'Playstation 4',
+    'PS4',
     'Xbox One',
     'PC',
-    'Xbox 360',
-    'PlayStation 3',
   ];
   juegos: string[] = [
     'Call of Duty: Modern Warfare',
@@ -25,21 +24,45 @@ export class EditProfileComponent implements OnInit {
     'Halo 4',
     'CounterStrike',
   ];
+  regions = [
+    { label: 'Norteamerica', value: 1 },
+    { label: 'Sudamerica', value: 2 },
+    { label: 'Europa', value: 3 },
+    { label: 'Asia', value: 4 },
+    { label: 'Oceania', value: 5 },
+    { label: 'Africa', value: 6 }
+  ];
   juegosOpciones: string[] = [];
   juegosEscogidos: string[] = [];
-  userSend: User;
+  selectedRegion: string;
+  userSend: User = new User("","","","","","",0,"","",false,[]);
 
   constructor(
     private route: ActivatedRoute,
     private router: Router,
     private userService: UserService
   ) {}
-
   async update() {
-    this.userService.updateUser(this.userSend);
+    var uploadImageData = new FormData();
+    uploadImageData.append('file', this.fileToUpload);
+    uploadImageData.append('folder', 'Fotosperfil/');
+    this.userSend.foto_perfil='Fotosperfil/'+this.fileToUpload;
+    this.userService.uploadFile(uploadImageData).subscribe(name => {
+      this.userSend.foto_perfil=name;
+      this.userService.updateUser(this.userSend).subscribe(data => {
+        // do something, if upload success
+        }, error => {
+          console.log(error);
+        });
+      }, error => {
+        console.log(error);
+      });
   }
   searchGame() {
     this.juegosEscogidos.push(this.search);
+  }
+  handleFileInput(files: FileList) {
+    this.fileToUpload = files.item(0);
   }
   ngOnInit(): void {
     this.userService.findByToken().subscribe

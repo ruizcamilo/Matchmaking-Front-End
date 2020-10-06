@@ -1,0 +1,102 @@
+<html lang="en">
+
+<body>
+    <div class="BaseLayout">
+        <div class="feedHome">
+            <div class="friendsPlaying">
+                <div class="blockFriendsPlaying">
+                    <h3>Amigos Jugando</h3>
+                    <div class="friendsBlock">
+                        <ng-container *ngFor="let personaActual of MyfriendsPlaying; let i = index">
+                            <div class="left_after_base">
+                                <a href="" class="information">
+                                    <div class="friend-top">
+                                        <div class="friendFigure"
+                                            style="background-image: url( https://i.ibb.co/H7rLhQr/pic-profile.png );background-size: contain;background-repeat: no-repeat;">
+                                        </div>
+                                        <div class="friendName">{{personaActual.nombre_usuario}}</div>
+                                    </div>
+                                </a>
+                            </div>
+                        </ng-container>
+                    </div>
+                    <div class="btnSeeMore">
+                        <button class="btn">Todos mis amigos activos</button>
+                    </div>
+                </div>
+            </div>
+            <div class="publications">
+                <div class="uploadPublication">
+                    <img src="https://i.ibb.co/H7rLhQr/pic-profile.png" alt="pic-profile">
+                    <input [(ngModel)]="post.contenido" class="form-control mr-sm-2 searchbarcont" type="Text" placeholder="¿Qué vamos a jugar hoy?"
+                        aria-label="Search">
+                    <input #file type="file" id="file" style="display:none;" (change)="handleFileInput($event.target.files)">
+                    <button class="btn" (click)="file.click()" title="Subir Multimedia">
+                        <svg width="1.4em" height="1.4em" viewBox="0 0 16 16" class="bi bi-collection-play"
+                            fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd"
+                                d="M14.5 13.5h-13A.5.5 0 0 1 1 13V6a.5.5 0 0 1 .5-.5h13a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-.5.5zm-13 1A1.5 1.5 0 0 1 0 13V6a1.5 1.5 0 0 1 1.5-1.5h13A1.5 1.5 0 0 1 16 6v7a1.5 1.5 0 0 1-1.5 1.5h-13zM2 3a.5.5 0 0 0 .5.5h11a.5.5 0 0 0 0-1h-11A.5.5 0 0 0 2 3zm2-2a.5.5 0 0 0 .5.5h7a.5.5 0 0 0 0-1h-7A.5.5 0 0 0 4 1z" />
+                            <path fill-rule="evenodd"
+                                d="M6.258 6.563a.5.5 0 0 1 .507.013l4 2.5a.5.5 0 0 1 0 .848l-4 2.5A.5.5 0 0 1 6 12V7a.5.5 0 0 1 .258-.437z" />
+                        </svg>
+                    </button>
+                    <button class="btn btn-outline-dark my-2 my-sm-0" type="submit" (click)="makePost()">Publicar</button>
+                </div>
+                <div class="InfinityScrollLayout">
+                    <div class="CentralFeed">
+                        <ng-container *ngFor="let postActual of myPosts; let i = index">
+                            <article class="basePublication">
+                                <div class="blogPost">
+                                    <a [routerLink]="['/profile']" class="blogPost-anchor">
+                                        <div class="blogPost-top">
+                                            <div class="blogPostFigure"
+                                                style="background-image: url( https://i.imgur.com/ZKbpmaU.jpg );background-size: contain;background-repeat: no-repeat;">
+                                            </div>
+                                            <div class="blogPostInformation">
+                                                <span>{{postActual.contenido}}</span>
+                                                <a href="" class="profileUser">
+
+                                                    <div class="profileUser-anchor">
+                                                        <div class="imageUser"
+                                                            style="background-image: url( https://i.imgur.com/uSlStch.jpg );background-size: cover;background-position: center;border-radius: 25px;">
+                                                        </div>
+                                                        <div class="informationUser">
+
+                                                            <h6>{{postActual.person.nombre_usuario}}</h6>
+                                                        </div>
+                                                    </div>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+                            </article>
+                        </ng-container>
+                    </div>
+                </div>
+            </div>
+            <div class="chats">
+                <h3>Chats</h3>
+                <div class="chatsBlock">
+                    <ng-container *ngFor="let personaActual of MyfriendsChating; let i = index"  >
+                        <div class="left_after_base">
+                            <a href="" class="information">
+                                <div class="friend-top">
+                                    <div class="friendFigure"
+                                        style="background-image: url( https://i.ibb.co/H7rLhQr/pic-profile.png );background-size: contain;background-repeat: no-repeat;">
+                                    </div>
+                                    <div class="friendName">{{personaActual.nombre_usuario}}</div>
+                                </div>
+                            </a>
+                        </div>
+                    </ng-container>
+                </div>
+                <div class="btnSeeMore">
+                    <button class="btn">Todos mis chats</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

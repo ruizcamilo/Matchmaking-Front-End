@@ -1,19 +1,17 @@
 import { Component, OnInit } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Post } from 'src/app/model/post';
 import { User } from 'src/app/model/user';
-import { PostService } from 'src/app/service/post.service';
-import { UserService } from '../../service/user.service';
+import { UserService } from 'src/app/service/user.service';
 
 @Component({
-  selector: 'app-profile',
-  templateUrl: './profile.component.html',
-  styleUrls: ['./profile.component.css']
+  selector: 'app-friend-profile',
+  templateUrl: './friend-profile.component.html',
+  styleUrls: ['./friend-profile.component.css']
 })
-export class ProfileComponent implements OnInit {
-  fileToUpload: File = null;
-  post: Post = new Post(null, "", "", "", false);
+export class FriendProfileComponent implements OnInit {
+  isRequestSend: boolean = false;
+  isFriend: boolean = false;
   Owner: User;
   ancho: string;
   consolas = [
@@ -36,53 +34,89 @@ export class ProfileComponent implements OnInit {
     private route: ActivatedRoute,
     private afAuth: AngularFireAuth,
     private router: Router,
-    private userService: UserService,
-    private postService: PostService) { }
+    private userService: UserService) { }
+
+
 
   ngOnInit(): void {
-    try {
-      this.userService.findByToken().subscribe
-        ((user: User) => {
-          this.Owner = user;
-          //Cargar imagenes
-          this.calcularAncho();
-        });
-    } catch (error) {
-      alert("Error en la base de datos");
-    }
-    console.log(this.Owner);
+    this.route.params.subscribe(params => {
+      let id = params['id'];
+      try {
+        this.userService.findById(id).subscribe
+          ((user: User) => {
+            this.Owner = user;
+            //Cargar imagenes
+            this.calcularAncho();
+          });
+
+/*           this.userService.isFriend(id).subscribe
+          ((friend: boolean) => {
+              this.isFriend = friend;
+              if(!this.isFriend){
+                this.userService.isRequestSend(id).subscribe
+                ((request: boolean) => {
+                    this.isRequestSend = request;
+                });
+              }
+          }); */
+
+      } catch (error) {
+        alert("Error en la base de datos");
+      }
+      console.log(this.Owner);
+    });
 
   }
-  async makePost() {
-    if(this.fileToUpload!=null){
-      var uploadImageData = new FormData();
-      uploadImageData.append('file', this.fileToUpload);
-      uploadImageData.append('folder', 'Publicaciones/');
-      this.userService.uploadFile(uploadImageData).subscribe(name => {
-        this.post.imagen=name;
-        this.postService.makePost(this.post).subscribe(data => {
-          // do something, if upload success
-          }, error => {
-            console.log(error);
-          });
-        }, error => {
-          console.log(error);
-        });
-    }
-    else{
-      this.postService.makePost(this.post).subscribe(data => {
-        // do something, if upload success
-        }, error => {
-          console.log(error);
-        });
-    }
-  }
+
   calcularAncho(){
     var numero = 170 * this.juegos.length;
     this.ancho ="width:"+numero.toString()+"px;";
     console.log(this.ancho);
   }
-  handleFileInput(files: FileList) {
-    this.fileToUpload = files.item(0);
+  report(): void{
+    this.route.params.subscribe(params => {
+      let id = params['id'];
+      try {
+        this.userService.reportById(id).subscribe(data => {
+          // do something, if upload success
+          }, error => {
+            console.log(error);
+          });;
+      } catch (error) {
+        alert("Error en la base de datos");
+      }
+    });
+  }
+
+  addFriend(): void{
+    this.route.params.subscribe(params => {
+      let id = params['id'];
+      try {
+        this.userService.addFriendById(id).subscribe(data => {
+            this.isRequestSend = true;
+            this.isFriend = false;
+          }, error => {
+            console.log(error);
+          });;
+      } catch (error) {
+        alert("Error en la base de datos");
+      }
+    });
+  }
+
+  deleteFriend(): void{
+    this.route.params.subscribe(params => {
+      let id = params['id'];
+      try {
+        this.userService.deleteFriendById(id).subscribe(data => {
+            this.isFriend = false;
+            this.isRequestSend = false;
+          }, error => {
+            console.log(error);
+          });;
+      } catch (error) {
+        alert("Error en la base de datos");
+      }
+    });
   }
 }

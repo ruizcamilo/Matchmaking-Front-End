@@ -2,44 +2,50 @@
   rel="stylesheet"
   href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
 />
-<!-- Toolbar -->
-
 <div class="row">
   <div class="col">
     <div class="left">
       <form>
-        <h1>Actualizar Datos</h1>
+        <div class="form-group">
+          <label class="col-sm-2">¿Cambiamos tu avatar?</label>
+          <input type="file"
+                 id="file"
+                 (change)="handleFileInput($event.target.files)">
+        </div>
+        <div class="form-group">
+          <label class="col-sm-2">Correo Electronico</label>
+          <div class="col-sm-7">
+            <input
+              type="email"
+              class="form-control solo"
+              placeholder="name@example.com"
+              name="user"
+              required
+              [(ngModel)]="userSend.correo"
+            />
+          </div>
+        </div>
         <div class="form-group">
           <label class="col-sm-2">GamerTag</label>
           <div class="col-sm-7">
             <input
               type="text"
-              class="form-control"
+              class="form-control solo"
+              placeholder="Gamertag"
               name="gtag"
               required
               [(ngModel)]="userSend.nombre_usuario"
             />
           </div>
         </div>
-        <div class="form-group">
-          <label class="col-sm-2">Fecha de Nacimiento</label>
-          <div class="col-sm-7">
-            <input
-              type="date"
-              class="form-control"
-              name="date"
-              required
-              [(ngModel)]="userSend.fecha_nacimiento"
-            />
-          </div>
-        </div>
-        <div class="input-group">
+        <div class = "input-group">
           <div class="form-group nombre">
             <label class="col-sm-2">Nombre</label>
             <div class="col-sm-12">
               <input
                 type="text"
                 class="form-control"
+                placeholder="Mario"
                 name="name"
                 required
                 [(ngModel)]="userSend.nombres"
@@ -52,10 +58,34 @@
               <input
                 type="text"
                 class="form-control"
-                name="lastName"
+                placeholder="Verde"
+                name="apellido"
+                required
                 [(ngModel)]="userSend.apellidos"
               />
             </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-sm-2">Continente</label>
+          <div class="col-sm-7">
+            <select class="form-control solo" id="continente" name="continente" [(ngModel)]="selectedRegion" required>
+              <option disabled selected>Seleccione una region</option>
+              <option value="op.value" *ngFor="let op of regions">{{op.label}}</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-sm-2">Conexión</label>
+          <div class="col-sm-7">
+            <input
+              type="number"
+              class="form-control solo"
+              placeholder="Conexión"
+              name="conexion"
+              required
+              [(ngModel)]="userSend.conexion"
+            />
           </div>
         </div>
       </form>
@@ -77,30 +107,10 @@
                   class="custom-control-input"
                   id="{{ consola }}"
                 />
-                <label class="custom-control-label" for="{{ consola }}">{{
-                  consola
-                }}</label>
+                <label class="custom-control-label" for="{{ consola }}">{{consola}}</label>
               </div>
             </div>
           </div>
-        </div>
-        <div class="form-group">
-          <label class="col-sm">Juegos en los que esta interesado:</label>
-          <form class="form-inline">
-            <input
-              class="form-control mr-sm-2"
-              type="search"
-              placeholder="Buscar..."
-              [(ngModel)]="search"
-            />
-            <button
-              class="btn btn-dark my-2 my-sm-0"
-              type="submit"
-              (click)="searchGame()"
-            >
-              Search
-            </button>
-          </form>
         </div>
         <table class="list-group">
           <ul *ngFor="let juego of juegosEscogidos">
@@ -109,8 +119,8 @@
         </table>
         <div class="form-group">
           <div class="col-auto">
-            <button type="submit" class="btn btn-dark" (click)="update()">
-              Actualizar
+            <button type="submit" class="btn" (click)="update()">
+              Editar
             </button>
           </div>
         </div>

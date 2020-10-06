@@ -33,9 +33,11 @@
           <a [routerLink]="['/squads']" class="nav-link">Squads</a>
       </li>
     </ul>
-    <form class="form-inline my-2 my-lg-0">
-      <input class="form-control mr-sm-2 searchbarcont" type="search" placeholder="Busca tu proxima aventura..." aria-label="Search">
-      <button class="btn btn-outline-dark my-2 my-sm-0" type="submit">Buscar</button>
+    <form class="form-inline my-2 my-lg-0 searchlong">
+      <div class="searchbarcont">
+        <input [(ngModel)]="search" name="searchinp" class="form-control mr-sm-2" type="search" placeholder="Busca tu proxima aventura..." aria-label="Search">
+        <button class="btn btn-outline-dark" type="submit" (click)="goSearch()">Buscar</button>
+      </div>
     </form>
     <a [routerLink]="['/login']" title="Cerrar Sesión" (click)="logout()">
       <svg
