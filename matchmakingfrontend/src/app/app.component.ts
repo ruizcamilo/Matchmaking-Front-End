@@ -1,4 +1,5 @@
 import { Component, DoCheck } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -8,7 +9,11 @@ import { Component, DoCheck } from '@angular/core';
 export class AppComponent implements DoCheck{
   gamerTag: string = "StormyFiddle";
   title = 'matchmakingfrontend';
+  search: string;
   show: boolean;
+
+  constructor(private router: Router) {
+  }
 
   ngDoCheck(): void {
     //Called every time that the input properties of a component or a directive are checked. Use it to extend change detection by performing a custom check.
@@ -23,5 +28,15 @@ export class AppComponent implements DoCheck{
   }
   logout() {
     sessionStorage.clear();
+  }
+
+  goSearch(){
+    if(!this.search)
+    {
+      alert("Ingresa algo noob");
+    }
+    else{
+      this.router.navigate(['/main-search', { search: this.search }]);
+    }
   }
 }

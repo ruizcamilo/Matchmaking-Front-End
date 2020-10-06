@@ -35,6 +35,12 @@
     <div class="left">
       <form>
         <div class="form-group">
+          <label class="col-sm-2">Elige tu avatar!</label>
+          <input type="file"
+                 id="file"
+                 (change)="handleFileInput($event.target.files)">
+        </div>
+        <div class="form-group">
           <label class="col-sm-2">Correo Electronico</label>
           <div class="col-sm-7">
             <input
@@ -47,57 +53,59 @@
             />
           </div>
         </div>
-        <div class="form-group">
-          <label class="col-sm-2">Contraseña</label>
-          <div class="col-auto">
-            <input
-              type="password"
-              class="form-control solo"
-              placeholder="Password"
-              name="pass"
-              required
-              [(ngModel)]="userSend.contrasena"
-            />
+        <div class = "input-group">
+          <div class="form-group nombre">
+            <label class="col-sm-2">Contraseña</label>
+            <div class="col-sm-12">
+              <input
+                type="password"
+                class="form-control"
+                placeholder="Contraseña"
+                name="contrasena"
+                required
+                [(ngModel)]="contrasena"
+              />
+            </div>
+          </div>
+          <div class="form-group nombre">
+            <label class="col-sm-12">Confirmar Contraseña</label>
+            <div class="col-sm-12">
+              <input
+                type="password"
+                class="form-control"
+                placeholder="Confirma"
+                name="confpassword"
+                required
+                [(ngModel)]="confpassword"
+              />
+            </div>
           </div>
         </div>
-        <div class="form-group">
-          <label for="inputPassword" class="col-sm-2"
-            >Confirmar Contraseña</label
-          >
-          <div class="col-auto">
-            <input
-              type="password"
-              class="form-control solo"
-              placeholder="Password"
-              name="passconf"
-              required
-              [(ngModel)]="confpassword"
-            />
+        <div class = "input-group">
+          <div class="form-group nombre">
+            <label class="col-sm-2">GamerTag</label>
+            <div class="col-sm-12">
+              <input
+                type="text"
+                class="form-control"
+                placeholder="Gamertag"
+                name="gtag"
+                required
+                [(ngModel)]="userSend.nombre_usuario"
+              />
+            </div>
           </div>
-        </div>
-        <div class="form-group">
-          <label class="col-sm-2">GamerTag</label>
-          <div class="col-sm-7">
-            <input
-              type="text"
-              class="form-control solo"
-              placeholder="Gamertag"
-              name="gtag"
-              required
-              [(ngModel)]="userSend.nombre_usuario"
-            />
-          </div>
-        </div>
-        <div class="form-group">
-          <label class="col-sm-2">Fecha de Nacimiento</label>
-          <div class="col-sm-7">
-            <input
-              type="date"
-              class="form-control solo"
-              name="date"
-              required
-              [(ngModel)]="userSend.fecha_nacimiento"
-            />
+          <div class="form-group nombre">
+            <label class="col-sm-12">Fecha de Nacimiento</label>
+            <div class="col-sm-12">
+              <input
+                type="date"
+                class="form-control"
+                name="date"
+                required
+                [(ngModel)]="userSend.fecha_nacimiento"
+              />
+            </div>
           </div>
         </div>
         <div class = "input-group">
@@ -114,7 +122,7 @@
               />
             </div>
           </div>
-          <div class="form-group">
+          <div class="form-group nombre">
             <label class="col-sm-2">Apellido</label>
             <div class="col-sm-12">
               <input
@@ -128,13 +136,28 @@
             </div>
           </div>
         </div>
-        <div class="form-group">
-          <label class="col-sm-2">Continente</label>
-          <div class="col-sm-7">
-            <select class="form-control solo" id="continente" name="continente" [(ngModel)]="selectedRegion" required>
-              <option disabled selected>Seleccione una region</option>
-              <option value="op.value" *ngFor="let op of regions">{{op.label}}</option>
-            </select>
+        <div class = "input-group">
+          <div class="form-group nombre">
+            <label class="col-sm-2">Region</label>
+            <div class="col-sm-12">
+              <select class="form-control" id="continente" name="continente" [(ngModel)]="userSend.region_id" required>
+                <option disabled selected>Seleccione una region</option>
+                <option value="op.value" *ngFor="let op of regions">{{op}}</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group nombre">
+            <label class="col-sm-2">Conexión</label>
+            <div class="col-sm-12">
+              <input
+                type="number"
+                class="form-control mr-sm-2"
+                placeholder="Conexión Mb/s"
+                name="conexion"
+                required
+                [(ngModel)]="userSend.conexion"
+              />
+            </div>
           </div>
         </div>
       </form>
@@ -148,15 +171,15 @@
           <div class="col-sm-7" id="consoles">
             <div
               class="custom-control custom-checkbox"
-              *ngFor="let consola of consolas"
             >
-              <div class="checkbox">
+              <div class="checkbox" *ngFor="let consola of consolas">
                 <input
                   type="checkbox"
                   class="custom-control-input"
-                  id="{{ consola }}"
+                  (change) = "changeStatus($event.target.checked, consola.nombre)"
+                  [checked]= "checked(consola.nombre)"
                 />
-                <label class="custom-control-label" for="{{ consola }}">{{consola}}</label>
+                <label class="custom-control-label" for="{{ consola.nombre }}">{{consola.nombre}}</label>
               </div>
             </div>
           </div>

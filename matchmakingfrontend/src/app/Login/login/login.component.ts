@@ -39,9 +39,9 @@ export class LoginComponent implements OnInit {
           ((user) => {
             sessionStorage.setItem('token', user.token);
             this.userService.findByToken().subscribe
-              ((user:User) => {
+              ((user: User) => {
               sessionStorage.setItem('gamertag', user.nombre_usuario);
-              this.router.navigate(['/profile']);
+              this.router.navigate(['/feed']);
               });
           });
       } catch {

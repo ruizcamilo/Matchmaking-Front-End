@@ -39,11 +39,16 @@ a{
 
 
 .searchbarcont{
-  padding-right: 200px;
+  width: 100%;
+  display: flex;
 }
 
-.searchbar{
-  width: auto;
+.searchbarcont input{
+  width: 400px;
+}
+
+.searchbarcont-button{
+  width: 20%;
 }
 
 .logout{

@@ -13,6 +13,11 @@ import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { ProfileComponent } from './Profile/profile/profile.component';
 import { HttpClientModule } from '@angular/common/http';
 import { EditProfileComponent } from './Profile/edit-profile/edit-profile.component';
+import { FriendProfileComponent } from './Profile/friend-profile/friend-profile.component';
+import { FeedComponent } from './feed/feed.component';
+import { MainSearchComponent } from './search/main-search/main-search.component';
+import { PublicacionesSearchComponent } from './search/publicaciones-search/publicaciones-search.component';
+import { VideojuegosSearchComponent } from './search/videojuegos-search/videojuegos-search.component';
 
 @NgModule({
   declarations: [
@@ -22,6 +27,11 @@ import { EditProfileComponent } from './Profile/edit-profile/edit-profile.compon
     RegisterComponent,
     ProfileComponent,
     EditProfileComponent,
+    FriendProfileComponent,
+    FeedComponent,
+    MainSearchComponent,
+    PublicacionesSearchComponent,
+    VideojuegosSearchComponent,
   ],
   imports: [
     BrowserModule,
