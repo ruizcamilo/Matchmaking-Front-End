@@ -1,6 +1,6 @@
-html{
-  background-color: #0e141e;
-  height: 100%;
+html {
+    background-color: #0e141e;
+    height: 100%;
 }
 
 body {
@@ -46,6 +46,20 @@ h3 {
     border-radius: 20px;
 }
 
+.uploadComment {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    padding: 1em;
+    background-color: #6b70799f;
+    border-radius: .5em;
+}
+
+.uploadComment img {
+    height: 40px;
+    border-radius: 30px;
+}
+
 input[type="Text"]::placeholder {
     text-align: center;
 }
@@ -75,6 +89,10 @@ input[type="Text"]::placeholder {
     grid-gap: 15px;
 }
 
+.information {
+    cursor: pointer;
+}
+
 .InfinityScrollLayout {
     padding: 1em;
 }
@@ -88,6 +106,10 @@ input[type="Text"]::placeholder {
 .blogPost-anchor {
     text-decoration: none;
     color: black;
+}
+
+.profileUser {
+    cursor: pointer;
 }
 
 .profileUser-anchor {
@@ -104,8 +126,8 @@ input[type="Text"]::placeholder {
     grid-gap: 8px;
 }
 
-.blockFriendsPlaying{
-  padding: 2%;
+.blockFriendsPlaying {
+    padding: 2%;
 }
 
 .left_after_base {
@@ -126,11 +148,11 @@ input[type="Text"]::placeholder {
     margin: 2%;
 }
 
-.btn{
-  background-color: #ff962c;
+.btn {
+    background-color: #ff962c;
 }
 
-.btn:hover{
-  background-color: #dd8e00;
-  color: white;
+.btn:hover {
+    background-color: #dd8e00;
+    color: white;
 }

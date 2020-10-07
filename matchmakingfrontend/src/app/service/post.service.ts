@@ -13,6 +13,7 @@ import { tokenName } from '@angular/compiler';
 import { CookieService } from 'ngx-cookie-service';
 import { FormGroup } from '@angular/forms';
 import { Post } from '../model/post';
+import { Comment } from '../model/comment';
 
 
 @Injectable({
@@ -114,6 +115,14 @@ export class PostService {
   makePost(post: Post){
     const url = `${environment.userServiceBaseUrl}/play/post`;
     return this.post<Post>(url, post);
+  }
+  makeComment(comment: Comment){
+    const url = `${environment.userServiceBaseUrl}/play/comments`;
+    return this.post<Comment>(url, comment);
+  }
+  like(idPost: string){
+    const url = `${environment.userServiceBaseUrl}/play/like/`+idPost;
+    return this.post<Comment>(url, null);
   }
 }
 
