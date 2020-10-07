@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Post } from 'src/app/model/post';
 import { PostService } from 'src/app/service/post.service'
 import { PersonService } from 'src/app/service/person.service'
 import { Person } from '../model/person';
 import { UserService } from '../service/user.service';
+import { Comment } from '../model/comment';
 
 
 @Component({
@@ -13,6 +14,7 @@ import { UserService } from '../service/user.service';
   styleUrls: ['./feed.component.css']
 })
 export class FeedComponent implements OnInit {
+  comment: Comment = new Comment();
   fileToUpload: File = null;
   post: Post = new Post(null, "", "", "", false);
   myPosts: Post [] = [];
@@ -22,6 +24,7 @@ export class FeedComponent implements OnInit {
   pruebaPost:Post;
 
   constructor(
+    private router: Router,
     private route: ActivatedRoute,
     private postService: PostService,
     private personService: PersonService,
@@ -30,15 +33,6 @@ export class FeedComponent implements OnInit {
 
 
   ngOnInit(): void {
-    this.personaPrueba = new Person("idPrueba", "Pepito Perez", "https://i.imgur.com/uSlStch.jpg");
-    this.MyfriendsPlaying.push(this.personaPrueba);
-    this.MyfriendsChating.push(this.personaPrueba);
-    this.pruebaPost =  new Post(this.personaPrueba, "un contenido de prueba", "23-00-00", "https://i.imgur.com/ZKbpmaU.jpg",false);
-    this.myPosts.push(this.pruebaPost);
-    this.pruebaPost =  new Post(this.personaPrueba, "otro contenido de prueba", "23-00-00", "https://i.imgur.com/ZKbpmaU.jpg",false);
-    this.myPosts.push(this.pruebaPost);
-    this.MyfriendsPlaying.push(this.personaPrueba);
-    this.MyfriendsChating.push(this.personaPrueba);
 
     console.log(this.myPosts.length);
       try {
@@ -60,6 +54,21 @@ export class FeedComponent implements OnInit {
         console.error(error);
       }
   }
+  async darMeGusta(idPost: string){
+    this.postService.like(idPost).subscribe(data =>{
+
+    }, error=> console.log(error)
+  );
+  }
+
+  async makeComment(idPost: string){
+    this.comment.publicacion_id=idPost;
+    this.postService.makeComment(this.comment).subscribe(data =>{
+
+      }, error=> console.log(error)
+    );
+  }
+
   async makePost() {
     if(this.fileToUpload!=null){
       var uploadImageData = new FormData();
@@ -86,5 +95,10 @@ export class FeedComponent implements OnInit {
   }
   handleFileInput(files: FileList) {
     this.fileToUpload = files.item(0);
+  }
+
+  routingFriendProfile(id_friend: string) {
+    let ruta: string = "/profile/" + id_friend;
+    this.router.navigate([ruta]);
   }
 }
