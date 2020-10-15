@@ -1,3 +1,8 @@
+html,body{
+  height:100%;
+  width: 100%;
+}
+
 :host {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
   font-size: 14px;
@@ -24,8 +29,38 @@ p {
   flex: 1;
 }
 
+.toolbar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 80px;
+  display: flex;
+  align-items: center;
+  background-color: #0a0a0a;
+  color: white;
+  font-weight: 600;
+  font-size: large;
+}
+
+.toolbar button{
+  margin: 20px;
+}
+
+.toolbar img {
+  margin: 0 16px;
+}
+
+.toolbar #user-logo {
+  width: 60px;
+  height: 60px;
+}
+
+.toolbar #user-logo:hover {
+  opacity: 0.8;
+}
+
 .split {
-  margin: 80px 0 0 0;
   height: 100%;
   width: 50%;
   color: white;
@@ -36,32 +71,25 @@ p {
   right: 0;
   overflow: auto;
   overflow-x: hidden;
-  padding-top: 20px;
   z-index: 1;
 }
 
 .right{
-  padding-right: 500px;
-  padding-top: 35px;
+  padding-top: 2%;
 }
 
 .left{
-  padding-top: 35px;
+  padding-top: 2%;
 }
 
 .left, .right{
+  margin: 80px 0 0 0;
   padding-left: 50px;
   position: fixed;
   height: 100%;
   width: 100%;
   background-color: #0e141e;
   color: #ffffff;
-}
-
-.left img{
-  margin-top: 100px;
-  width: 450px;
-  font-size: 10px;
 }
 
 .centered{
@@ -115,4 +143,32 @@ p {
 
 .solo{
   width: 600px;
+}
+
+.nombre{
+  width: 20%;
+}
+
+.list-group::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+.list-group::-webkit-scrollbar-track {
+  background: #23314a;
+}
+
+/* Handle */
+.list-group::-webkit-scrollbar-thumb {
+  background: #888;
+}
+
+/* Handle on hover */
+.list-group::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+.selected-game{
+  background-color: #ff962c;
+  color: white;
 }

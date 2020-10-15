@@ -11,7 +11,10 @@ import { VideoJuegoService } from '../../service/video-juego.service';
 export class VideojuegosSearchComponent implements OnInit {
 
   search: string;
-  videoJuegos: VideoJuego[] = [];
+  videoJuegos: VideoJuego[] = [
+    {nombre:"Halo The Master Chief Collection", imagen:"https://compass-ssl.xbox.com/assets/92/5d/925d1321-89fe-4537-9303-a64adaf27c07.jpg?n=Halo-MCC_GLP-Page-Hero-1084_1920x1040.jpg"},
+    {nombre:"Assassins Creed Revelations" ,imagen: "https://ubistatic19-a.akamaihd.net/ubicomstatic/es-mx/global/game-info/acr_nakedbox_mobile_165287.jpg"}
+  ];
 
   constructor(
     private route: ActivatedRoute,
@@ -33,11 +36,21 @@ export class VideojuegosSearchComponent implements OnInit {
 
   mostrarPublicaciones(): void
   {
-    this.router.navigate(['/buscarPublicaciones',{ search: this.search } ])
+    this.router.navigate(['publication-search',{ search: this.search } ])
   }
 
   mostrarUsuarios(): void {
     this.router.navigate(['/main-search', { search: this.search }]);
+  }
+
+  mostrarClanes(): void
+  {
+    this.router.navigate(['/clan-search', { search: this.search } ]);
+  }
+
+  mostrarSquads(): void
+  {
+    this.router.navigate(['/squad-search', { search: this.search } ]);
   }
 
 }

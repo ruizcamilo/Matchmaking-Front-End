@@ -1,5 +1,9 @@
 import { Component, DoCheck } from '@angular/core';
+import { AngularFireAuth } from '@angular/fire/auth';
 import { Router } from '@angular/router';
+import { Person } from './model/person';
+import { PersonService } from './service/person.service';
+import { UserService } from './service/user.service';
 
 @Component({
   selector: 'app-root',
@@ -11,8 +15,14 @@ export class AppComponent implements DoCheck{
   title = 'matchmakingfrontend';
   search: string;
   show: boolean;
+  solicitudes: Person[] = [];
 
-  constructor(private router: Router) {
+  constructor(
+    private router: Router,
+    private afAuth: AngularFireAuth,
+    private personService: PersonService,
+    private userService: UserService
+    ) {
   }
 
   ngDoCheck(): void {
@@ -26,12 +36,30 @@ export class AppComponent implements DoCheck{
       this.show = true;
     }
   }
+
+  getNotificaciones(){
+    this.personService.getFriendRequestsNotifications().subscribe(
+      (friNotif: Person[]) =>  {
+        this.solicitudes = friNotif;
+        console.log(this.solicitudes);
+    });
+  }
+
+  aceptar(mail){
+    this.userService.acceptFriendById(mail).subscribe();
+  }
+
+  rechazar(mail){
+    this.userService.rejectFriendById(mail).subscribe();
+  }
+
   logout() {
+    this.afAuth.signOut();
     sessionStorage.clear();
   }
 
   goSearch(){
-    if(!this.search)
+    if (!this.search)
     {
       alert("Ingresa algo noob");
     }

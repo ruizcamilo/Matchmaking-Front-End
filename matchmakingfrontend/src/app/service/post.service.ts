@@ -20,7 +20,7 @@ import { Comment } from '../model/comment';
   providedIn: 'root'
 })
 export class PostService {
-    
+
   constructor(private http: HttpClient) { }
 
   private handleError(error: HttpErrorResponse): Observable<any> {
@@ -41,23 +41,6 @@ export class PostService {
           Accept: 'application/json',
           'X-Firebase-Auth': this.getToken(),
         }),
-      })
-      .pipe(
-        // retry(5),
-        catchError(this.handleError)
-      );
-  }
-  
-  private get2<T>(url, param): Observable<T> {
-    console.log('get:', url);
-    return this.http
-      .get<T>(url, {
-        headers: new HttpHeaders({
-          'Content-Type': 'application/json',
-          Accept: 'application/json',
-          'X-Firebase-Auth': this.getToken(),
-        }),
-        params: new  HttpParams().set("searchKey", param),
       })
       .pipe(
         // retry(5),
@@ -104,25 +87,45 @@ export class PostService {
       );
   }
   getPosts() {
-    const url = `${environment.userServiceBaseUrl}/play/feed`;
-    return this.get(url);
+    const url = `${environment.logedInServiceBaseUrl}/feed`;
+    return this.get<Post[]>(url);
+  }
+
+  getMyPosts(mail){
+    const url = `${environment.logedInServiceBaseUrl}/posts/${mail}`;
+    return this.get<Post[]>(url);
   }
 
   searchPost(searchKey: string) {
-    const url = `${environment.userServiceBaseUrl}/play/upload`; //FALTA
-    return this.get2(url, searchKey);
+    const url = `${environment.logedInServiceBaseUrl}/search/posts/` + searchKey;
+    return this.get(url);
   }
   makePost(post: Post){
-    const url = `${environment.userServiceBaseUrl}/play/post`;
+    const url = `${environment.logedInServiceBaseUrl}/post`;
     return this.post<Post>(url, post);
   }
   makeComment(comment: Comment){
-    const url = `${environment.userServiceBaseUrl}/play/comments`;
+    const url = `${environment.logedInServiceBaseUrl}/comments`;
     return this.post<Comment>(url, comment);
   }
   like(idPost: string){
-    const url = `${environment.userServiceBaseUrl}/play/like/`+idPost;
-    return this.post<Comment>(url, null);
+    const url = `${environment.logedInServiceBaseUrl}/like/` + idPost;
+    return this.post(url, null);
+  }
+
+  getLikes(idPost: string){
+    const url = `${environment.logedInServiceBaseUrl}/likes/` + idPost;
+    return this.get<number>(url);
+  }
+
+  reportar(idPost: string){
+    const url = `${environment.logedInServiceBaseUrl}/post/report/` + idPost;
+    return this.post(url, null);
+  }
+
+  getComments(idPost: string){
+    const url = `${environment.logedInServiceBaseUrl}/comments/` + idPost; //REVISAR URL
+    return this.get<Comment[]>(url);
   }
 }
 

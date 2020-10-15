@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
+import { VideoJuego } from '../model/video-juego';
 
 @Injectable({
   providedIn: 'root'
@@ -36,23 +37,6 @@ export class VideoJuegoService {
       );
   }
 
-
-  private get2<T>(url, param): Observable<T> {
-    console.log('get:', url);
-    return this.http
-      .get<T>(url, {
-        headers: new HttpHeaders({
-          'Content-Type': 'application/json',
-          Accept: 'application/json',
-          'X-Firebase-Auth': this.getToken(),
-        }),
-        params: new  HttpParams().set("searchKey", param),
-      })
-      .pipe(
-        // retry(5),
-        catchError(this.handleError)
-      );
-  }
 
   private post<T>(url, data: T): Observable<T> {
     console.log('post:', url);
@@ -93,8 +77,24 @@ export class VideoJuegoService {
       );
   }
 
+  getAllGames()
+  {
+    const url = `${environment.userServiceBaseUrl}/games`;
+    console.log(url);
+    return this.http.get<VideoJuego[]>(url, {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        Accept: 'application/json',
+      }),
+    })
+    .pipe(
+      // retry(5),
+      catchError(this.handleError)
+    );
+  }
+
   searchGameTitle(searchKey: string) {
-    const url = `${environment.userServiceBaseUrl}/play/upload`; //FALTA
-    return this.get2(url, searchKey);
+    const url = `${environment.logedInServiceBaseUrl}/search/games/` + searchKey;
+    return this.get<VideoJuego[]>(url);
   }
 }

@@ -8,9 +8,8 @@ import {
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
-import { tokenName } from '@angular/compiler';
-import { CookieService } from 'ngx-cookie-service';
-import { FormGroup } from '@angular/forms';
+import { VideoJuego } from '../model/video-juego';
+
 
 
 @Injectable({
@@ -19,7 +18,7 @@ import { FormGroup } from '@angular/forms';
 export class PersonService {
 
   constructor(private http: HttpClient) { }
-  
+
   private handleError(error: HttpErrorResponse): Observable<any> {
     console.log(error);
     return throwError('An error has occurred');
@@ -85,13 +84,33 @@ export class PersonService {
   }
 
   //Amigos jugando
-  getFriends() {
-      const url = `${environment.userServiceBaseUrl}/play/friends`; // Falta dirección URL
-      return this.get(url);
+  getFriends(mail: string) {
+    const url = `${environment.logedInServiceBaseUrl}/friends/${mail}`; // Falta dirección URL
+    return this.get(url);
   }
-  
+
+  getActiveFriends() {
+    const url = `${environment.logedInServiceBaseUrl}/friends/`;
+    return this.get(url);
+  }
+
+  setFavorites(games) {
+    const url = `${environment.logedInServiceBaseUrl}/games/favorites`;
+    return this.post(url, games);
+  }
+
+  getFavorites(mail: string) {
+    const url = `${environment.logedInServiceBaseUrl}/games/favorites/${mail}`;
+    return this.get<VideoJuego[]>(url);
+  }
+
   getFriendsChat() {
-    const url = `${environment.userServiceBaseUrl}/play/friends`; // Falta dirección URL
+    const url = `${environment.logedInServiceBaseUrl}/friends`; // Falta dirección URL
+    return this.get(url);
+  }
+
+  getFriendRequestsNotifications(){
+    const url = `${environment.logedInServiceBaseUrl}/friendsrequests`;
     return this.get(url);
   }
 

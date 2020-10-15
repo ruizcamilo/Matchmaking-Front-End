@@ -12,7 +12,7 @@ export class MainSearchComponent implements OnInit {
 
   search: string;
   usuarios: User[] = [];
-
+  yo: string;
 
   constructor(
     private route: ActivatedRoute,
@@ -22,6 +22,7 @@ export class MainSearchComponent implements OnInit {
 
 
   ngOnInit(): void {
+    this.yo = sessionStorage.getItem('gamertag');
     this.search = this.route.snapshot.paramMap.get("search");
     try {
       this.userService.searchUser(this.search).subscribe(
@@ -33,6 +34,8 @@ export class MainSearchComponent implements OnInit {
       console.error(error);
     }
   }
+
+
   mostrarPublicaciones(): void
   {
     this.router.navigate(['/publication-search', { search: this.search } ]);

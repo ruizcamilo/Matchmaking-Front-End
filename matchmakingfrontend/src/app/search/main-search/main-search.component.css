@@ -7,12 +7,12 @@ body{
   height: 100vh;
   width: 100%;
   overflow: hidden;
-  padding-top: 10px;
   background-color:  #0e141e;
   float: left;
 }
 
 .full-container{
+  margin-top: 80px;
   display: grid;
   grid-template-columns: 3fr 8fr;
   height: 100%;
@@ -20,6 +20,7 @@ body{
 }
 
 .izquierda{
+  padding: 10px;
   height: 100%;
   border-right: 2px solid #dfe1e5;
 }
@@ -27,6 +28,25 @@ body{
 .derecha{
   height: 100%;
   overflow-y: scroll;
+}
+
+.derecha::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+.derecha::-webkit-scrollbar-track {
+  background: #23314a;
+}
+
+/* Handle */
+.derecha::-webkit-scrollbar-thumb {
+  background: #888;
+}
+
+/* Handle on hover */
+.derecha::-webkit-scrollbar-thumb:hover {
+  background: #555;
 }
 
 .showing{
@@ -45,6 +65,17 @@ body{
 #search{
   text-align: right;
   margin-right: 10%;
+}
+
+a{
+  color:white;
+  text-decoration: none;
+}
+
+a:hover{
+  color:#ff962c;
+  text-decoration: none;
+  cursor: pointer;
 }
 
 #search p{

@@ -5,6 +5,7 @@
 export const environment = {
   production: false,
   userServiceBaseUrl: 'http://localhost:8080',
+  logedInServiceBaseUrl: 'http://localhost:8080/play',
   firebaseConfig: {
     apiKey: 'AIzaSyANzM8X0iicUDfNLfnm_kedFoQBon8bEC8',
     authDomain: 'spring-course-c4e5a.firebaseapp.com',

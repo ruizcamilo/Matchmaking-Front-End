@@ -1,11 +1,11 @@
 import { Person } from './person';
 
 export class Comment {
-    publicacion_id: String ;
-    person: Person;
-    comentario: string;
-    fecha: string;
-    
-    constructor(){
+
+    constructor(
+      public publicacion_id: string,
+      public person: Person,
+      public comentario: string,
+      public fecha: string){
     }
 }
