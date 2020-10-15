@@ -103,11 +103,11 @@ p {
   font-size: 70px;
 }
 
-.btn{
+.btn-register{
   background-color: #ff962c;
 }
 
-.btn:hover{
+.btn-register:hover{
   background-color: #dd8e00;
   color: white;
 }
@@ -166,4 +166,9 @@ p {
 /* Handle on hover */
 .list-group::-webkit-scrollbar-thumb:hover {
   background: #555;
+}
+
+.selected-game{
+  background-color: #ff962c;
+  color: white;
 }

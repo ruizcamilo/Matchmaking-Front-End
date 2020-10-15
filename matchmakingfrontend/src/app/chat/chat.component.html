@@ -1,0 +1,89 @@
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous" />
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" type="text/css" rel="stylesheet" />
+<!-- Toolbar -->
+<div class="content" role="main">
+    <div *ngIf="exists" class="container">
+        <h3 class=" text-center">MatchMaking</h3>
+        <div class="messaging" style="margin-top: 80px;">
+            <div class="inbox_msg">
+                <div class="inbox_people">
+                    <div class="headind_srch">
+                        <div class="channel_heading">
+                            <h4>Chats</h4>
+                        </div>
+                        <div class="createChat" ng-controller="searchController">
+                            <div>
+                                <input type="text" (click)="mostrar = !mostrar" [(ngModel)]="term">
+                                <div *ngFor="let item of items |filter:term">
+                                    <p class="pu" *ngIf="mostrar" (click)="fillInputBar(item.email)" style="cursor: pointer;">
+                                        {{item.name}} ({{item.email}})
+                                    </p>
+                                </div>
+                            </div>
+                            <button (click)="createChat()">Crear chat</button>
+                        </div>
+                    </div>
+                    <div class="inbox_chat">
+                        <div class="channels" *ngFor="let channel of channelList; index as i">
+                            <div class="chat_list">
+                                <div class="chat_people">
+                                    <div class="chat_ib" *ngFor="let inte of channel.integrantes">
+                                        <a (click)="routingChat(channel.id)" style="cursor: pointer">
+                                            <h5>
+                                                {{inte}}
+                                            </h5>
+                                        </a>
+                                    </div>
+                                </div>
+                                <div>
+                                    <p style="color: black; margin-left: 15px;">
+                                        {{ channel.mensajes[0].mensaje }}
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mesgs">
+                    <div class="msg_history" #scroll [scrollTop]="scrolltop">
+                        <li class="message" *ngFor="let message of messages; let last = last">
+                            <div *ngIf="message.remitente !== emailActual; then incoming_msg;else outgoing_msg"></div>
+                            <ng-template #incoming_msg>
+                                <div class="incoming_msg">
+                                    <div class="incoming_msg_img">
+                                        <img src="https://i.imgur.com/k2PZLZa.png" alt="User avatar" />
+                                    </div>
+                                    <div class="received_msg">
+                                        <div class="received_withd_msg">
+                                            <p>{{ message.mensaje }}</p>
+                                            {{last ? scrollToBottom() : ''}}
+                                        </div>
+                                    </div>
+                                </div>
+                            </ng-template>
+                            <ng-template #outgoing_msg>
+                                <div class="outgoing_msg">
+                                    <div class="sent_msg">
+                                        <p>{{ message.mensaje }}</p>
+                                        {{last ? scrollToBottom() : ''}}
+                                    </div>
+                                </div>
+                            </ng-template>
+                        </li>
+                    </div>
+                    <div class="type_msg">
+                        <form class="input_msg_write" autocomplete="off">
+                            <input type="text" class="write_msg" placeholder="Type a message" name="newMessage" [(ngModel)]="messageSend.mensaje" />
+                            <button class="msg_send_btn" type="button" id="mandarMensaje">
+                                <i class="fa fa-paper-plane-o" aria-hidden="true" (click)="mandarMensaje()"></i>
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</div>

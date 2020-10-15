@@ -18,6 +18,10 @@ import { FeedComponent } from './feed/feed.component';
 import { MainSearchComponent } from './search/main-search/main-search.component';
 import { PublicacionesSearchComponent } from './search/publicaciones-search/publicaciones-search.component';
 import { VideojuegosSearchComponent } from './search/videojuegos-search/videojuegos-search.component';
+import { Ng2SearchPipeModule } from 'ng2-search-filter';
+import { NotFoundComponent } from './not-found/not-found.component';
+import { ChatComponent } from './chat/chat.component';
+import { GuardAccesGuard } from '../../guard/guard-acces.guard';
 
 @NgModule({
   declarations: [
@@ -32,6 +36,8 @@ import { VideojuegosSearchComponent } from './search/videojuegos-search/videojue
     MainSearchComponent,
     PublicacionesSearchComponent,
     VideojuegosSearchComponent,
+    NotFoundComponent,
+    ChatComponent,
   ],
   imports: [
     BrowserModule,
@@ -40,9 +46,10 @@ import { VideojuegosSearchComponent } from './search/videojuegos-search/videojue
     FormsModule,
     AngularFireAuthModule,
     AngularFirestoreModule,
-    HttpClientModule
+    HttpClientModule,
+    Ng2SearchPipeModule
   ],
-  providers: [],
+  providers: [GuardAccesGuard],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

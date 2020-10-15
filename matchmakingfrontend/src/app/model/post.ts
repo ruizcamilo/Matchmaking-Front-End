@@ -6,7 +6,7 @@ export class Post {
     constructor(
         public person: Person,
         public contenido: string,
-        public fecha_hora: string,
+        public fecha: string,
         public imagen: string,
         public reportado: boolean,
     ) {}

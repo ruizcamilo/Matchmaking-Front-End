@@ -10,19 +10,24 @@ import { FeedComponent } from './feed/feed.component';
 import { MainSearchComponent } from './search/main-search/main-search.component';
 import { PublicacionesSearchComponent } from './search/publicaciones-search/publicaciones-search.component';
 import { VideojuegosSearchComponent } from './search/videojuegos-search/videojuegos-search.component';
+import { NotFoundComponent } from './not-found/not-found.component';
+import { ChatComponent } from './chat/chat.component';
+import { GuardAccesGuard } from '../../guard/guard-acces.guard';
 
 const routes: Routes = [
   {path: 'presentation', component: PresentationComponent},
   {path: 'login', component: LoginComponent},
   {path: 'register', component: RegisterComponent},
-  {path: 'profile', component: ProfileComponent},
-  {path: 'editar', component: EditProfileComponent},
-  {path: 'profile/:id', component: FriendProfileComponent},
-  {path: 'feed', component: FeedComponent},
-  {path: 'main-search', component: MainSearchComponent},
-  {path: 'publication-search', component: PublicacionesSearchComponent},
-  {path: 'videogame-search', component: VideojuegosSearchComponent},
-  {path: '', pathMatch: 'full', redirectTo: 'presentation' }
+  {path: 'profile', component: ProfileComponent, canActivate: [GuardAccesGuard]},
+  {path: 'editar', component: EditProfileComponent, canActivate: [GuardAccesGuard]},
+  {path: 'profile/:id', component: FriendProfileComponent, canActivate: [GuardAccesGuard]},
+  {path: 'feed', component: FeedComponent, canActivate: [GuardAccesGuard]},
+  {path: 'main-search', component: MainSearchComponent, canActivate: [GuardAccesGuard]},
+  {path: 'publication-search', component: PublicacionesSearchComponent, canActivate: [GuardAccesGuard]},
+  {path: 'videogame-search', component: VideojuegosSearchComponent, canActivate: [GuardAccesGuard]},
+  {path: 'chat', component: ChatComponent, canActivate: [GuardAccesGuard]},
+  {path: '', pathMatch: 'full', redirectTo: 'presentation' },
+  {path: '**', component: NotFoundComponent }
 ];
 
 @NgModule({

@@ -20,8 +20,8 @@
               class="form-control solo"
               placeholder="name@example.com"
               name="user"
-              required
               [(ngModel)]="userSend.correo"
+              disabled
             />
           </div>
         </div>
@@ -67,11 +67,11 @@
           </div>
         </div>
         <div class="form-group">
-          <label class="col-sm-2">Continente</label>
-          <div class="col-sm-7">
-            <select class="form-control solo" id="continente" name="continente" [(ngModel)]="selectedRegion" required>
-              <option disabled selected>Seleccione una region</option>
-              <option value="op.value" *ngFor="let op of regions">{{op.label}}</option>
+          <label class="col-sm-2">Region</label>
+          <div class="col-sm-12">
+            <select class="form-control" id="continente" name="continente" [(ngModel)]="userSend.region_id" required>
+              <option disabled selected style="background-color:#ff962c;" >ACTUAL:{{userSend.region_id}}</option>
+              <option value={{op}} *ngFor="let op of regions">{{op}}</option>
             </select>
           </div>
         </div>
@@ -101,26 +101,62 @@
               class="custom-control custom-checkbox"
               *ngFor="let consola of consolas"
             >
-              <div class="checkbox">
+              <div class="checkbox" (click)="changeStatus(consola.nombre)">
                 <input
                   type="checkbox"
                   class="custom-control-input"
-                  id="{{ consola }}"
+                  [checked]="consola.selected"
                 />
-                <label class="custom-control-label" for="{{ consola }}">{{consola}}</label>
+                <label class="custom-control-label" for="{{ consola.nombre }}">{{consola.nombre}}</label>
               </div>
             </div>
           </div>
         </div>
+        <div class="form-group">
+          <label class="col-sm">Juegos en los que esta interesado:</label>
+          <form class="form-inline">
+            <input
+              name="search"
+              class="form-control mr-sm-2"
+              type="search"
+              placeholder="Buscar..."
+              [(ngModel)]="search"
+            />
+          </form>
+        </div>
         <table class="list-group">
-          <ul *ngFor="let juego of juegosEscogidos">
-            <li class="list-group-item" color="blue">{{ juego }}</li>
+          <ul *ngFor="let juego of juegos | filter:search " (click)="gameSelection(juego)">
+            <li *ngIf="juegosEscogidos.includes(juego)" class="list-group-item selected-game">{{ juego.nombre }}</li>
+            <li *ngIf="!juegosEscogidos.includes(juego)" class="list-group-item">{{ juego.nombre }}</li>
           </ul>
         </table>
         <div class="form-group">
           <div class="col-auto">
-            <button type="submit" class="btn" (click)="update()">
+            <button *ngIf="fileToUpload != null &&
+            userSend.correo!='' &&
+            userSend.nombre_usuario != '' &&
+            userSend.fecha_nacimiento != '' &&
+            userSend.nombres != '' &&
+            userSend.apellidos != '' &&
+            userSend.region_id != '' &&
+            userSend.conexion != 0 &&
+            consolasEscogidas.length > 0 &&
+            juegosEscogidos.length > 0"
+            type="submit" class="btn" (click)="update()">
               Editar
+            </button>
+            <button *ngIf="fileToUpload === null ||
+            userSend.correo === '' ||
+            userSend.nombre_usuario === '' ||
+            userSend.fecha_nacimiento === '' ||
+            userSend.nombres === '' ||
+            userSend.apellidos === '' ||
+            userSend.region_id === '' ||
+            userSend.conexion === 0 ||
+            consolasEscogidas.length === 0 ||
+            juegosEscogidos.length === 0"
+            type="submit" class="btn btn-secondary">
+              Llena todos los campos
             </button>
           </div>
         </div>

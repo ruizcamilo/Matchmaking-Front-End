@@ -35,6 +35,9 @@ a{
 .navbar{
   background-color: #0a0a0a;
   height: 80px;
+  position: fixed;
+  width: 100%;
+  z-index: 1000;
 }
 
 
@@ -68,5 +71,19 @@ a{
 .btn:hover{
   background-color: #dd8e00;
   color: white;
+}
+
+.dropdown{
+  background-color: #0a0a0a;
+  color:white;
+  position: absolute;
+}
+
+.dropdown-container {
+  position: relative;
+}
+
+.yesbutton{
+  margin-right: 8px;
 }
 

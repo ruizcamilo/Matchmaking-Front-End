@@ -81,13 +81,7 @@ export class UserService {
   register(usuario: User) {
     const url = `${environment.userServiceBaseUrl}/register`;
     console.log(usuario.nombres);
-    return this.http
-      .post<User>(url, usuario, {
-        headers: new HttpHeaders({
-          'Content-Type': 'application/json',
-        }),
-      })
-      .pipe(catchError(this.handleError));
+    return this.http.post<boolean>(url, usuario).pipe(catchError(this.handleError));
   }
   getToken() {
     return sessionStorage.getItem('token');
@@ -112,6 +106,17 @@ export class UserService {
     const url = `${environment.userServiceBaseUrl}/play/profile/add/${id}`;
     return this.post(url, {});
   }
+
+  acceptFriendById(id: string){
+    const url = `${environment.userServiceBaseUrl}/play/profile/accept`;
+    return this.post(url, id);
+  }
+
+  rejectFriendById(id: string){
+    const url = `${environment.userServiceBaseUrl}/play/profile/reject`;
+    return this.post(url, id);
+  }
+
   deleteFriendById(id: string) {
     const url = `${environment.userServiceBaseUrl}/play/profile/delete/${id}`;
     return this.delete(url);
@@ -136,8 +141,21 @@ export class UserService {
       .pipe(catchError(this.handleError));
   }
 
+  downloadFile(route){
+    const url = `${environment.logedInServiceBaseUrl}/download?ruta=` + route;
+    console.log( url);
+    return this.http
+    .get(url, {
+      headers: new HttpHeaders({
+        'X-Firebase-Auth': this.getToken(),
+      }),
+      responseType: 'text',
+    })
+    .pipe(catchError(this.handleError));
+  }
+
   searchUser(searchKey: string) {
-    const url = `${environment.userServiceBaseUrl}/play/search/` + searchKey;
+    const url = `${environment.logedInServiceBaseUrl}/search/users/` + searchKey;
     return this.get(url);
   }
 }
