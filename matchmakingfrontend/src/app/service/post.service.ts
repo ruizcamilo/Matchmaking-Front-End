@@ -20,7 +20,7 @@ import { Comment } from '../model/comment';
   providedIn: 'root'
 })
 export class PostService {
-
+    
   constructor(private http: HttpClient) { }
 
   private handleError(error: HttpErrorResponse): Observable<any> {
@@ -118,6 +118,21 @@ export class PostService {
     return this.get<number>(url);
   }
 
+  getPostsReported() {
+    const url = `${environment.userServiceBaseUrl}/play/manage/posts`;
+    return this.get(url);
+  }
+
+  discardDeletePostById(idPost: string) {
+    const url = `${environment.userServiceBaseUrl}/play/manage/posts/unreport/` + idPost;
+    return this.put(url, {}); 
+  }
+  deletePostById(idPost: string) {
+    const url = `${environment.userServiceBaseUrl}/play/manage/posts/delete/` + idPost;
+    console.log("urlPost " + url);
+    return this.delete(url); 
+  }
+
   reportar(idPost: string){
     const url = `${environment.logedInServiceBaseUrl}/post/report/` + idPost;
     return this.post(url, null);
@@ -128,4 +143,3 @@ export class PostService {
     return this.get<Comment[]>(url);
   }
 }
-

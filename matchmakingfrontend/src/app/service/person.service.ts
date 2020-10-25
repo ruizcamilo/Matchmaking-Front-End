@@ -9,8 +9,9 @@ import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { VideoJuego } from '../model/video-juego';
-
-
+import { tokenName } from '@angular/compiler';
+import { CookieService } from 'ngx-cookie-service';
+import { FormGroup } from '@angular/forms';
 
 @Injectable({
   providedIn: 'root'
@@ -87,6 +88,22 @@ export class PersonService {
   getFriends(mail: string) {
     const url = `${environment.logedInServiceBaseUrl}/friends/${mail}`; // Falta dirección URL
     return this.get(url);
+  }
+
+  getUsersResported() {
+    const url = `${environment.userServiceBaseUrl}/play/manage/users`;
+    return this.get(url);
+  }
+
+  deleteUserById(id: string) {
+    const url = `${environment.userServiceBaseUrl}/play/manage/users/delete/${id}`;
+    return this.delete(url);
+  }
+  discardDeleteUserById(id: string) {
+    const url = `${environment.userServiceBaseUrl}/play/manage/users/unreport/${id}`;
+    console.log("id: " +id);
+    console.log("url: " +url);
+    return this.put(url, {});
   }
 
   getActiveFriends() {
