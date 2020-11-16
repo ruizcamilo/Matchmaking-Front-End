@@ -1,0 +1,76 @@
+<div class="title">
+  <h1>Crea tu Squad!</h1>
+</div>
+<div class="container">
+  <div class="info">
+    <div class="item">
+      <h4 class="col">Nombre</h4>
+      <div class="col">
+        <input minlength="4" maxlength="26" type="text" class="form-control" autocomplete="off"
+          placeholder="El mejor nombre de SQUAD que puedas imaginar va acá" name="name" required
+          [(ngModel)]="sendSquad.nombre" />
+      </div>
+    </div>
+    <div class="item">
+      <h4 class="col">Elige la cara de tu squad!</h4>
+      <input type="file" accept='image/*' id="file" (change)="handleFileInput($event.target.files)" name="foto"
+        required>
+    </div>
+    <div class="image">
+      <div class="image-header">
+        <h4 class="col" style="float:left;">Muestra!</h4>
+      </div>
+      <div class="image-img">
+        <img id="blah" [src]="imageSrc || 'http://placehold.it/180'" alt="your image" />
+      </div>
+    </div>
+    <div class="item">
+      <h4 class="col">Visibilidad</h4>
+      <div class="col">
+        <select class="form-control" id="visibilidad" name="visibilidad" [(ngModel)]="visibilidad" required>
+          <option disabled value=''>Seleccione una opcion</option>
+          <option value=true>Disponible para mis amigos</option>
+          <option value=false>Solo con invitación</option>
+        </select>
+      </div>
+    </div>
+  </div>
+  <div class="friends">
+    <div class="item">
+      <h4 class="col-sm">Invita a tus amigos a: {{sendSquad.nombre}}</h4>
+      <form class="form-inline">
+        <input name="search" class="form-control" autocomplete="off" type="search" placeholder="Buscar..."
+          [(ngModel)]="searchFilter" />
+      </form>
+    </div>
+    <table class="list-group">
+      <ul *ngFor="let amigo of myFriends | filter:searchFilter " (click)="clickFriend(amigo[0].persona_id)">
+        <li *ngIf="invitedFriends.includes(amigo[0].persona_id)" class="list-group-item selected">
+          <div class="friend-image">
+            <img [src]=amigo[1] alt="{{amigo[0].nombre_usuario}}">
+          </div>
+          <div class="friend-name">
+            {{ amigo[0].nombre_usuario}}
+          </div>
+          <div class="friend-mail">
+            {{ amigo[0].persona_id}}
+          </div>
+        </li>
+        <li *ngIf="!invitedFriends.includes(amigo[0].persona_id)" class="list-group-item" style="color: black">
+          <div class="friend-image">
+            <img [src]=amigo[1] alt="{{amigo[0].nombre_usuario}}">
+          </div>
+          <div class="friend-name">
+            {{ amigo[0].nombre_usuario}}
+          </div>
+          <div class="friend-mail">
+            {{ amigo[0].persona_id}}
+          </div>
+        </li>
+      </ul>
+    </table>
+    <div class="boton">
+      <button class="btn" (click)="createSquad()">Crear Squad</button>
+    </div>
+  </div>
+</div>

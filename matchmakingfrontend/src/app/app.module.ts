@@ -22,6 +22,10 @@ import { Ng2SearchPipeModule } from 'ng2-search-filter';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { ChatComponent } from './chat/chat.component';
 import { GuardAccesGuard } from '../../guard/guard-acces.guard';
+import { FeedSquadsComponent } from './squads/feed-squads/feed-squads.component';
+import { CreateSquadComponent } from './squads/create-squad/create-squad.component';
+import { SquadViewComponent } from './squads/squad-view/squad-view.component';
+import { RecoverPasswordComponent } from './Login/recover-password/recover-password.component';
 import { AdminProfileComponent } from './Profile/admin-profile/admin-profile.component';
 import { MatchmakingComponent } from './matchmaking/matchmaking/matchmaking.component';
 
@@ -41,6 +45,10 @@ import { MatchmakingComponent } from './matchmaking/matchmaking/matchmaking.comp
     NotFoundComponent,
     ChatComponent,
     AdminProfileComponent,
+    FeedSquadsComponent,
+    CreateSquadComponent,
+    SquadViewComponent,
+    RecoverPasswordComponent,
     MatchmakingComponent,
   ],
   imports: [

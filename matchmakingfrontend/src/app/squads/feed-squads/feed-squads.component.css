@@ -1,0 +1,193 @@
+.top{
+  position: fixed;
+  width: 100%;
+  top: 80px;
+  height: 90px;
+}
+
+.search-bar{
+  width: 60%;
+  height: 100%;
+  float: left;
+}
+
+.search-bar input{
+  width: 90%;
+  height: 45px;
+  margin: 15px 10px 15px;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #495057;
+  background-color: #fff;
+  background-clip: padding-box;
+  border: 1px solid #ced4da;
+  border-radius: .25rem;
+  transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+}
+
+.buttons{
+  width: 40%;
+  height: 100%;
+  padding-left: 10%;
+  float: left;
+}
+
+.buttons .btn {
+  margin: 15px 2.5% 0;
+  height: 45px;
+  width: 45%;
+}
+
+.btn {
+  background-color: #ff962c;
+  color: white;
+}
+
+.btn:hover {
+  background-color: #dd8e00;
+}
+
+.btn:focus {
+	outline: 0;
+}
+
+
+.results{
+  position: relative;
+  top: 180px;
+  width: 100%;
+  height: 100%;
+  background-color: #0e141e;
+}
+
+.friendsquads{
+  width: 100%;
+  overflow-x: hidden;
+  overflow-y: hidden;
+  border-radius: 5px;
+}
+
+.friendsquads .squad{
+  margin: 15px 10px 10px 10px;
+  width: 600px;
+  height: 500px;
+  text-align: center;
+  float: left;
+  background-color: #0a0a0a;
+  border: 5px solid #0a0a0a;
+  border-bottom: 5px solid #ff962c;
+  background-color: #23314a;
+}
+
+.header-squad{
+  width: 100%;
+  height:10%;
+  text-align: center;
+  float: left;
+  color: white;
+}
+
+.middle{
+  height: 70%;
+  width: 100%;
+  float:left;
+  background-color: #23314a;
+}
+
+.image-squad{
+  width: 50%;
+  height:100%;
+  background-color: #0e141e;
+  float:left;
+}
+
+.image-squad img{
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
+  padding: auto;
+}
+
+.integrantes{
+  background-color: #0e141e;
+  float: left;
+  width: 50%;
+  height: 100%;
+  padding: 5%;
+  text-align: left;
+}
+
+.integrantes h3{
+  font-size: 20px;
+  height: 30px;
+  color: white;
+}
+
+
+.botones-squad{
+  width: 100%;
+  height:15%;
+  float: left;
+  padding-top: 5%;
+}
+
+.botones-squad .btn{
+  height: 100%;
+  width: 50%;
+}
+
+.mysquads{
+  width: 100%;
+}
+
+.mysquads .squad{
+  margin: 15px 10px 10px 10px;
+  width: 97%;
+  height: 400px;
+  text-align: center;
+  float: left;
+  background-color: #0a0a0a;
+  border: 5px solid #0a0a0a;
+  border-bottom: 5px solid #ff962c;
+  background-color: #23314a;
+}
+
+.mysquads h1{
+  font-size: 2rem;
+}
+
+.mysquads .integrantes h3{
+  font-size: 10px;
+  height: 30px;
+  color: white;
+}
+
+.mysquads .btn{
+  width: 40%;
+  margin-right: 5%;
+  margin-left: 5%;
+}
+
+.btn:hover path{
+  fill: #0a0a0a;
+}
+
+.empty-mysquads{
+  width: 100%;
+  text-align: center;
+  padding: 10%;
+}
+
+.label h2{
+  color: white;
+}
+
+.label p{
+  color: #0a0a0a;
+}
+
+.icon{
+
+}
+

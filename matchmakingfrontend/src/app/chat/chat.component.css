@@ -26,6 +26,20 @@ img {
     overflow: hidden;
 }
 
+.btn {
+  background-color: #ff962c;
+  color: white;
+}
+
+.btn:hover {
+  background-color: #dd8e00;
+}
+
+
+.btn:focus {
+	outline: 0;
+}
+
 .top_spac {
     margin: 20px 0 0;
 }

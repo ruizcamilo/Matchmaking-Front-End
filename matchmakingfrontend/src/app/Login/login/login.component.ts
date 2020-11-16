@@ -41,7 +41,18 @@ export class LoginComponent implements OnInit {
             this.userService.findByToken().subscribe
               ((user: User) => {
               sessionStorage.setItem('gamertag', user.nombre_usuario);
-              this.router.navigate(['/feed']);
+              sessionStorage.setItem('mail', user.correo);
+              this.userService.isAdmin().subscribe(data => {
+                console.log(data);
+                if (data)
+                {
+                  sessionStorage.setItem('isAdmin', 'yes');
+                }
+                else{
+                  sessionStorage.setItem('isAdmin', 'no');
+                }
+                this.router.navigate(['/feed']);
+                });
               });
           });
       } catch {

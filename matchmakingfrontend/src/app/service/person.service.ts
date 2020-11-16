@@ -131,4 +131,9 @@ export class PersonService {
     return this.get(url);
   }
 
+  getSquadInvitations() {
+    const url = `${environment.logedInServiceBaseUrl}/squads/invitations`;
+    return this.get(url);
+  }
+
 }
