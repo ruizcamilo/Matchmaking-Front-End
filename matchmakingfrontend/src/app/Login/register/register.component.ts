@@ -34,17 +34,17 @@ export class RegisterComponent implements OnInit {
     { nombre: 'CounterStrike', imagen: '' }
   ];
   regions = [
-    "Brasil",
-    "Europa Nórdica y Este",
-    "Europa Oeste",
-    "Japón",
-    "Latinoamérica Norte",
-    "Latinoamérica Sur",
-    "Norteamérica",
-    "Oceanía",
-    "República de Corea",
-    "Rusia",
-    "Turquia"
+    'Brasil',
+    'Europa Nórdica y Este',
+    'Europa Oeste',
+    'Japón',
+    'Latinoamérica Norte',
+    'Latinoamérica Sur',
+    'Norteamérica',
+    'Oceanía',
+    'República de Corea',
+    'Rusia',
+    'Turquia'
   ];
   juegosEscogidos: VideoJuego[] = [];
   selectedRegion: string;

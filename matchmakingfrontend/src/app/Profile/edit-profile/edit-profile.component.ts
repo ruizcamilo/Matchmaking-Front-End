@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { User } from 'src/app/model/user';
 import { UserService } from 'src/app/service/user.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { tokenName } from '@angular/compiler';
 import { VideoJuegoService } from '../../service/video-juego.service';
 import { VideoJuego } from 'src/app/model/video-juego';
 import { PersonService } from 'src/app/service/person.service';
@@ -21,13 +20,7 @@ export class EditProfileComponent implements OnInit {
     { nombre: 'PC', selected: false },
   ];
   consolasEscogidas = [];
-  juegos: VideoJuego[] = [
-    { nombre: 'Call of Duty: Modern Warfare', imagen: '' },
-    { nombre: 'Fortnite', imagen: '' },
-    { nombre: 'Gears of War', imagen: '' },
-    { nombre: 'Halo 4', imagen: '' },
-    { nombre: 'CounterStrike', imagen: '' }
-  ];
+  juegos: VideoJuego[] = [];
   regions = [
     "Brasil",
     "Europa Nórdica y Este",
@@ -62,6 +55,8 @@ export class EditProfileComponent implements OnInit {
       this.personService.getFavorites(user.correo).subscribe(data =>
         {
           this.juegosEscogidos = data;
+          console.log(this.juegosEscogidos);
+          console.log(this.juegos);
         });
       this.markConsoles();
     });
@@ -70,9 +65,9 @@ export class EditProfileComponent implements OnInit {
   markConsoles(){
     for (const plata of this.userSend.plataformas) {
       for (let index = 0; index < this.consolas.length; index++) {
-        if (this.consolas[0].nombre == plata)
+        if (this.consolas[index].nombre == plata)
         {
-          this.consolas[0].selected = true;
+          this.consolas[index].selected = true;
           this.consolasEscogidas.push(plata);
         }
       }
@@ -103,6 +98,7 @@ export class EditProfileComponent implements OnInit {
       this.userSend.foto_perfil = name;
       this.userService.updateUser(this.userSend).subscribe(data => {
         this.personService.setFavorites(this.juegosEscogidos).subscribe();
+        this.router.navigate(['/profile']);
         }, error => {
           console.log(error);
         });
@@ -118,9 +114,22 @@ export class EditProfileComponent implements OnInit {
     else {
       this.juegosEscogidos.push(juego);
     }
+    console.log(this.juegosEscogidos);
   }
 
   handleFileInput(files: FileList) {
     this.fileToUpload = files.item(0);
   }
+
+  juegoExiste(juego:VideoJuego) {
+    let existe = false;
+    for (let jueguin of this.juegosEscogidos)
+    {
+      if (juego.nombre == jueguin.nombre)
+      {
+        existe = true;
+      }
+    }
+    return existe;
+    }
 }

@@ -13,6 +13,7 @@
 }
 
 .left{
+  margin-top: 80px;
   align-items: center;
   position: fixed;
   height: 100vh;

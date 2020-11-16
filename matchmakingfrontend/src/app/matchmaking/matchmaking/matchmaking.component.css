@@ -1,0 +1,298 @@
+.nav-item{
+  color: #2e75ec;
+}
+
+.result{
+  text-align: center;
+}
+
+/*Modal Modal*/
+.modal.left .modal-dialog {
+	position:fixed;
+	right: 0;
+	margin: auto;
+	width: 480px;
+	height: 100%;
+	-webkit-transform: translate3d(0%, 0, 0);
+	-ms-transform: translate3d(0%, 0, 0);
+	-o-transform: translate3d(0%, 0, 0);
+	transform: translate3d(0%, 0, 0);
+}
+
+.modal.left .modal-content {
+	height: 100%;
+	overflow-y: auto;
+}
+
+.modal.right .modal-body {
+	padding: 15px 15px 80px;
+}
+
+.modal.right.fade .modal-dialog {
+	left: -320px;
+	-webkit-transition: opacity 0.3s linear, left 0.3s ease-out;
+	-moz-transition: opacity 0.3s linear, left 0.3s ease-out;
+	-o-transition: opacity 0.3s linear, left 0.3s ease-out;
+	transition: opacity 0.3s linear, left 0.3s ease-out;
+}
+
+.modal.right.fade.show .modal-dialog {
+	right: 0;
+}
+
+/* ----- MODAL STYLE ----- */
+.modal-content {
+  margin-top: 80px;
+	border-radius: 0;
+  border: none;
+  padding-bottom: 80px;
+}
+
+.modal-header {
+	border-bottom-color: #eeeeee;
+	background-color: #fafafa;
+}
+
+.content{
+  height: calc(100% - 80px);
+  width: 100%;
+  margin-top: 80px;
+  background-color: #0e141e;
+  float: left;
+}
+
+.right{
+  width: 30%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
+.buttons{
+  height:30%;
+  float: right;
+  width: 100%;
+  height:30%;
+  position: relative;
+}
+
+.button-side {
+    width: 48%;
+    float: left;
+    margin: 5px 1%;
+    padding: 5px 1px;
+}
+
+.buttons .btn {
+  margin: 15px 10px 0;
+}
+
+
+.btn-sidebar{
+  margin: 0;
+  position: absolute;
+  top: 50%;
+}
+
+.btn {
+  background-color: #ff962c;
+  color: white;
+}
+
+.btn:hover {
+  background-color: #dd8e00;
+}
+
+.btn:focus {
+	outline: 0;
+}
+
+.below{
+  width: 90%;
+  height: 70%;
+
+  position: absolute;
+  bottom: 0;
+  left:0;
+}
+
+.centered{
+  display: block;
+  margin: auto;
+  width: 100%;
+}
+
+/* Juegos */
+.game-container-outer{
+  width: 100%;
+  float: left;
+  overflow-x: scroll;
+  overflow-y: hidden;
+  margin-bottom: 5%;
+  border-radius: 5px;
+  background-color: #0e141e;
+}
+
+.game-container-outer::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+.game-container-outer::-webkit-scrollbar-track {
+  background: #0e141e;
+}
+
+/* Handle */
+.game-container-outer::-webkit-scrollbar-thumb {
+  background: #888;
+}
+
+/* Handle on hover */
+.game-container-outer::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+.game-container{
+  width: 0px;
+  float: left;
+  background-color: #0e141e;
+}
+
+.selected{
+  border: 4px solid #ff962c;
+}
+
+.game{
+  width: 150px;
+  margin: 10px 5px;
+  float: left;
+  background-color: #0a0a0a;
+  border-bottom: 2px solid #ff962c;
+}
+
+.game-label{
+  color: #FFFFFF;
+  background-color: #343a40;
+}
+
+.game-label h3 {
+  font-size: 14px;
+  height: 30px;
+}
+
+.game-image{
+  width: 100%;
+  height:200px;
+}
+
+.game-image img{
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
+}
+
+.results-left{
+  width: 70%;
+  height: 100%;
+  float: left;
+}
+
+.empty{
+  height: 100%;
+}
+
+.empty img{
+  display: block;
+  margin: 0 auto 0;
+  width: 70%;
+}
+
+.results-container{
+  width: 100%;
+  overflow-x: scroll;
+  overflow-y: hidden;
+  border-radius: 5px;
+  background-color: #0e141e;
+}
+
+.results-container::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+.results-container::-webkit-scrollbar-track {
+  background: #0e141e;
+}
+
+/* Handle */
+.results-container::-webkit-scrollbar-thumb {
+  background: #888;
+}
+
+/* Handle on hover */
+.results-container::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+.player{
+  width: 0px;
+  background-color: #0e141e;
+}
+
+.persona{
+  margin: 5px 10px 10px 10px;
+  width: 250px;
+  text-align: center;
+  float: left;
+  background-color: #0a0a0a;
+  border-bottom: 2px solid #ff962c;
+}
+
+.header-persona{
+  color: #FFFFFF;
+  background-color: #343a40;
+}
+
+.header-persona h3{
+  font-size: 14px;
+  height: 30px;
+}
+
+.pic-persona{
+  width: 100%;
+  height:310px;
+}
+
+.pic-persona img{
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
+}
+
+.extra-persona{
+  color: #FFFFFF;
+  background-color: #343a40;
+}
+
+.extra-persona h3{
+  font-size: 14px;
+  height: 30px;
+}
+
+.recharger{
+  height: 40px;
+  width: 40px;
+}
+
+.not-found{
+  height: 100%;
+  width: 100%;
+  padding-top: 20%;
+  margin: auto auto;
+  text-align: center;
+}
+
+.label{
+  color: white;
+}
