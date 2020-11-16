@@ -1,0 +1,104 @@
+<body>
+    <div class="full-container">
+        <div class=izquierda>
+            <div class="showing">
+                <div id="titulo">
+                    <p>Menú de Reportes:</p>
+                </div>
+            </div>
+            <div class="opciones">
+                <div class="option-container">
+                    <a (click)="mostrarUsuariosReportados()">Usuarios</a><br>
+                </div>
+                <div class="option-container">
+                    <a>Publicaciones</a><br>
+                </div>
+                <div class="option-container">
+                    <a (click)="mostrarVideoJuegosAdmin()">Videojuegos</a><br>
+                </div>
+                <!-- <div class="option-container">
+                    <a (click)="mostrarClanes()">Clanes</a><br>
+                </div>
+                <div class="option-container">
+                    <a (click)="mostrarSquads()">Squads</a><br>
+                </div> -->
+            </div>
+        </div>
+        <div class="derecha">
+            <div class="usuariosReportados">
+                <div class="publicacionesReportadas">
+                    <h1>Publicaciones reportadas</h1>
+                    <div class="CentralFeed">
+                        <div class="container mt-2 mb-3" *ngFor="let publi of publications; index as i">
+                            <div class="row d-flex justify-content-center" *ngIf="!publi[4]">
+                                <div class="">
+                                    <div class="d-flex flex-row">
+                                    </div>
+                                    <div class="row news-card p-3" style="background-color: #23314a;">
+                                        <div class="col-md-4">
+                                            <div class="feed-image" style="text-align: center;">
+                                                <img class="news-feed-image rounded img-fluid img-responsive"
+                                                    [src]=publi[3]>
+                                                <h5>{{publi[0]}}</h5>
+                                                <p style="font-size:13px;">
+                                                    {{publi[2] | date: 'hh:mm a dd-MM-yyyy'}}</p>
+                                            </div>
+                                        </div>
+                                        <div class="col">
+                                            <div class="news-feed-text">
+                                                <h6>{{publi[1]}}</h6>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="btnReporte">
+                                    <button (click)="deletePost(publi[5])" class="btnEliminar">
+                                        Eliminar
+                                    </button>
+                                    <button (click)="discardDeletePost(publi[5])" class="btnDescartar">
+                                        Descartar
+                                    </button>
+                                </div>
+                            </div>
+                           
+                            <div class="row d-flex justify-content-center" *ngIf="publi[4]">
+                                <div class="">
+                                    <div class="d-flex flex-row">
+                                    </div>
+                                    <div class="row news-card p-3"
+                                        style="background-color: #23314a; border-bottom-left-radius: 0%;border-bottom-right-radius: 0%;">
+                                        <div class="col-md-4">
+                                            <div class="feed-image" style="text-align: center;">
+                                                <div>
+                                                    <img class="news-feed-image rounded img-fluid img-responsive"
+                                                        [src]=publi[3]>
+                                                </div>
+                                                <h5>{{publi[0]}}</h5>
+                                                <p style="font-size:13px;">
+                                                    {{publi[2] | date: 'hh:mm a dd-MM-yyyy'}}</p>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-8">
+                                            <div class="news-feed-text">
+                                                <img class="news-feed-image rounded img-fluid img-responsive"
+                                                    [src]=publi[4]>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="btnReporte">
+                                    <button (click)="deletePost(publi[5])" class="btnEliminar">
+                                        Eliminar
+                                    </button>
+                                    <button (click)="discardDeletePost(publi[5])" class="btnDescartar">
+                                        Descartar
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>

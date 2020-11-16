@@ -96,7 +96,8 @@ export class ProfileComponent implements OnInit {
   }
 
   async getFavoriteGames(){
-    this.personService.getFavorites(this.Owner.correo).subscribe(favorites => {
+    this.personService.getFavorites(this.Owner.correo).subscribe(
+      favorites => {
       console.log("favoritos");
       console.log(favorites);
       for (let index = 0; index < favorites.length; index++) {

@@ -1,0 +1,116 @@
+<body>
+    <div class="full-container">
+        <div class=izquierda>
+            <div class="showing">
+                <div id="titulo">
+                    <p>Menú de Reportes:</p>
+                </div>
+            </div>
+            <div class="opciones">
+                <div class="option-container">
+                    <a (click)="mostrarUsuariosReportados()">Usuarios</a><br>
+                </div>
+                <div class="option-container">
+                    <a (click)="mostrarPublicacionesReportadas()">Publicaciones</a><br>
+                </div>
+                <div class="option-container">
+                    <a (click)="mostrarVideoJuegosAdmin()">Videojuegos</a><br>
+                </div>
+                <!-- <div class="option-container">
+                    <a (click)="mostrarClanes()">Clanes</a><br>
+                </div>
+                <div class="option-container">
+                    <a (click)="mostrarSquads()">Squads</a><br>
+                </div> -->
+            </div>
+        </div>
+        <div class="derecha">
+            <img class = "backgroundImageAdmin"   src="https://www.megaidea.net/wp-content/uploads/2020/07/un-jefe-en-panales-clipart-35.png" alt="bb1" border="0">
+            <img class = "GodMode" src="https://i.ibb.co/JBGNbNw/Gmode.png" alt="Gmode" border="0">
+        </div>
+    </div>
+</body>
+<!-- <body>
+
+    <div class="subMenuFeeedAdmin">
+        <li class="nav-item">
+            <div class="dropdown-container">
+                <a class="nav-link dropdown-toggle" data-toggle="dropdown">Reportes</a>
+                <div class="dropdown dropdown-menu">
+                    <a class="dropdown-item menu-item" [routerLink]="['./usersReported']">Usuarios</a>
+                    <a class="dropdown-item menu-item" [routerLink]="['./postsReported']">Publicaciones</a>
+                    <a class="dropdown-item menu-item" [routerLink]="['./Juegos']">Juegos</a>
+                </div>
+            </div>
+        </li>
+        <div class="feedAdmin">
+            <div class="publicacionesReportadas">
+                <h1>Publicaciones reportadas</h1>
+                <div class="CentralFeed">
+                    <ng-container *ngFor="let postActual of postsReported; let i = index">
+                        <article class="basePublication">
+                            <div class="blogPost">
+                                <div class="blogPost-anchor">
+                                    <div class="blogPost-top">
+                                        <div class="blogPostFigure"
+                                            style="background-image: url( https://i.imgur.com/ZKbpmaU.jpg );background-size: contain;background-repeat: no-repeat;">
+                                        </div>
+                                        <div class="blogPostInformation">
+                                            <span>{{postActual.contenido}}</span>
+                                            <div class="profileUser-anchor">
+                                                <div class="imageUser"
+                                                    style="background-image: url( https://i.imgur.com/uSlStch.jpg );background-size: cover;background-position: center;border-radius: 25px;">
+                                                </div>
+                                                <a (click)="routingProfile(postActual.person.persona_id)"
+                                                    class="informationUser">
+                                                    <div>
+                                                        <h6>{{postActual.person.nombre_usuario}}</h6>
+                                                    </div>
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <div class="btnReporte">
+                                            <button (click)="deletePost(postActual.id)" class="btnEliminar">
+                                                Eliminar
+                                            </button>
+                                            <button (click)="discardDeletePost(postActual.id)" class="btnDescartar">
+                                                Descartar
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </article>
+                    </ng-container>
+                </div>
+            </div>
+            <div class="usuariosReportados">
+                <h1>Usuarios reportados</h1>
+                <div class="usersBlock">
+                    <ng-container *ngFor="let personaActual of usuariosReported; let i = index">
+                        <div class="left_after_base">
+                            <div class="friend-top">
+                                <div class="friendFigure"
+                                    style="background-image: url( https://i.ibb.co/H7rLhQr/pic-profile.png );background-size: contain;background-repeat: no-repeat;">
+                                </div>
+
+                                <a (click)="routingProfile(personaActual.persona_id)" class="informationUser">
+
+                                    <div class="friendName">{{personaActual.nombre_usuario}}</div>
+                                </a>
+                                <div class="btnReporte">
+                                    <button (click)="UserDelete(personaActual.persona_id)" class="btnEliminar">
+                                        Eliminar
+                                    </button>
+                                    <button (click)="UserDiscard(personaActual.persona_id)" class="btnDescartar">
+                                        Descartar
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </ng-container>
+                </div>
+            </div>
+        </div>
+    </div>
+</body> -->

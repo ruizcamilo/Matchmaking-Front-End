@@ -91,6 +91,11 @@ export class PostService {
     return this.get<Post[]>(url);
   }
 
+  getPostsClan(id) {
+    const url = `${environment.logedInServiceBaseUrl}/clans/${id}`;
+    return this.get<Post[]>(url);
+  }
+
   getMyPosts(mail){
     const url = `${environment.logedInServiceBaseUrl}/posts/${mail}`;
     return this.get<Post[]>(url);
@@ -128,7 +133,7 @@ export class PostService {
     return this.put(url, {}); 
   }
   deletePostById(idPost: string) {
-    const url = `${environment.userServiceBaseUrl}/play/manage/posts/delete/` + idPost;
+    const url = `${environment.userServiceBaseUrl}/play/manage/posts/delete/`+idPost;
     console.log("urlPost " + url);
     return this.delete(url); 
   }

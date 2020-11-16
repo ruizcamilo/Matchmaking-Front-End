@@ -22,11 +22,16 @@ import { Ng2SearchPipeModule } from 'ng2-search-filter';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { ChatComponent } from './chat/chat.component';
 import { GuardAccesGuard } from '../../guard/guard-acces.guard';
+import { AdminProfileComponent } from './Admin/admin-profile/admin-profile.component';
+import { AdminPostReportedComponent } from './Admin/admin-post-reported/admin-post-reported.component';
+import { AdminUsersReportedComponent } from './Admin/admin-users-reported/admin-users-reported.component';
+import { AdminVideoGamesComponent } from './Admin/admin-video-games/admin-video-games.component';
+import { ClanComponent } from './Clan/clan/clan.component';
+import { ClanesSearchComponent } from './search/clanes-search/clanes-search.component';
 import { FeedSquadsComponent } from './squads/feed-squads/feed-squads.component';
 import { CreateSquadComponent } from './squads/create-squad/create-squad.component';
 import { SquadViewComponent } from './squads/squad-view/squad-view.component';
 import { RecoverPasswordComponent } from './Login/recover-password/recover-password.component';
-import { AdminProfileComponent } from './Profile/admin-profile/admin-profile.component';
 import { MatchmakingComponent } from './matchmaking/matchmaking/matchmaking.component';
 
 @NgModule({
@@ -45,6 +50,11 @@ import { MatchmakingComponent } from './matchmaking/matchmaking/matchmaking.comp
     NotFoundComponent,
     ChatComponent,
     AdminProfileComponent,
+    AdminPostReportedComponent,
+    AdminUsersReportedComponent,
+    AdminVideoGamesComponent,
+    ClanComponent,
+    ClanesSearchComponent,
     FeedSquadsComponent,
     CreateSquadComponent,
     SquadViewComponent,

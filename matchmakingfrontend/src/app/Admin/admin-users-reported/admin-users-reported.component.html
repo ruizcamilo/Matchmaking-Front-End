@@ -1,0 +1,55 @@
+<body>
+    <div class="full-container">
+        <div class=izquierda>
+            <div class="showing">
+                <div id="titulo">
+                    <p>Menú de Reportes:</p>
+                </div>
+            </div>
+            <div class="opciones">
+                <div class="option-container">
+                    <a>Usuarios</a><br>
+                </div>
+                <div class="option-container">
+                    <a (click)="mostrarPublicacionesReportadas()">Publicaciones</a><br>
+                </div>
+                <div class="option-container">
+                    <a (click)="mostrarVideoJuegosAdmin()">Videojuegos</a><br>
+                </div>
+                <!-- <div class="option-container">
+                    <a (click)="mostrarClanes()">Clanes</a><br>
+                </div>
+                <div class="option-container">
+                    <a (click)="mostrarSquads()">Squads</a><br>
+                </div> -->
+            </div>
+        </div>
+        <div class="derecha">
+            <div class="usuariosReportados">
+                <h1>Usuarios reportados</h1>
+                <div class="usersBlock">
+                    <ng-container *ngFor="let personaActual of users; let i = index">
+                        <div class="left_after_base">
+                            <div class="friend-top">
+                                <img class="news-feed-image rounded img-fluid img-responsive" [src]=personaActual[1]>
+
+                                <a (click)="routingProfile(personaActual.persona_id)" class="informationUser">
+
+                                    <div class="friendName">{{personaActual[0]}}</div>
+                                </a>
+                                <div class="btnReporte">
+                                    <button (click)="UserDelete(personaActual.persona_id)" class="btnEliminar">
+                                        Eliminar
+                                    </button>
+                                    <button (click)="UserDiscard(personaActual.persona_id)" class="btnDescartar">
+                                        Descartar
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </ng-container>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
