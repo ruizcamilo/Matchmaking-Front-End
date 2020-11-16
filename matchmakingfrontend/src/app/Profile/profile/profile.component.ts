@@ -47,10 +47,6 @@ export class ProfileComponent implements OnInit {
 
   ngOnInit(): void {
     this.getProfile();
-    let v = new Comment('AAA', new Person('bla', 'bla', 'bla'), 'Uyyy cual es el DM ricura', '1234567890.123');
-    this.pubComments.push(v);
-    this.pubComments.push(v);
-    this.pubComments.push(v);
   }
 
   async getProfile(){

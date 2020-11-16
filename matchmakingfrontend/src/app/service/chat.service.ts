@@ -96,14 +96,14 @@ export class ChatService {
       );
     }
 
-    createChat(data: Chat) {
-      const url = `${environment.logedInServiceBaseUrl}/chat/create`;
-      return this.post2(url, data);
-    }
-    
-    getChats(){
-      const url = `${environment.logedInServiceBaseUrl}/chats`;
-      return this.get<Chat[]>(url);
+  createChat(data: Chat) {
+    const url = `${environment.logedInServiceBaseUrl}/chat/create`;
+    return this.post2(url, data);
+  }
+  
+  getChats(){
+    const url = `${environment.logedInServiceBaseUrl}/chats`;
+    return this.get<Chat[]>(url);
   }
   getChatById(idChat : string){
     const url = `${environment.logedInServiceBaseUrl}/chat/${idChat}`;

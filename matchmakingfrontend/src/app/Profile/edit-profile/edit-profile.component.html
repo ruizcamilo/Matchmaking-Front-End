@@ -126,8 +126,8 @@
         </div>
         <table class="list-group">
           <ul *ngFor="let juego of juegos | filter:search " (click)="gameSelection(juego)">
-            <li *ngIf="juegosEscogidos.includes(juego)" class="list-group-item selected-game">{{ juego.nombre }}</li>
-            <li *ngIf="!juegosEscogidos.includes(juego)" class="list-group-item">{{ juego.nombre }}</li>
+            <li *ngIf="juegoExiste(juego)" class="list-group-item selected-game">{{ juego.nombre }}</li>
+            <li *ngIf="!juegoExiste(juego)" class="list-group-item">{{ juego.nombre }}</li>
           </ul>
         </table>
         <div class="form-group">

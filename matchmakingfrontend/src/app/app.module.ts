@@ -23,6 +23,7 @@ import { NotFoundComponent } from './not-found/not-found.component';
 import { ChatComponent } from './chat/chat.component';
 import { GuardAccesGuard } from '../../guard/guard-acces.guard';
 import { AdminProfileComponent } from './Profile/admin-profile/admin-profile.component';
+import { MatchmakingComponent } from './matchmaking/matchmaking/matchmaking.component';
 
 @NgModule({
   declarations: [
@@ -40,6 +41,7 @@ import { AdminProfileComponent } from './Profile/admin-profile/admin-profile.com
     NotFoundComponent,
     ChatComponent,
     AdminProfileComponent,
+    MatchmakingComponent,
   ],
   imports: [
     BrowserModule,
