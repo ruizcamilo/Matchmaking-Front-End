@@ -98,6 +98,7 @@ export class RegisterComponent implements OnInit {
             .subscribe(data => { this.personService.setFavorites(this.juegosEscogidos).subscribe(); });
         }
         sessionStorage.setItem('gamertag', this.userSend.nombre_usuario);
+        sessionStorage.setItem('mail', this.userSend.correo);
         this.router.navigate(['/feed']);
       });
     });

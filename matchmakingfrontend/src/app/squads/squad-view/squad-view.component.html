@@ -1,0 +1,222 @@
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+  integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous" />
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" type="text/css"
+  rel="stylesheet" />
+
+<div class="full-squad">
+  <div class="info">
+    <div class="squad-title">
+      <h2>{{theSquad.nombre}}</h2>
+    </div>
+    <div class="squad-photo">
+      <img [src]=squadPhoto alt="{{theSquad.nombre}}">
+    </div>
+    <div class="squad-members">
+      <div class="member-header">
+        <p>Integrantes : {{members.length}}</p>
+      </div>
+      <div class="member-container">
+        <div class="member" [style.background-color]="getColorByPerson(member)" *ngFor="let member of members">
+          <div class="members-photo">
+            <img [src]=member[1] alt="{{member[0].nombre_usuario}}">
+          </div>
+          <div class="admin" *ngIf="theSquad.admin == member[0].persona_id">
+            <h4>{{member[0].nombre_usuario}}
+              <svg class="svg-icon" height="24" viewBox="0 0 20 20">
+                <rect id="sortir" width="400" height="400" fill="none" />
+                <path fill="#000"
+                  d="M17.684,7.925l-5.131-0.67L10.329,2.57c-0.131-0.275-0.527-0.275-0.658,0L7.447,7.255l-5.131,0.67C2.014,7.964,1.892,8.333,2.113,8.54l3.76,3.568L4.924,17.21c-0.056,0.297,0.261,0.525,0.533,0.379L10,15.109l4.543,2.479c0.273,0.153,0.587-0.089,0.533-0.379l-0.949-5.103l3.76-3.568C18.108,8.333,17.986,7.964,17.684,7.925 M13.481,11.723c-0.089,0.083-0.129,0.205-0.105,0.324l0.848,4.547l-4.047-2.208c-0.055-0.03-0.116-0.045-0.176-0.045s-0.122,0.015-0.176,0.045l-4.047,2.208l0.847-4.547c0.023-0.119-0.016-0.241-0.105-0.324L3.162,8.54L7.74,7.941c0.124-0.016,0.229-0.093,0.282-0.203L10,3.568l1.978,4.17c0.053,0.11,0.158,0.187,0.282,0.203l4.578,0.598L13.481,11.723z">
+                </path>
+              </svg>
+            </h4>
+          </div>
+          <div class="username" *ngIf="theSquad.admin != member[0].persona_id">
+            <h4>{{member[0].nombre_usuario}}</h4>
+          </div>
+          <div class="kick" *ngIf="theSquad.admin == mymail && member[0].persona_id != mymail">
+            <button title="Expulsar a este miembro" class="btn btn-kick">
+              <svg class="svg-icon" height="24" viewBox="0 0 20 20">
+                <rect id="sortir" width="400" height="400" fill="none" />
+                <path fill="#fff"
+                  d="M18.344,16.174l-7.98-12.856c-0.172-0.288-0.586-0.288-0.758,0L1.627,16.217c0.339-0.543-0.603,0.668,0.384,0.682h15.991C18.893,16.891,18.167,15.961,18.344,16.174 M2.789,16.008l7.196-11.6l7.224,11.6H2.789z M10.455,7.552v3.561c0,0.244-0.199,0.445-0.443,0.445s-0.443-0.201-0.443-0.445V7.552c0-0.245,0.199-0.445,0.443-0.445S10.455,7.307,10.455,7.552M10.012,12.439c-0.733,0-1.33,0.6-1.33,1.336s0.597,1.336,1.33,1.336c0.734,0,1.33-0.6,1.33-1.336S10.746,12.439,10.012,12.439M10.012,14.221c-0.244,0-0.443-0.199-0.443-0.445c0-0.244,0.199-0.445,0.443-0.445s0.443,0.201,0.443,0.445C10.455,14.021,10.256,14.221,10.012,14.221">
+                </path>
+              </svg>
+            </button>
+          </div>
+        </div>
+        <div class="add" *ngIf="theSquad.integrantes.length < 8" data-toggle="modal" data-target="#ModalInviteFriends">
+          <button class="btn">Invitar
+            <svg class="svg-icon" height="24" viewBox="0 0 20 20">
+              <rect id="sortir" width="400" height="400" fill="none" />
+              <path fill="#fff"
+                d="M14.613,10c0,0.23-0.188,0.419-0.419,0.419H10.42v3.774c0,0.23-0.189,0.42-0.42,0.42s-0.419-0.189-0.419-0.42v-3.774H5.806c-0.23,0-0.419-0.189-0.419-0.419s0.189-0.419,0.419-0.419h3.775V5.806c0-0.23,0.189-0.419,0.419-0.419s0.42,0.189,0.42,0.419v3.775h3.774C14.425,9.581,14.613,9.77,14.613,10 M17.969,10c0,4.401-3.567,7.969-7.969,7.969c-4.402,0-7.969-3.567-7.969-7.969c0-4.402,3.567-7.969,7.969-7.969C14.401,2.031,17.969,5.598,17.969,10 M17.13,10c0-3.932-3.198-7.13-7.13-7.13S2.87,6.068,2.87,10c0,3.933,3.198,7.13,7.13,7.13S17.13,13.933,17.13,10">
+              </path>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="comms">
+    <div class="chat-header">
+      <div class="chat-title">
+        <h1>Mensajes</h1>
+      </div>
+      <div class="chat-buttons">
+        <button class="btn" title="Ir a llamada" (click)="go2call()">
+          <svg class="svg-icon" height="24" viewBox="0 0 20 20">
+            <rect id="sortir" width="400" height="400" fill="none" />
+            <path fill="#fff"
+              d="M17.919,4.633l-3.833,2.48V6.371c0-1-0.815-1.815-1.816-1.815H3.191c-1.001,0-1.816,0.814-1.816,1.815v7.261c0,1.001,0.815,1.815,1.816,1.815h9.079c1.001,0,1.816-0.814,1.816-1.815v-0.739l3.833,2.478c0.428,0.226,0.706-0.157,0.706-0.377V5.01C18.625,4.787,18.374,4.378,17.919,4.633 M13.178,13.632c0,0.501-0.406,0.907-0.908,0.907H3.191c-0.501,0-0.908-0.406-0.908-0.907V6.371c0-0.501,0.407-0.907,0.908-0.907h9.079c0.502,0,0.908,0.406,0.908,0.907V13.632zM17.717,14.158l-3.631-2.348V8.193l3.631-2.348V14.158z">
+            </path>
+          </svg>
+        </button>
+        <button class="btn" title="Editar squad" data-toggle="modal" data-target="#ModalEditSquad">
+          <svg class="svg-icon" height="24" viewBox="0 0 20 20">
+            <rect id="sortir" width="400" height="400" fill="none" />
+            <path fill="#fff"
+              d="M17.498,11.697c-0.453-0.453-0.704-1.055-0.704-1.697c0-0.642,0.251-1.244,0.704-1.697c0.069-0.071,0.15-0.141,0.257-0.22c0.127-0.097,0.181-0.262,0.137-0.417c-0.164-0.558-0.388-1.093-0.662-1.597c-0.075-0.141-0.231-0.22-0.391-0.199c-0.13,0.02-0.238,0.027-0.336,0.027c-1.325,0-2.401-1.076-2.401-2.4c0-0.099,0.008-0.207,0.027-0.336c0.021-0.158-0.059-0.316-0.199-0.391c-0.503-0.274-1.039-0.498-1.597-0.662c-0.154-0.044-0.32,0.01-0.416,0.137c-0.079,0.106-0.148,0.188-0.22,0.257C11.244,2.956,10.643,3.207,10,3.207c-0.642,0-1.244-0.25-1.697-0.704c-0.071-0.069-0.141-0.15-0.22-0.257C7.987,2.119,7.821,2.065,7.667,2.109C7.109,2.275,6.571,2.497,6.07,2.771C5.929,2.846,5.85,3.004,5.871,3.162c0.02,0.129,0.027,0.237,0.027,0.336c0,1.325-1.076,2.4-2.401,2.4c-0.098,0-0.206-0.007-0.335-0.027C3.001,5.851,2.845,5.929,2.77,6.07C2.496,6.572,2.274,7.109,2.108,7.667c-0.044,0.154,0.01,0.32,0.137,0.417c0.106,0.079,0.187,0.148,0.256,0.22c0.938,0.936,0.938,2.458,0,3.394c-0.069,0.072-0.15,0.141-0.256,0.221c-0.127,0.096-0.181,0.262-0.137,0.416c0.166,0.557,0.388,1.096,0.662,1.596c0.075,0.143,0.231,0.221,0.392,0.199c0.129-0.02,0.237-0.027,0.335-0.027c1.325,0,2.401,1.076,2.401,2.402c0,0.098-0.007,0.205-0.027,0.334C5.85,16.996,5.929,17.154,6.07,17.23c0.501,0.273,1.04,0.496,1.597,0.66c0.154,0.047,0.32-0.008,0.417-0.137c0.079-0.105,0.148-0.186,0.22-0.256c0.454-0.453,1.055-0.703,1.697-0.703c0.643,0,1.244,0.25,1.697,0.703c0.071,0.07,0.141,0.15,0.22,0.256c0.073,0.098,0.188,0.152,0.307,0.152c0.036,0,0.073-0.004,0.109-0.016c0.558-0.164,1.096-0.387,1.597-0.66c0.141-0.076,0.22-0.234,0.199-0.393c-0.02-0.129-0.027-0.236-0.027-0.334c0-1.326,1.076-2.402,2.401-2.402c0.098,0,0.206,0.008,0.336,0.027c0.159,0.021,0.315-0.057,0.391-0.199c0.274-0.5,0.496-1.039,0.662-1.596c0.044-0.154-0.01-0.32-0.137-0.416C17.648,11.838,17.567,11.77,17.498,11.697 M16.671,13.334c-0.059-0.002-0.114-0.002-0.168-0.002c-1.749,0-3.173,1.422-3.173,3.172c0,0.053,0.002,0.109,0.004,0.166c-0.312,0.158-0.64,0.295-0.976,0.406c-0.039-0.045-0.077-0.086-0.115-0.123c-0.601-0.6-1.396-0.93-2.243-0.93s-1.643,0.33-2.243,0.93c-0.039,0.037-0.077,0.078-0.116,0.123c-0.336-0.111-0.664-0.248-0.976-0.406c0.002-0.057,0.004-0.113,0.004-0.166c0-1.75-1.423-3.172-3.172-3.172c-0.054,0-0.11,0-0.168,0.002c-0.158-0.312-0.293-0.639-0.405-0.975c0.044-0.039,0.085-0.078,0.124-0.115c1.236-1.236,1.236-3.25,0-4.486C3.009,7.719,2.969,7.68,2.924,7.642c0.112-0.336,0.247-0.664,0.405-0.976C3.387,6.668,3.443,6.67,3.497,6.67c1.75,0,3.172-1.423,3.172-3.172c0-0.054-0.002-0.11-0.004-0.168c0.312-0.158,0.64-0.293,0.976-0.405C7.68,2.969,7.719,3.01,7.757,3.048c0.6,0.6,1.396,0.93,2.243,0.93s1.643-0.33,2.243-0.93c0.038-0.039,0.076-0.079,0.115-0.123c0.336,0.112,0.663,0.247,0.976,0.405c-0.002,0.058-0.004,0.114-0.004,0.168c0,1.749,1.424,3.172,3.173,3.172c0.054,0,0.109-0.002,0.168-0.004c0.158,0.312,0.293,0.64,0.405,0.976c-0.045,0.038-0.086,0.077-0.124,0.116c-0.6,0.6-0.93,1.396-0.93,2.242c0,0.847,0.33,1.645,0.93,2.244c0.038,0.037,0.079,0.076,0.124,0.115C16.964,12.695,16.829,13.021,16.671,13.334 M10,5.417c-2.528,0-4.584,2.056-4.584,4.583c0,2.529,2.056,4.584,4.584,4.584s4.584-2.055,4.584-4.584C14.584,7.472,12.528,5.417,10,5.417 M10,13.812c-2.102,0-3.812-1.709-3.812-3.812c0-2.102,1.71-3.812,3.812-3.812c2.102,0,3.812,1.71,3.812,3.812C13.812,12.104,12.102,13.812,10,13.812">
+            </path>
+          </svg>
+        </button>
+        <button class="btn" title="Abandonar squad" (click)="leaveSquad()">
+          <svg class="svg-icon" height="24" viewBox="0 0 20 20">
+            <rect id="sortir" width="400" height="400" fill="none" />
+            <path fill="#fff"
+              d="M17.114,3.923h-4.589V2.427c0-0.252-0.207-0.459-0.46-0.459H7.935c-0.252,0-0.459,0.207-0.459,0.459v1.496h-4.59c-0.252,0-0.459,0.205-0.459,0.459c0,0.252,0.207,0.459,0.459,0.459h1.51v12.732c0,0.252,0.207,0.459,0.459,0.459h10.29c0.254,0,0.459-0.207,0.459-0.459V4.841h1.511c0.252,0,0.459-0.207,0.459-0.459C17.573,4.127,17.366,3.923,17.114,3.923M8.394,2.886h3.214v0.918H8.394V2.886z M14.686,17.114H5.314V4.841h9.372V17.114z M12.525,7.306v7.344c0,0.252-0.207,0.459-0.46,0.459s-0.458-0.207-0.458-0.459V7.306c0-0.254,0.205-0.459,0.458-0.459S12.525,7.051,12.525,7.306M8.394,7.306v7.344c0,0.252-0.207,0.459-0.459,0.459s-0.459-0.207-0.459-0.459V7.306c0-0.254,0.207-0.459,0.459-0.459S8.394,7.051,8.394,7.306">
+            </path>
+          </svg>
+        </button>
+      </div>
+    </div>
+    <div class="chat">
+      <div class="msg_history" #scroll [scrollTop]="scrolltop">
+        <li class="message" *ngFor="let message of messages">
+          <div *ngIf="message.remitente !== mymail; then incoming_msg;else outgoing_msg"></div>
+          <ng-template #incoming_msg>
+            <div class="incoming_msg">
+              <div class="incoming_msg_img">
+                <img [src]="getImageByMail(message.remitente) || 'https://i.imgur.com/k2PZLZa.png'" alt="User avatar" />
+              </div>
+              <div class="received_msg">
+                <div class="received_withd_msg">
+                  <p [style.background-color]="getColorByMail(message.remitente)">{{ message.mensaje }}</p>
+                </div>
+              </div>
+            </div>
+          </ng-template>
+          <ng-template #outgoing_msg>
+            <div class="outgoing_msg">
+              <div class="sent_msg">
+                <p [style.background-color]="getColorByMail(mymail)">{{ message.mensaje }}</p>
+              </div>
+            </div>
+          </ng-template>
+        </li>
+      </div>
+      <div class="type_msg">
+        <form class="input_msg_write" autocomplete="off">
+          <input type="text" class="write_msg" placeholder="Type a message" name="newMessage"
+            [(ngModel)]="messageSend.mensaje" />
+          <button class="msg_send_btn" type="button" id="mandarMensaje">
+            <i class="fa fa-paper-plane-o" aria-hidden="true" (click)="sendMessage()"></i>
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--MODAL EDIT SQUAD-->
+<div class="modal fade" id="ModalEditSquad" tabindex="-1" role="dialog" aria-labelledby="ModalEditar"
+  aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header" style="background-color:#000;">
+        <h5 class="modal-title" id="exampleModalLongTitle" style="color:#fff">Editar Squad</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="item">
+          <h4 class="col">Nombre</h4>
+          <div class="col">
+            <input type="text" class="form-control" autocomplete="off" placeholder={{theSquad.nombre}} name="name"
+              required [(ngModel)]="newName" />
+          </div>
+        </div>
+        <div class="item">
+          <h4 class="col">Elige la nueva cara de tu squad!</h4>
+          <div class="file">
+            <input type="file" accept='image/*' id="file" (change)="handleFileInput($event.target.files)" name="foto">
+          </div>
+          <div class="image-img">
+            <img id="blah" [src]="imageSrc || squadPhoto" alt="your image" />
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn" data-dismiss="modal" aria-label="Volver">
+          Volver
+        </button>
+        <button type="button" class="btn" data-dismiss="modal" aria-label="Volver">
+          Actualizar
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--MODAL INVITE FRIENDS-->
+<div class="modal fade" id="ModalInviteFriends" tabindex="-1" role="dialog" aria-labelledby="ModalInvitar"
+  aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header" style="background-color:#000;">
+        <h5 class="modal-title" id="exampleModalLongTitle" style="color:#fff">Invitar Amigos</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="item">
+          <form class="form-inline">
+            <input name="search" class="form-control" autocomplete="off" type="search" placeholder="Buscar..."
+              [(ngModel)]="searchFilter" />
+          </form>
+        </div>
+        <table class="list-group">
+          <ul style="margin:0; padding:0;" *ngFor="let amigo of myFriends | filter:searchFilter ">
+            <li style="margin:0; padding:0;" class="list-group-item">
+              <div class="friend-image">
+                <img [src]=amigo[1] alt="{{amigo[0].nombre_usuario}}">
+              </div>
+              <div class="friend-name">
+                <p>{{ amigo[0].nombre_usuario}}</p>
+              </div>
+              <div class="friend-mail">
+                <p>{{ amigo[0].persona_id}}</p>
+              </div>
+              <div class="invite">
+                <button class="boton" (click)="inviteFriend(amigo[0])">
+                  <svg class="svg-icon" height="25" viewBox="0 0 20 20">
+                    <rect id="sortir" width="400" height="400" fill="none" />
+                    <path fill="#fff"
+                      d="M14.613,10c0,0.23-0.188,0.419-0.419,0.419H10.42v3.774c0,0.23-0.189,0.42-0.42,0.42s-0.419-0.189-0.419-0.42v-3.774H5.806c-0.23,0-0.419-0.189-0.419-0.419s0.189-0.419,0.419-0.419h3.775V5.806c0-0.23,0.189-0.419,0.419-0.419s0.42,0.189,0.42,0.419v3.775h3.774C14.425,9.581,14.613,9.77,14.613,10 M17.969,10c0,4.401-3.567,7.969-7.969,7.969c-4.402,0-7.969-3.567-7.969-7.969c0-4.402,3.567-7.969,7.969-7.969C14.401,2.031,17.969,5.598,17.969,10 M17.13,10c0-3.932-3.198-7.13-7.13-7.13S2.87,6.068,2.87,10c0,3.933,3.198,7.13,7.13,7.13S17.13,13.933,17.13,10">
+                    </path>
+                  </svg>
+                </button>
+              </div>
+            </li>
+          </ul>
+        </table>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn" data-dismiss="modal" aria-label="Volver">
+          Volver
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

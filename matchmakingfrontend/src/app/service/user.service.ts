@@ -129,6 +129,13 @@ export class UserService {
     const url = `${environment.userServiceBaseUrl}/play/profile/isRequestSend/${id}`;
     return this.get(url);
   }
+
+  isAdmin()
+  {
+    const url = `${environment.userServiceBaseUrl}/play/isAdmin`;
+    return this.get<boolean>(url);
+  }
+
   uploadFile(fileToUpload: FormData): Observable<any> {
     const url = `${environment.userServiceBaseUrl}/play/upload`;
     return this.http

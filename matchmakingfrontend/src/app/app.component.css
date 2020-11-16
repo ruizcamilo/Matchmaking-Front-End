@@ -77,10 +77,12 @@ a{
   background-color: #0a0a0a;
   color:white;
   position: absolute;
+  cursor: pointer;
 }
 
 .dropdown-container {
   position: relative;
+  cursor: pointer;
 }
 
 .yesbutton{
