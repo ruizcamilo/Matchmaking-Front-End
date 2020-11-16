@@ -1,0 +1,78 @@
+<html lang="en">
+
+<body>
+    <div class="full-container">
+        <div class=izquierda>
+            <div class="showing">
+                <div id="titulo">
+                    <p>Resultados de busqueda para:</p>
+                </div>
+                <div id="search">
+                    <p>"{{search}}"</p>
+                </div>
+            </div>
+            <div class="opciones">
+                <div class="option-container">
+                    <a (click)="mostrarUsuarios()">Usuarios</a><br>
+                </div>
+                <div class="option-container">
+                    <a (click)="mostrarPublicaciones()">Publicaciones</a><br>
+                </div>
+                <div class="option-container">
+                    <a (click)="mostrarVideoJuegos()">Videojuegos</a><br>
+                </div>
+                <div class="option-container">
+                    <a>Clanes</a><br>
+                </div>
+                <div class="option-container">
+                    <a (click)="mostrarSquads()">Squads</a><br>
+                </div>
+            </div>
+        </div>
+        <div class="derecha">
+            <div class="results-container">
+                <div class="result-category">
+                    <div class="encabezado">
+                        <p>Clanes</p>
+                    </div>
+                    <div class="contents">
+                        <ng-container class="container mb-3" *ngFor='let clanActual of searchClanes'>
+                            <div class="ppp row d-flex justify-content-center">
+                                <div class="col-md-8">
+                                    <!-- <a (click)="routingClan(clanActual.nombre_clan)" class="informationUser"> -->
+                                    <div class="row news-card p-3" style="background-color: #23314a;">
+                                        <div class="col-md-4">
+                                            <div class="feed-image">
+                                                <img class="news-feed-image rounded img-fluid img-responsive" [src]=clanActual[2]>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-8">
+                                            <a [routerLink]="['/clans/',clanActual[0]]">{{clanActual[0]}}</a><br>
+                                            <div class="news-feed-text">
+                                                <h5 class="descripcion">{{clanActual[1]}}</h5>
+                                                <div *ngIf="soyMiembro2(clanActual[0]); else noEsmiembro">
+                                                    <button class="btn">Desterrarse</button>
+                                                </div>
+                                                <ng-template #noEsmiembro>
+                                                    <div *ngIf="clanActual[3]; else noSolicitudEnviada">
+                                                        <button class="btn">Solicitud Enviada</button>
+                                                    </div>
+                                                    <ng-template #noSolicitudEnviada>
+                                                        <button (click)="joinClan(clanActual[0])" class="btn">Unirse</button>
+                                                    </ng-template>
+                                                </ng-template>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- </a> -->
+                                </div>
+                            </div>
+                        </ng-container>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

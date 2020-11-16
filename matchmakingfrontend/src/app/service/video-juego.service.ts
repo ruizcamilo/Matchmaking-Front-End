@@ -9,8 +9,7 @@ import { VideoJuego } from '../model/video-juego';
   providedIn: 'root'
 })
 export class VideoJuegoService {
-
-  constructor(private http: HttpClient) { }
+    constructor(private http: HttpClient) { }
 
   private handleError(error: HttpErrorResponse): Observable<any> {
     console.log(error);
@@ -62,7 +61,7 @@ export class VideoJuegoService {
       .pipe(catchError(this.handleError));
   }
 
-  private delete<T>(url): Observable<T> {
+  private delete<T>(url, nombreJuego, imagenJuego): Observable<T> {
     console.log('delete:', url);
     return this.http
       .delete<T>(url, {
@@ -70,6 +69,8 @@ export class VideoJuegoService {
           'Content-Type': 'application/json',
           Accept: 'application/json',
           'X-Firebase-Auth': this.getToken(),
+          'gameName': nombreJuego,
+          'image': imagenJuego,
         }),
       })
       .pipe(
@@ -97,4 +98,22 @@ export class VideoJuegoService {
     const url = `${environment.logedInServiceBaseUrl}/search/games/` + searchKey;
     return this.get<VideoJuego[]>(url);
   }
+
+  deleteGame(searchKey: VideoJuego)
+  {
+    console.log( searchKey.imagen);
+    const url = `${environment.logedInServiceBaseUrl}/games/delete`;
+    return this.delete<VideoJuego>(url, searchKey.nombre, searchKey.imagen);
+  }
+  
+  modificarGame(searchKey: VideoJuego, anterior: String) {
+    const url = `${environment.logedInServiceBaseUrl}/games/update/${anterior}`;
+    return this.put<VideoJuego>(url, searchKey );
+  }
+  
+  makeGame(game: VideoJuego) {
+
+    const url = `${environment.logedInServiceBaseUrl}/games/new`;
+    return this.post<VideoJuego>(url, game);
+  }  
 }

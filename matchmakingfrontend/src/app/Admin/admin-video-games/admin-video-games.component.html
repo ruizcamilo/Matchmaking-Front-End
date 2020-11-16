@@ -1,0 +1,84 @@
+<body>
+    <div class="full-container">
+        <div class=izquierda>
+            <div class="showing">
+                <div id="titulo">
+                    <p>Menú de Reportes:</p>
+                </div>
+            </div>
+            <div class="opciones">
+                <div class="option-container">
+                    <a (click)="mostrarUsuariosReportados()">Usuarios</a><br>
+                </div>
+                <div class="option-container">
+                    <a (click)="mostrarPublicacionesReportadas()">Publicaciones</a><br>
+                </div>
+                <div class="option-container">
+                    <a>Videojuegos</a><br>
+                </div>
+                <!-- <div class="option-container">
+                    <a (click)="mostrarClanes()">Clanes</a><br>
+                </div>
+                <div class="option-container">
+                    <a (click)="mostrarSquads()">Squads</a><br>
+                </div> -->
+            </div>
+        </div>
+        <div class="derecha">
+            <div class="uploadPublication">
+                <!-- <img [src]="profilepic" alt="pic-profile"> -->
+                <input [(ngModel)]="game.nombre" class="form-control mr-sm-2 searchbarcont" type="Text"
+                    placeholder="Nombre del nuevo video juego" aria-label="Search">
+                <input #file type="file" id="file" style="display:none;"
+                    (change)="handleFileInput($event.target.files)">
+                <button class="btn" (click)="file.click()" title="Subir Multimedia">
+                    <svg width="1.4em" height="1.4em" viewBox="0 0 16 16" class="bi bi-collection-play"
+                        fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd"
+                            d="M14.5 13.5h-13A.5.5 0 0 1 1 13V6a.5.5 0 0 1 .5-.5h13a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-.5.5zm-13 1A1.5 1.5 0 0 1 0 13V6a1.5 1.5 0 0 1 1.5-1.5h13A1.5 1.5 0 0 1 16 6v7a1.5 1.5 0 0 1-1.5 1.5h-13zM2 3a.5.5 0 0 0 .5.5h11a.5.5 0 0 0 0-1h-11A.5.5 0 0 0 2 3zm2-2a.5.5 0 0 0 .5.5h7a.5.5 0 0 0 0-1h-7A.5.5 0 0 0 4 1z" />
+                        <path fill-rule="evenodd"
+                            d="M6.258 6.563a.5.5 0 0 1 .507.013l4 2.5a.5.5 0 0 1 0 .848l-4 2.5A.5.5 0 0 1 6 12V7a.5.5 0 0 1 .258-.437z" />
+                    </svg>
+                </button>
+                <button class="btn btn-outline-dark my-2 my-sm-0" type="submit"
+                    (click)="makeGame()">Añadir video juego</button>
+            </div>
+            <div class="game-container-outer">
+                <div class="game-container" [ngStyle]="{'width': anchoNumero+'px'}">
+                    <ng-container *ngFor="let juego of allGamesAdminShow">
+                        <a (click)="mostrarJuegoAdmin(juego)" data-toggle="modal" data-target="#exampleModalLongSin"
+                            class="game">
+                            <div class="game-label">
+                                <h3>{{juego[0]}}</h3>
+                            </div>
+                            <div class="game-image">
+                                <img [src]=juego[1] alt="{{juego[0]}}">
+                            </div>
+                        </a>
+                    </ng-container>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+<div class="modal fade" id="exampleModalLongSin" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="myModalLabel">Descripción {{showGame.nombre}} </h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modificarVideoJuego">
+                <div class="modal-body">
+                    <p>Nuevo nombre </p>
+                    <input [(ngModel)] = "nombrejuego" type="text">
+                </div>
+                <button (click)="modificarJuego(nombrejuego)"> Modificar nombre</button>
+                <button (click)="eliminarJuego(nombrejuego)"> Eliminar video juego</button>
+            </div>
+        </div>
+    </div>
+</div>
