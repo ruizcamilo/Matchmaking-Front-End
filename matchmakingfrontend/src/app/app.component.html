@@ -24,12 +24,12 @@
                     (click)="rechazarFriend(sol[0].persona_id)"><span>&#10007;</span></button></a>
               </div>
               <div *ngIf="sol[1] == 'squad'">
-                <a class="dropdown-item menu-item">{{sol[0].remitente}} te ha invitado a su squad {{sol[0].nombreSquad}}
+                <a class="dropdown-item menu-item">{{sol[0].remitente.nombre_usuario}} te ha invitado a su squad {{sol[0].nombreSquad}}
                   <button class="btn btn-outline-dark yesbutton" type="submit"
-                    (click)="aceptarSquad(sol[0].idSquad)"><span>&#10003;</span></button>
+                    (click)="aceptarSquad(sol[0])"><span>&#10003;</span></button>
                   <span></span>
                   <button class="btn btn-outline-dark" type="submit"
-                    (click)="rechazarSquad(sol[0].idSquad)"><span>&#10007;</span></button></a>
+                    (click)="rechazarSquad(sol[0])"><span>&#10007;</span></button></a>
               </div>
             </div>
           </div>

@@ -2,7 +2,7 @@ html{
     background-color: #0e141e;
     height: 100%;
   }
-  
+
   body{
     height: 100vh;
     width: 100%;
@@ -10,7 +10,7 @@ html{
     background-color:  #0e141e;
     float: left;
   }
-  
+
   .full-container{
     margin-top: 80px;
     display: grid;
@@ -18,71 +18,71 @@ html{
     height: 100%;
     width: 100%;
   }
-  
+
   .izquierda{
     padding: 10px;
     height: 100%;
     border-right: 2px solid #dfe1e5;
   }
-  
+
   .derecha{
     height: 100%;
     overflow-y: scroll;
   }
-  
+
   .derecha::-webkit-scrollbar {
     width: 10px;
   }
-  
+
   /* Track */
   .derecha::-webkit-scrollbar-track {
     background: #23314a;
   }
-  
+
   /* Handle */
   .derecha::-webkit-scrollbar-thumb {
     background: #888;
   }
-  
+
   /* Handle on hover */
   .derecha::-webkit-scrollbar-thumb:hover {
     background: #555;
   }
-  
+
   .showing{
     font-weight: bold;
     height: 30%;
     color: white;
   }
-  
+
   #titulo{
     margin-left: 5%;
   }
-  
+
   #titulo p{
     font-size: 30px;
   }
-  
+
   #search{
     text-align: right;
     margin-right: 10%;
   }
-  
+
   a{
     color:white;
     text-decoration: none;
   }
-  
+
   a:hover{
     color:#ff962c;
     text-decoration: none;
     cursor: pointer;
   }
-  
+
   #search p{
     font-size: 35px;
   }
-  
+
   .opciones{
     width: 65%;
     height: 70%;
@@ -90,24 +90,24 @@ html{
     margin-right: 15%;
     text-align: left;
   }
-  
+
   .option-container{
     border-bottom: 2px solid #ff962c;
     margin-top: 10%;
     margin-bottom: 10%;
   }
-  
+
   .option-container:hover{
     width: 110%;
     font-weight: bold;
     color: #ff962c;
   }
-  
+
   .opciones a{
     font-size: 20px;
     color: white;
   }
-  
+
   .encabezado{
     width: 100%;
     padding-left: 25%;
@@ -116,15 +116,15 @@ html{
     font-size: 35px;
     color: white;
   }
-  
+
   .contents{
     top: 0;
   }
-  
-  
+
+
 
 .feedAdmin {
-    
+
     display: grid;
     grid-template-columns: 1fr 1fr;
 }
@@ -160,6 +160,10 @@ h3 {
     border-right: 1px solid white;
     width: 100%;
     height: 100%;
+}
+
+.friendName{
+  font-size: 25px;
 }
 
 .feedHome {
@@ -217,15 +221,13 @@ input[type="Text"]::placeholder {
 
 .left_after_base
 {
-    margin: 1em 3em;
-    border-radius: .5em;
-    background: white;
-    width: 600px;
-    background-color: white;
-    border: 1px solid black;
-    padding: 1em;
-    color: red;
-    font-weight: 1000;
+  border-radius: .5em;
+  margin: 0 10% 0;
+  width: 80%;
+  background-color: #23314a;
+  border: 1px solid black;
+  padding: 1em;
+  font-weight: 100;
 }
 
 .basePublication {
@@ -259,7 +261,6 @@ input[type="Text"]::placeholder {
 }
 .btnReporte
 {
-    display: inline-grid;
     justify-content: center;
 }
 .btnEliminar
@@ -284,6 +285,11 @@ input[type="Text"]::placeholder {
     color: black;
 }
 .informationUser
+{
+    color:#ff962c;
+}
+
+.informationUser:hover
 {
     color:#dd8e00;
     cursor: pointer;
@@ -315,7 +321,7 @@ input[type="Text"]::placeholder {
     display: grid;
     grid-template-columns: 100px 3fr 1fr ;
     grid-gap: 1rem;
-    height: 5em;
+    height: 100%;
     width: 100%;
 }
 
@@ -326,6 +332,7 @@ input[type="Text"]::placeholder {
 
 .btn {
     background-color: #ff962c;
+    margin: 2px 0 2px;
 }
 
 .btn:hover {

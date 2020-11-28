@@ -1,11 +1,11 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { PresentationComponent } from './Login/presentation/presentation.component';
 import { LoginComponent } from './Login/login/login.component';
 import { RegisterComponent } from './Login/register/register.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule , ReactiveFormsModule } from '@angular/forms';
 import { environment } from '../environments/environment';
 import { AngularFireAuthModule } from '@angular/fire/auth';
 import { AngularFireModule } from '@angular/fire';
@@ -21,7 +21,8 @@ import { VideojuegosSearchComponent } from './search/videojuegos-search/videojue
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { ChatComponent } from './chat/chat.component';
-import { GuardAccesGuard } from '../../guard/guard-acces.guard';
+import { GuardAccesGuard } from './guard/guard-acces.guard';
+import { AdminAccessGuard } from './guard/admin-access.guard';
 import { AdminProfileComponent } from './Admin/admin-profile/admin-profile.component';
 import { AdminPostReportedComponent } from './Admin/admin-post-reported/admin-post-reported.component';
 import { AdminUsersReportedComponent } from './Admin/admin-users-reported/admin-users-reported.component';
@@ -33,6 +34,11 @@ import { CreateSquadComponent } from './squads/create-squad/create-squad.compone
 import { SquadViewComponent } from './squads/squad-view/squad-view.component';
 import { RecoverPasswordComponent } from './Login/recover-password/recover-password.component';
 import { MatchmakingComponent } from './matchmaking/matchmaking/matchmaking.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatInputModule } from '@angular/material/input';
+import { NewAccessGuardGuard } from './guard/new-access-guard.guard';
 
 @NgModule({
   declarations: [
@@ -66,12 +72,18 @@ import { MatchmakingComponent } from './matchmaking/matchmaking/matchmaking.comp
     AppRoutingModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),
     FormsModule,
+    ReactiveFormsModule,
     AngularFireAuthModule,
     AngularFirestoreModule,
     HttpClientModule,
-    Ng2SearchPipeModule
+    Ng2SearchPipeModule,
+    NgbModule,
+    BrowserAnimationsModule,
+    MatAutocompleteModule,
+    MatInputModule
   ],
-  providers: [GuardAccesGuard],
+  providers: [GuardAccesGuard, AdminAccessGuard, NewAccessGuardGuard],
   bootstrap: [AppComponent],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class AppModule {}

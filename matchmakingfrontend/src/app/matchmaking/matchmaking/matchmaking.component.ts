@@ -8,6 +8,7 @@ import { VideoJuegoService } from '../../service/video-juego.service';
 import { Person } from 'src/app/model/person';
 import { User } from 'src/app/model/user';
 import { PersonService } from '../../service/person.service';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-matchmaking',
@@ -47,6 +48,8 @@ export class MatchmakingComponent implements OnInit {
   ];
 
   constructor(
+    private route: ActivatedRoute,
+    private router: Router,
     private matchmakingService: MatchmakingService,
     private userService: UserService,
     private gameService: VideoJuegoService,
@@ -114,6 +117,11 @@ export class MatchmakingComponent implements OnInit {
   imprimir(){
     console.log(this.anchoNumero);
     console.log(this.selectedJuegos);
+  }
+
+  goChatByMail(mail: string)
+  {
+    this.router.navigate(['chat', { mail: mail }]);
   }
 
   buscar(){

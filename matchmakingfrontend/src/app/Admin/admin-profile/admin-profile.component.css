@@ -2,98 +2,103 @@ html{
     background-color: #0e141e;
     height: 100%;
   }
-.backgroundImageAdmin
-{
-  margin-left: 5ch ;
-  height: 80ch;
-  /* margin-top: 30ch ; */
-}  
+
   body{
-    height: 100vh;
+    height: 100%;
     width: 100%;
     overflow: hidden;
     background-color:  #0e141e;
     float: left;
   }
-  
+
   .full-container{
     margin-top: 80px;
     display: grid;
     grid-template-columns: 3fr 8fr;
-    height: 100%;
+    height: calc(100% - 80px);
     width: 100%;
   }
-  
+
   .izquierda{
     padding: 10px;
     height: 100%;
     border-right: 2px solid #dfe1e5;
   }
-  
+
   .derecha{
     display: flex;
     align-items: center;
     height: 100%;
-    overflow-y: scroll;
+    width: 100%;
   }
-  .GodMode
-  {
-    /* margin-top: 35ch; */
-    height: 16ch;
-  }
+
+.backgroundImageAdmin
+{
+  height: 100%;
+  width: 50%;
+  object-fit: contain;
+}
+
+.GodMode
+{
+  height: 100%;
+  width: 50%;
+  object-fit: contain;
+}
+
   .derecha::-webkit-scrollbar {
     width: 10px;
   }
-  
+
   /* Track */
   .derecha::-webkit-scrollbar-track {
     background: #23314a;
   }
-  
+
   /* Handle */
   .derecha::-webkit-scrollbar-thumb {
     background: #888;
   }
-  
+
   /* Handle on hover */
   .derecha::-webkit-scrollbar-thumb:hover {
     background: #555;
   }
-  
+
   .showing{
     font-weight: bold;
     height: 30%;
     color: white;
   }
-  
+
   #titulo{
     margin-left: 5%;
   }
-  
+
   #titulo p{
     font-size: 30px;
   }
-  
+
   #search{
     text-align: right;
     margin-right: 10%;
   }
-  
+
   a{
     color:white;
     text-decoration: none;
   }
-  
+
   a:hover{
     color:#ff962c;
     text-decoration: none;
     cursor: pointer;
   }
-  
+
   #search p{
     font-size: 35px;
   }
-  
+
   .opciones{
     width: 65%;
     height: 70%;
@@ -101,24 +106,24 @@ html{
     margin-right: 15%;
     text-align: left;
   }
-  
+
   .option-container{
     border-bottom: 2px solid #ff962c;
     margin-top: 10%;
     margin-bottom: 10%;
   }
-  
+
   .option-container:hover{
     width: 110%;
     font-weight: bold;
     color: #ff962c;
   }
-  
+
   .opciones a{
     font-size: 20px;
     color: white;
   }
-  
+
   .encabezado{
     width: 100%;
     padding-left: 25%;
@@ -127,15 +132,15 @@ html{
     font-size: 35px;
     color: white;
   }
-  
+
   .contents{
     top: 0;
   }
-  
-  
+
+
 
 .feedAdmin {
-    
+
     display: grid;
     grid-template-columns: 1fr 1fr;
 }

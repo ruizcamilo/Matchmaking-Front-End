@@ -139,7 +139,7 @@ export class UserService {
   uploadFile(fileToUpload: FormData): Observable<any> {
     const url = `${environment.userServiceBaseUrl}/play/upload`;
     return this.http
-      .post<any>(url, fileToUpload, {
+      .post<string>(url, fileToUpload, {
         headers: new HttpHeaders({
           'X-Firebase-Auth': this.getToken(),
         }),

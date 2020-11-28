@@ -24,16 +24,16 @@ import { Person } from '../model/person';
 })
 export class ClanService {
   constructor(private http: HttpClient) { }
-  
+
   private handleError(error: HttpErrorResponse): Observable<any> {
     console.log(error);
     return throwError('An error has occurred');
   }
-  
+
   getToken() {
     return sessionStorage.getItem('token');
   }
-  
+
   private get<T>(url): Observable<T> {
     console.log('get:', url);
     return this.http
@@ -61,7 +61,7 @@ export class ClanService {
       })
       .pipe(catchError(this.handleError));
     }
-    
+
     private postNomClan<T>(url, data: T, clan: string): Observable<T> {
       console.log('post:', url);
     return this.http
@@ -101,7 +101,7 @@ export class ClanService {
         catchError(this.handleError)
         );
   }
-  
+
   private deleteConNombreClan<T>(url, nomClan: string): Observable<T> {
     console.log('delete:', url);
     return this.http
@@ -122,14 +122,14 @@ export class ClanService {
     const url = `${environment.userServiceBaseUrl}/play/search/clans/${search}`;
     return this.get(url);
   }
-  
+
   getMyClans() {
-    const url = `${environment.userServiceBaseUrl}/play/clan/all`;
+    const url = `${environment.userServiceBaseUrl}/play/clans`;
     return this.get(url);
   }
-  
+
   leaveClan() {
-    
+
   }
 
   makeClan(nuevoClan: Clan) {
@@ -144,7 +144,7 @@ export class ClanService {
     const url = `${environment.logedInServiceBaseUrl}/clan/add/post`;
     return this.postNomClan<Post>(url, post, clan);
   }
-  
+
   isMember(nombre_clan: string) {
     const url = `${environment.userServiceBaseUrl}/play/clan/isMember/${nombre_clan}`;
     return this.get(url);
@@ -154,7 +154,7 @@ export class ClanService {
     const url = `${environment.userServiceBaseUrl}/play/clan/isRequestSend/${nombre_clan}`;
     return this.get(url);
   }
-  
+
   requestToClan(nombre_clan: string) {
     const url = `${environment.logedInServiceBaseUrl}/clan/request/${nombre_clan}`;
     return this.post(url, {} );
@@ -169,19 +169,19 @@ export class ClanService {
     const url = `${environment.userServiceBaseUrl}/play/clan/requests/${nombre_clan}`;
     return this.get(url);
   }
-  
+
   /* aceptar solictud */
-  shelter(refujiado: Person, clan: string) { 
+  shelter(refujiado: Person, clan: string) {
     const url = `${environment.logedInServiceBaseUrl}/clan/add/person/`;
     return this.postNomClan(url,refujiado, clan);
   }
-  
+
   isAdmin(nom_clan: string) {
     const url = `${environment.logedInServiceBaseUrl}/clan/isAdmin/${nom_clan}`;
     return this.get<boolean>(url);
   }
 
-  /* 
+  /*
    * Delete de  mierda
    */
 
@@ -190,7 +190,7 @@ export class ClanService {
     const url = `${environment.logedInServiceBaseUrl}/clan/delete/${exMiembro.persona_id}`;
     return this.deleteConNombreClan(url, nombre_clan);
   }
-  
+
   abandonRefugee(refujiado: Person, nombre_clan: string) {
     const url = `${environment.logedInServiceBaseUrl}/clan/deleterequest/${refujiado.persona_id}`;
     return this.deleteConNombreClan(url, nombre_clan);

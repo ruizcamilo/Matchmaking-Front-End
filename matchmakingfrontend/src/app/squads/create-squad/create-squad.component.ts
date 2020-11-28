@@ -8,6 +8,7 @@ import { PersonService } from 'src/app/service/person.service';
 import { SquadService } from 'src/app/service/squad.service';
 import { UserService } from 'src/app/service/user.service';
 import { Squad } from '../../model/squad';
+import { AngularFireStorage } from '@angular/fire/storage';
 
 @Component({
   selector: 'app-create-squad',
@@ -20,6 +21,7 @@ export class CreateSquadComponent implements OnInit {
   imageSrc: string;
   searchFilter: string;
   mymail: string;
+  loading: boolean = false;
   myFriends: any[] = [];
   visibilidad: string = '';
   sendSquad: Squad = new Squad("", "", [], "", "", "", false);
@@ -35,7 +37,8 @@ export class CreateSquadComponent implements OnInit {
     private userService: UserService,
     private personService: PersonService,
     private squadService: SquadService,
-    private sanitizer: DomSanitizer) { }
+    private sanitizer: DomSanitizer,
+    private storage: AngularFireStorage) { }
 
   ngOnInit(): void {
     this.mymail = sessionStorage.getItem('mail');
@@ -56,29 +59,25 @@ export class CreateSquadComponent implements OnInit {
   }
 
   createSquad(){
+    this.loading = true;
     let boolValue = (this.visibilidad == 'true');
     this.sendSquad.visibilidad = boolValue;
     if (this.fileToUpload != null) {
-      const uploadImageData = new FormData();
-      uploadImageData.append('file', this.fileToUpload);
-      uploadImageData.append('folder', 'Squads/');
-      this.userService.uploadFile(uploadImageData).subscribe(name => {
-        this.sendSquad.imagen = name;
-        this.squadService.create(this.sendSquad).subscribe(resultSquad => {
-          this.resultSquad = resultSquad;
-          this.squadService.sendInvitations(this.invitedFriends, this.sendSquad.nombre,this.resultSquad.id_squad).subscribe(result =>{
-            this.router.navigate(['squad-view'], {queryParams: { squadid: this.resultSquad.id_squad } });
-          });
+      let name = `Squads/`+Date.now()+"-"+this.fileToUpload.name;
+      this.storage.upload(name, this.fileToUpload);
+      this.sendSquad.imagen = name;
+      this.squadService.create(this.sendSquad).subscribe(resultSquad => {
+        this.resultSquad = resultSquad;
+        this.squadService.sendInvitations(this.invitedFriends, this.sendSquad.nombre,this.resultSquad.id_squad).subscribe(result =>{
+          this.router.navigate(['squads'], {queryParams: { squadid: this.resultSquad.id_squad } });
         });
-      }, error => {
-        console.log(error);
       });
     }
     else {
       this.squadService.create(this.sendSquad).subscribe(resultSquad => {
         this.resultSquad = resultSquad;
         this.squadService.sendInvitations(this.invitedFriends,this.sendSquad.nombre,this.resultSquad.id_squad).subscribe(result =>{
-          this.router.navigate(['squad-view'], {queryParams: { squadid: this.resultSquad.id_squad } });
+          this.router.navigate(['squads'], {queryParams: { squadid: this.resultSquad.id_squad } });
         });
       });
     }

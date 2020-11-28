@@ -10,6 +10,7 @@ import { UserService } from 'src/app/service/user.service';
 import { Comment } from 'src/app/model/comment';
 import { User } from 'src/app/model/user';
 import { Clan } from 'src/app/model/clan';
+import { AngularFireStorage } from '@angular/fire/storage';
 import { nullSafeIsEquivalent } from '@angular/compiler/src/output/output_ast';
 
 @Component({
@@ -40,6 +41,8 @@ export class ClanComponent implements OnInit {
   miembrosClan: Person[] = [];
   refugiados: Person[] = [];
   isAdminVar: boolean;
+  imageSrc: string;
+  imageSelected: string;
 
   constructor(
     private router: Router,
@@ -48,7 +51,8 @@ export class ClanComponent implements OnInit {
     private personService: PersonService,
     private clanService: ClanService,
     private userService: UserService,
-    private sanitizer: DomSanitizer
+    private sanitizer: DomSanitizer,
+    private storage: AngularFireStorage
   ) {}
 
   ngOnInit(): void {
@@ -66,13 +70,6 @@ export class ClanComponent implements OnInit {
         });
         this.clanService.isAdmin(this.idRoute).subscribe((data) => {
           this.isAdminVar = data;
-          console.log(
-            '-------------------------------------' + this.isAdminVar
-          );
-        });
-        //amigos chateando
-        this.personService.getFriendsChat().subscribe((chating: Person[]) => {
-          this.MyfriendsChating = chating;
         });
         if (this.idRoute == 'myClans') {
           this.clanService
@@ -253,34 +250,19 @@ export class ClanComponent implements OnInit {
 
   async makePost() {
     if (this.fileToUpload != null) {
-      console.log('somo tontos o que ' + this.fileToUpload.name);
-      var uploadImageData = new FormData();
-      uploadImageData.append('file', this.fileToUpload);
-      uploadImageData.append('folder', 'Publicaciones/');
-      this.userService.uploadFile(uploadImageData).subscribe(
-        (name) => {
-          this.post.imagen = name;
-          console.log(
-            '++++++++++++++++++++++++++++++++++++++++++++++' + this.clanActual
-          );
+      let name = `Publicaciones/`+Date.now()+"-"+this.fileToUpload.name;
+      this.storage.upload(name, this.fileToUpload);
+      this.post.imagen = name;
 
-          this.clanService.makePost(this.post, this.clanActual).subscribe(
-            (data) => {
-              //window.location.reload();
-            },
-            (error) => {
-              console.log(error);
-            }
-          );
+      this.clanService.makePost(this.post, this.clanActual).subscribe(
+        (data) => {
+          //window.location.reload();
         },
         (error) => {
           console.log(error);
         }
       );
     } else {
-      console.log(
-        '++++++++++++++++++++++++++++++++++++++++++++++' + this.clanActual
-      );
       this.clanService.makePost(this.post, this.clanActual).subscribe(
         (data) => {
           //window.location.reload();
@@ -298,6 +280,12 @@ export class ClanComponent implements OnInit {
 
   handleFileInput(files: FileList) {
     this.fileToUpload = files.item(0);
+    this.imageSelected = this.fileToUpload.name;
+    if (files && files[0]) {
+      const reader = new FileReader();
+      reader.onload = (e: any) => {this.imageSrc = e.target.result; };
+      reader.readAsDataURL(files[0]);
+    }
   }
 
   routingFriendProfile(id_friend: string) {
@@ -322,20 +310,12 @@ export class ClanComponent implements OnInit {
 
   createClan(nuevoClan: Clan) {
     if (this.fileToUpload != null) {
-      var uploadImageData = new FormData();
-      uploadImageData.append('file', this.fileToUpload);
-      uploadImageData.append('folder', 'Clanes/');
-      this.userService.uploadFile(uploadImageData).subscribe(
-        (name) => {
-          this.nuevoClan.foto_clan = name;
-          this.clanService.makeClan(this.nuevoClan).subscribe(
-            (data) => {
-              window.location.reload();
-            },
-            (error) => {
-              console.log(error);
-            }
-          );
+      let name = `Publicaciones/`+Date.now()+"-"+this.fileToUpload.name;
+      this.storage.upload(name, this.fileToUpload);
+      this.nuevoClan.foto_clan = name;
+      this.clanService.makeClan(this.nuevoClan).subscribe(
+        (data) => {
+          window.location.reload();
         },
         (error) => {
           console.log(error);

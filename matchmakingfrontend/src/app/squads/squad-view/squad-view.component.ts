@@ -9,6 +9,7 @@ import { PersonService } from 'src/app/service/person.service';
 import { UserService } from 'src/app/service/user.service';
 import { SquadService } from '../../service/squad.service';
 import { Person } from 'src/app/model/person';
+import { AngularFireStorage } from '@angular/fire/storage';
 
 @Component({
   selector: 'app-squad-view',
@@ -34,6 +35,7 @@ export class SquadViewComponent implements OnInit {
   messageSend: Mensaje = new Mensaje('', '', '', '');
   @ViewChild('scroll') scroll: ElementRef;
   scrolltop: number = null;
+  eventMessage: string = '';
 
   constructor(
     private route: ActivatedRoute,
@@ -43,10 +45,10 @@ export class SquadViewComponent implements OnInit {
     private squadService: SquadService,
     private personService: PersonService,
     private userService: UserService,
-    private sanitizer: DomSanitizer) { }
+    private sanitizer: DomSanitizer,
+    private storage: AngularFireStorage) { }
 
   ngOnInit(): void {
-
     this.myusername = sessionStorage.getItem('gamertag');
     this.mymail = sessionStorage.getItem('mail');
     this.route.params.subscribe(params => {
@@ -87,12 +89,27 @@ export class SquadViewComponent implements OnInit {
   getMembers(){
     this.afStore.collection('Squad').doc(this.theSquad.id_squad).collection("Integrantes").valueChanges().subscribe(miembros => {
       this.members = [];
-      for (const person of miembros) {
-        this.userService.downloadFile(person.foto_perfil).subscribe(data => {
-          let objectURL = 'data:image/png;base64,' + data;
-          let imagen = this.sanitizer.bypassSecurityTrustUrl(objectURL);
-          this.members.push([person, imagen]);
-        }, error => console.log(error));
+      let found = false;
+      for (const member of miembros)
+      {
+        if (member.persona_id == this.mymail)
+        {
+          found = true;
+        }
+      }
+      if (found)
+      {
+        for (const person of miembros) {
+          this.userService.downloadFile(person.foto_perfil).subscribe(data => {
+            let objectURL = 'data:image/png;base64,' + data;
+            let imagen = this.sanitizer.bypassSecurityTrustUrl(objectURL);
+            this.members.push([person, imagen]);
+            }, error => console.log(error));
+        }
+      }
+      else{
+        this.router.navigate(['squads']);
+        alert("Haz sido echado del squad.");
       }
     });
   }
@@ -100,13 +117,24 @@ export class SquadViewComponent implements OnInit {
   getFriends(){
     this.personService.getFriends(sessionStorage.getItem('mail')).subscribe(
       (personas: Person[]) => {
-       for (let index = 0; index < personas.length; index++) {
-        this.userService.downloadFile(personas[index].foto_perfil).subscribe(data => {
-          let objectURL = 'data:image/png;base64,' + data;
-          let imagen = this.sanitizer.bypassSecurityTrustUrl(objectURL);
-          this.myFriends.push([personas[index], imagen]);
-        }, error => console.log(error));
-      }
+       for (const person of personas) {
+          let found = false;
+          for (const member of this.theSquad.integrantes)
+          {
+            if (person.persona_id == member.persona_id)
+            {
+              found = true;
+            }
+          }
+          if (!found)
+          {
+          this.userService.downloadFile(person.foto_perfil).subscribe(data => {
+            let objectURL = 'data:image/png;base64,' + data;
+            let imagen = this.sanitizer.bypassSecurityTrustUrl(objectURL);
+            this.myFriends.push([person, imagen]);
+          }, error => console.log(error));
+         }
+        }
       });
   }
 
@@ -114,6 +142,7 @@ export class SquadViewComponent implements OnInit {
     let inviteList: string[] = [];
     inviteList.push(p.persona_id);
     this.squadService.sendInvitations(inviteList, this.theSquad.nombre, this.theSquad.id_squad).subscribe();
+    this.eventMessage = 'Se ha invitado a ' + p.nombre_usuario;
   }
 
   getColorByPerson(p: Person){
@@ -175,12 +204,10 @@ export class SquadViewComponent implements OnInit {
     }
   }
 
-  kickFromSquad(position: number)
+  kickFromSquad(member: any )
   {
     try{
-      this.theSquad.integrantes.splice(position, 1);
-      this.squadService.updateSquad(this.theSquad).subscribe();
-      this.members.splice(position, 1);
+      this.squadService.kickFromSquad(member, this.theSquad).subscribe();
     }catch {
       console.log('No se ha podido botar');
     }
@@ -191,16 +218,23 @@ export class SquadViewComponent implements OnInit {
   }
 
   updateSquad(){
-    this.theSquad.nombre = this.newName;
-    const uploadImageData = new FormData();
-    uploadImageData.append('file', this.fileToUpload);
-    uploadImageData.append('folder', 'Squads/');
-    this.userService.uploadFile(uploadImageData).subscribe(name => {
+    if (this.fileToUpload != null)
+    {
+      let name = `Squads/`+Date.now()+"-"+this.fileToUpload.name;
+      this.storage.upload(name, this.fileToUpload);
+      this.theSquad.nombre = this.newName;
       this.theSquad.imagen = name;
-      this.squadService.updateSquad(this.theSquad).subscribe(resultSquad => {
-        this.theSquad = resultSquad;
-      });
-    });
+      this.resetImage();
+      this.squadService.updateSquad(this.theSquad).subscribe(resultSquad => {});
+    }
+    else{
+      this.theSquad.nombre = this.newName;
+      this.squadService.updateSquad(this.theSquad).subscribe(resultSquad => {});
+    }
+  }
+
+  resetImage(){
+    this.squadPhoto = this.imageSrc;
   }
 
   handleFileInput(files: FileList) {

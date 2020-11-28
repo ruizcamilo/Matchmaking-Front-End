@@ -116,3 +116,7 @@ h1{
   padding-top: 10px;
   padding-bottom: 50px;
 }
+
+ngb-alert{
+  width: 60%;
+}

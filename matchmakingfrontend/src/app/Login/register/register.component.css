@@ -47,6 +47,17 @@ p {
   margin: 20px;
 }
 
+.btn{
+  border: none;
+  color: white;
+  background-color: #ff962c;
+}
+
+.btn:hover{
+  background-color: #dd8e00;
+  color: white;
+}
+
 .toolbar img {
   margin: 0 16px;
 }

@@ -1,84 +1,112 @@
 <body>
-    <div class="full-container">
-        <div class=izquierda>
-            <div class="showing">
-                <div id="titulo">
-                    <p>Menú de Reportes:</p>
-                </div>
-            </div>
-            <div class="opciones">
-                <div class="option-container">
-                    <a (click)="mostrarUsuariosReportados()">Usuarios</a><br>
-                </div>
-                <div class="option-container">
-                    <a (click)="mostrarPublicacionesReportadas()">Publicaciones</a><br>
-                </div>
-                <div class="option-container">
-                    <a>Videojuegos</a><br>
-                </div>
-                <!-- <div class="option-container">
-                    <a (click)="mostrarClanes()">Clanes</a><br>
-                </div>
-                <div class="option-container">
-                    <a (click)="mostrarSquads()">Squads</a><br>
-                </div> -->
-            </div>
+  <div class="full-container">
+    <div class=izquierda>
+      <div class="showing">
+        <div id="titulo">
+          <p>Menú de Reportes:</p>
         </div>
-        <div class="derecha">
-            <div class="uploadPublication">
-                <!-- <img [src]="profilepic" alt="pic-profile"> -->
-                <input [(ngModel)]="game.nombre" class="form-control mr-sm-2 searchbarcont" type="Text"
-                    placeholder="Nombre del nuevo video juego" aria-label="Search">
-                <input #file type="file" id="file" style="display:none;"
-                    (change)="handleFileInput($event.target.files)">
-                <button class="btn" (click)="file.click()" title="Subir Multimedia">
-                    <svg width="1.4em" height="1.4em" viewBox="0 0 16 16" class="bi bi-collection-play"
-                        fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                        <path fill-rule="evenodd"
-                            d="M14.5 13.5h-13A.5.5 0 0 1 1 13V6a.5.5 0 0 1 .5-.5h13a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-.5.5zm-13 1A1.5 1.5 0 0 1 0 13V6a1.5 1.5 0 0 1 1.5-1.5h13A1.5 1.5 0 0 1 16 6v7a1.5 1.5 0 0 1-1.5 1.5h-13zM2 3a.5.5 0 0 0 .5.5h11a.5.5 0 0 0 0-1h-11A.5.5 0 0 0 2 3zm2-2a.5.5 0 0 0 .5.5h7a.5.5 0 0 0 0-1h-7A.5.5 0 0 0 4 1z" />
-                        <path fill-rule="evenodd"
-                            d="M6.258 6.563a.5.5 0 0 1 .507.013l4 2.5a.5.5 0 0 1 0 .848l-4 2.5A.5.5 0 0 1 6 12V7a.5.5 0 0 1 .258-.437z" />
-                    </svg>
-                </button>
-                <button class="btn btn-outline-dark my-2 my-sm-0" type="submit"
-                    (click)="makeGame()">Añadir video juego</button>
-            </div>
-            <div class="game-container-outer">
-                <div class="game-container" [ngStyle]="{'width': anchoNumero+'px'}">
-                    <ng-container *ngFor="let juego of allGamesAdminShow">
-                        <a (click)="mostrarJuegoAdmin(juego)" data-toggle="modal" data-target="#exampleModalLongSin"
-                            class="game">
-                            <div class="game-label">
-                                <h3>{{juego[0]}}</h3>
-                            </div>
-                            <div class="game-image">
-                                <img [src]=juego[1] alt="{{juego[0]}}">
-                            </div>
-                        </a>
-                    </ng-container>
-                </div>
-            </div>
+      </div>
+      <div class="opciones">
+        <div class="option-container">
+          <a (click)="mostrarUsuariosReportados()">Usuarios</a><br>
         </div>
+        <div class="option-container">
+          <a (click)="mostrarPublicacionesReportadas()">Publicaciones</a><br>
+        </div>
+        <div class="option-container">
+          <a>Videojuegos</a><br>
+        </div>
+      </div>
     </div>
+    <div class="derecha">
+      <div class="title">
+        <h3>Creemos un juego</h3>
+      </div>
+      <div class="uploadPublication">
+        <input [(ngModel)]="game.nombre" class="form-control mr-sm-2 searchbarcont" type="Text"
+          placeholder="Nombre del nuevo video juego" aria-label="Search">
+        <div>
+          <input #file type="file" id="file" style="display:none;" (change)="handleFileInput($event.target.files)">
+          <button class="btn" (click)="file.click()" title="Subir Multimedia">
+            <svg width="1.4em" height="1.4em" viewBox="0 0 16 16" class="bi bi-collection-play" fill="currentColor"
+              xmlns="http://www.w3.org/2000/svg">
+              <path fill-rule="evenodd"
+                d="M14.5 13.5h-13A.5.5 0 0 1 1 13V6a.5.5 0 0 1 .5-.5h13a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-.5.5zm-13 1A1.5 1.5 0 0 1 0 13V6a1.5 1.5 0 0 1 1.5-1.5h13A1.5 1.5 0 0 1 16 6v7a1.5 1.5 0 0 1-1.5 1.5h-13zM2 3a.5.5 0 0 0 .5.5h11a.5.5 0 0 0 0-1h-11A.5.5 0 0 0 2 3zm2-2a.5.5 0 0 0 .5.5h7a.5.5 0 0 0 0-1h-7A.5.5 0 0 0 4 1z" />
+              <path fill-rule="evenodd"
+                d="M6.258 6.563a.5.5 0 0 1 .507.013l4 2.5a.5.5 0 0 1 0 .848l-4 2.5A.5.5 0 0 1 6 12V7a.5.5 0 0 1 .258-.437z" />
+            </svg>
+          </button>
+          <button class="btn" type="submit" (click)="makeGame()">Crear Nuevo Juego</button>
+        </div>
+      </div>
+      <div class="title">
+        <h3>Veamos la cara del nuevo juego:</h3>
+      </div>
+      <div class="imagePreview">
+        <img id="blah" [src]="imageSrc || 'http://placehold.it/180'" alt="your image" />
+        <div style="width: 30%; float: left;" *ngIf="eventMessage">
+          <ngb-alert #selfClosingAlert type="danger" (close)="eventMessage = ''">{{ eventMessage }}</ngb-alert>
+        </div>
+      </div>
+      <div class="title">
+        <h3>Gestionemos los que ya existen</h3>
+      </div>
+      <div class="game-container-outer">
+        <div class="game-container" [ngStyle]="{'width': anchoNumero+'px'}">
+          <ng-container *ngFor="let juego of allGamesAdminShow">
+            <a (click)="mostrarJuegoAdmin(juego)" data-toggle="modal" data-target="#exampleModalLongSin" class="game">
+              <div class="game-label">
+                <h3>{{juego[0].nombre}}</h3>
+              </div>
+              <div class="game-image">
+                <img [src]=juego[1] alt="{{juego[0].nombre}}">
+              </div>
+            </a>
+          </ng-container>
+        </div>
+      </div>
+    </div>
+  </div>
 </body>
+<!--Modal Editar Juego-->
 <div class="modal fade" id="exampleModalLongSin" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-    aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title" id="myModalLabel">Descripción {{showGame.nombre}} </h4>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modificarVideoJuego">
-                <div class="modal-body">
-                    <p>Nuevo nombre </p>
-                    <input [(ngModel)] = "nombrejuego" type="text">
-                </div>
-                <button (click)="modificarJuego(nombrejuego)"> Modificar nombre</button>
-                <button (click)="eliminarJuego(nombrejuego)"> Eliminar video juego</button>
-            </div>
+  aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header" style="background-color:#000;">
+        <h5 class="modal-title" id="exampleModalLongTitle" style="color:#fff">Descripción {{editGame.nombre}} </h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="item">
+          <h4 class="col">Nombre</h4>
+          <div class="col">
+            <input type="text" class="form-control" autocomplete="off" placeholder={{editGame.nombre}} name="name"
+              required [(ngModel)]="nombrejuego" />
+          </div>
         </div>
+        <div class="item">
+          <h4 class="col">Elige la nueva cara del juego</h4>
+          <div class="file">
+            <input type="file" accept='image/*' id="file" (change)="handleFileInputModal($event.target.files)"
+              name="foto">
+          </div>
+          <div class="image-img">
+            <img id="blah" [src]="modalImageSrc || editImage" alt="your image" />
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn" (click)="modificarJuego()" data-dismiss="modal" aria-label="Volver">
+          Modificar</button>
+        <button type="button" class="btn" (click)="eliminarJuego()" data-dismiss="modal" aria-label="Volver">
+          Eliminar juego</button>
+        <button type="button" class="btn" data-dismiss="modal" aria-label="Volver">
+          Volver
+        </button>
+      </div>
     </div>
+  </div>
 </div>

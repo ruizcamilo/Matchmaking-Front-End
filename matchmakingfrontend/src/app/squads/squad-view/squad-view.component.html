@@ -34,7 +34,7 @@
             <h4>{{member[0].nombre_usuario}}</h4>
           </div>
           <div class="kick" *ngIf="theSquad.admin == mymail && member[0].persona_id != mymail">
-            <button title="Expulsar a este miembro" class="btn btn-kick">
+            <button title="Expulsar a este miembro" class="btn btn-kick" (click)="kickFromSquad(member[0])">
               <svg class="svg-icon" height="24" viewBox="0 0 20 20">
                 <rect id="sortir" width="400" height="400" fill="none" />
                 <path fill="#fff"
@@ -71,7 +71,8 @@
             </path>
           </svg>
         </button>
-        <button class="btn" title="Editar squad" data-toggle="modal" data-target="#ModalEditSquad">
+        <button *ngIf="theSquad.admin == mymail" class="btn" title="Editar squad" data-toggle="modal"
+          data-target="#ModalEditSquad">
           <svg class="svg-icon" height="24" viewBox="0 0 20 20">
             <rect id="sortir" width="400" height="400" fill="none" />
             <path fill="#fff"
@@ -160,7 +161,7 @@
         <button type="button" class="btn" data-dismiss="modal" aria-label="Volver">
           Volver
         </button>
-        <button type="button" class="btn" data-dismiss="modal" aria-label="Volver">
+        <button type="button" class="btn" (click)="updateSquad()" data-dismiss="modal" aria-label="Volver">
           Actualizar
         </button>
       </div>
@@ -213,6 +214,8 @@
         </table>
       </div>
       <div class="modal-footer">
+        <ngb-alert #selfClosingAlert *ngIf="eventMessage" type="success" (close)="eventMessage = ''">
+          {{ eventMessage }}</ngb-alert>
         <button type="button" class="btn" data-dismiss="modal" aria-label="Volver">
           Volver
         </button>
