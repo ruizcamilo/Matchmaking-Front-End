@@ -1,443 +1,468 @@
 <html lang="en">
 
 <body>
-    <div class="BaseLayout">
-        <div class="feedHome">
-            <div class="friendsPlaying">
-                <div class="blockFriendsPlaying">
-                    <h3>Mis Clanes </h3>
-                    <div clas="atajosClan">
-                        <button data-toggle="modal" data-target="#exampleModalLongSin2" class="btn2">Fundar Clan</button>
-                        <button data-toggle="modal" data-target="#exampleModalLongSin3" class="btn2">Miembros</button>
-                        <div *ngIf="isAdminVar">
-                            <button data-toggle="modal" data-target="#exampleModalLongSin4" class="btn2">Solicitudes</button>
-                        </div>
-                    </div>
-                    <ng-container *ngFor="let clanActual of myClans; let i = index">
-                        <div class="option-container">
-                            <a [routerLink]="['/clans/',clanActual.nombre_clan]">{{clanActual.nombre_clan}}</a><br>
-                            <!-- <a (click)="mostrarFeedClanActual(i)">{{clanActual.nombre_clan}}</a><br> -->
-                        </div>
-                    </ng-container>
-                </div>
+  <div class="BaseLayout">
+    <div class="feedHome">
+      <div class="friendsPlaying">
+        <div class="blockFriendsPlaying">
+          <h3>Mis Clanes </h3>
+          <div clas="atajosClan">
+            <button data-toggle="modal" data-target="#exampleModalLongSin2" class="btn2">Fundar Clan</button>
+            <button data-toggle="modal" data-target="#exampleModalLongSin3" class="btn2">Miembros</button>
+            <div *ngIf="isAdminVar">
+              <button data-toggle="modal" data-target="#exampleModalLongSin4" class="btn2">Solicitudes</button>
             </div>
-            <div class="publications">
-                <div class="uploadPublication">
-                    <img [src]="profilepic" alt="pic-profile">
-                    <input [(ngModel)]="post.contenido" class="form-control mr-sm-2 searchbarcont" type="Text" placeholder="¿Qué vamos a jugar hoy?" aria-label="Search">
-                    <input #file type="file" id="file" style="display:none;" (change)="handleFileInput($event.target.files)">
-                    <button class="btn" (click)="file.click()" title="Subir Multimedia">
-                                <svg width="1.4em" height="1.4em" viewBox="0 0 16 16" class="bi bi-collection-play"
-                                    fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                                    <path fill-rule="evenodd"
-                                        d="M14.5 13.5h-13A.5.5 0 0 1 1 13V6a.5.5 0 0 1 .5-.5h13a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-.5.5zm-13 1A1.5 1.5 0 0 1 0 13V6a1.5 1.5 0 0 1 1.5-1.5h13A1.5 1.5 0 0 1 16 6v7a1.5 1.5 0 0 1-1.5 1.5h-13zM2 3a.5.5 0 0 0 .5.5h11a.5.5 0 0 0 0-1h-11A.5.5 0 0 0 2 3zm2-2a.5.5 0 0 0 .5.5h7a.5.5 0 0 0 0-1h-7A.5.5 0 0 0 4 1z" />
-                                    <path fill-rule="evenodd"
-                                        d="M6.258 6.563a.5.5 0 0 1 .507.013l4 2.5a.5.5 0 0 1 0 .848l-4 2.5A.5.5 0 0 1 6 12V7a.5.5 0 0 1 .258-.437z" />
-                                </svg>
-                            </button>
-                    <button class="btn btn-outline-dark my-2 my-sm-0" type="submit" (click)="makePost()">Publicar</button>
-                </div>
-                <div class="InfinityScrollLayout">
-                    <div class="CentralFeed">
-                        <div class="feedPublications">
-                            <div class="contents">
-                                <div *ngIf="publications.length === 0" class="empty">
-                                    <h3>
-                                        Todo se ve muy solo por aca
-                                    </h3>
-                                </div>
-                                <div class="container mt-2 mb-3" *ngFor="let publi of publications; index as i">
-                                    <div class="row d-flex justify-content-center" *ngIf="!publi[4]">
-                                        <div class="">
-                                            <div class="d-flex flex-row">
-                                            </div>
-                                            <div class="row news-card p-3" style="background-color: #23314a;">
-                                                <div class="col-md-4">
-                                                    <div class="feed-image" style="text-align: center;">
-                                                        <img class="news-feed-image rounded img-fluid img-responsive" [src]=publi[3]>
-                                                        <h5>{{publi[0]}}</h5>
-                                                        <p style="font-size:13px;">
-                                                            {{publi[2] | date: 'hh:mm a dd-MM-yyyy'}}</p>
-                                                    </div>
-                                                </div>
-                                                <div class="col">
-                                                    <div class="news-feed-text">
-                                                        <h6>{{publi[1]}}</h6>
-                                                    </div>
-                                                </div>
-                                                <div class="uploadComment">
-                                                    <button class="btn like" (click)="darMeGusta(showPub.id)" title="Dar Like">
-                                                                <svg width="1.4em" height="1.4em" viewBox="0 0 20 20"
-                                                                    class="bi bi-collection-play" fill="#000"
-                                                                    xmlns="http://www.w3.org/2000/svg">
-                                                                    <path fill-rule="evenodd"
-                                                                        d="M9.719,17.073l-6.562-6.51c-0.27-0.268-0.504-0.567-0.696-0.888C1.385,7.89,1.67,5.613,3.155,4.14c0.864-0.856,2.012-1.329,3.233-1.329c1.924,0,3.115,1.12,3.612,1.752c0.499-0.634,1.689-1.752,3.612-1.752c1.221,0,2.369,0.472,3.233,1.329c1.484,1.473,1.771,3.75,0.693,5.537c-0.19,0.32-0.425,0.618-0.695,0.887l-6.562,6.51C10.125,17.229,9.875,17.229,9.719,17.073 M6.388,3.61C5.379,3.61,4.431,4,3.717,4.707C2.495,5.92,2.259,7.794,3.145,9.265c0.158,0.265,0.351,0.51,0.574,0.731L10,16.228l6.281-6.232c0.224-0.221,0.416-0.466,0.573-0.729c0.887-1.472,0.651-3.346-0.571-4.56C15.57,4,14.621,3.61,13.612,3.61c-1.43,0-2.639,0.786-3.268,1.863c-0.154,0.264-0.536,0.264-0.69,0C9.029,4.397,7.82,3.61,6.388,3.61" />
-                                                                </svg>
-                                                            </button>
-                                                    <div class="pic-container1">
-                                                        <img [src]="profilepic" alt="pic-profile">
-                                                    </div>
-                                                    <input [(ngModel)]="comments[i]" class="form-control mr-sm-2 searchbarcont" type="Text" placeholder="Dale tus tips gamer!" aria-label="Search">
-                                                    <button class="btn btn-outline-dark my-2 my-sm-0" type="submit" (click)="makeCommentI(publi[5],i)">Comentar</button>
-                                                    <div class="dropdown-container">
-                                                        <a class="btn btn-outline-dark my-2 my-sm-0 dropdown-toggle" title=" másVer" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                                                            <svg width="1.4em" height="1.4em" viewBox="0 0 20 20" class="bi bi-collection-play" fill="#000" xmlns="http://www.w3.org/2000/svg">
-                                                                        <path fill-rule="evenodd"
-                                                                            d="M10,2.172c-4.324,0-7.828,3.504-7.828,7.828S5.676,17.828,10,17.828c4.324,0,7.828-3.504,7.828-7.828S14.324,2.172,10,2.172M10,17.004c-3.863,0-7.004-3.141-7.004-7.003S6.137,2.997,10,2.997c3.862,0,7.004,3.141,7.004,7.004S13.862,17.004,10,17.004M10,8.559c-0.795,0-1.442,0.646-1.442,1.442S9.205,11.443,10,11.443s1.441-0.647,1.441-1.443S10.795,8.559,10,8.559 M10,10.619c-0.34,0-0.618-0.278-0.618-0.618S9.66,9.382,10,9.382S10.618,9.661,10.618,10S10.34,10.619,10,10.619 M14.12,8.559c-0.795,0-1.442,0.646-1.442,1.442s0.647,1.443,1.442,1.443s1.442-0.647,1.442-1.443S14.915,8.559,14.12,8.559 M14.12,10.619c-0.34,0-0.618-0.278-0.618-0.618s0.278-0.618,0.618-0.618S14.738,9.661,14.738,10S14.46,10.619,14.12,10.619 M5.88,8.559c-0.795,0-1.442,0.646-1.442,1.442s0.646,1.443,1.442,1.443S7.322,10.796,7.322,10S6.675,8.559,5.88,8.559 M5.88,10.619c-0.34,0-0.618-0.278-0.618-0.618S5.54,9.382,5.88,9.382S6.498,9.661,6.498,10S6.22,10.619,5.88,10.619">
-                                                                        </path>
-                                                                    </svg>
-                                                        </a>
-                                                        <div class=" dropdown dropdown-menu">
-                                                            <a class="dropdown-item menu-item" (click)="showPublicacion(publi)" data-toggle="modal" data-target="#exampleModalLongSin">Ver
-                                                                        publicación</a>
-                                                            <a class="dropdown-item menu-item" (click)="reportarPublicacion(publi[5])">Reportar</a>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row d-flex justify-content-center" *ngIf="publi[4]">
-                                        <div class="">
-                                            <div class="d-flex flex-row">
-                                            </div>
-                                            <div class="row news-card p-3" style="background-color: #23314a; border-bottom-left-radius: 0%;border-bottom-right-radius: 0%;">
-                                                <div class="col-md-4">
-                                                    <div class="feed-image" style="text-align: center;">
-                                                        <div>
-                                                            <img class="news-feed-image rounded img-fluid img-responsive" [src]=publi[3]>
-                                                        </div>
-                                                        <h5>{{publi[0]}}</h5>
-                                                        <p style="font-size:13px;">
-                                                            {{publi[2] | date: 'hh:mm a dd-MM-yyyy'}}</p>
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-8">
-                                                    <div class="news-feed-text">
-                                                        <img class="news-feed-image rounded img-fluid img-responsive" [src]=publi[4]>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="row news-card p-3" style="background-color: #23314a; border-radius:0%;">
-                                                <h6>{{publi[1]}}</h6>
-                                                <div class="uploadComment">
-                                                    <button class="btn like" (click)="darMeGusta(showPub.id)" title="Dar Like">
-                                                                <svg width="1.4em" height="1.4em" viewBox="0 0 20 20"
-                                                                    class="bi bi-collection-play" fill="#000"
-                                                                    xmlns="http://www.w3.org/2000/svg">
-                                                                    <path fill-rule="evenodd"
-                                                                        d="M9.719,17.073l-6.562-6.51c-0.27-0.268-0.504-0.567-0.696-0.888C1.385,7.89,1.67,5.613,3.155,4.14c0.864-0.856,2.012-1.329,3.233-1.329c1.924,0,3.115,1.12,3.612,1.752c0.499-0.634,1.689-1.752,3.612-1.752c1.221,0,2.369,0.472,3.233,1.329c1.484,1.473,1.771,3.75,0.693,5.537c-0.19,0.32-0.425,0.618-0.695,0.887l-6.562,6.51C10.125,17.229,9.875,17.229,9.719,17.073 M6.388,3.61C5.379,3.61,4.431,4,3.717,4.707C2.495,5.92,2.259,7.794,3.145,9.265c0.158,0.265,0.351,0.51,0.574,0.731L10,16.228l6.281-6.232c0.224-0.221,0.416-0.466,0.573-0.729c0.887-1.472,0.651-3.346-0.571-4.56C15.57,4,14.621,3.61,13.612,3.61c-1.43,0-2.639,0.786-3.268,1.863c-0.154,0.264-0.536,0.264-0.69,0C9.029,4.397,7.82,3.61,6.388,3.61" />
-                                                                </svg>
-                                                            </button>
-                                                    <div class="pic-container1">
-                                                        <img [src]="profilepic" alt="pic-profile">
-                                                    </div>
-                                                    <input [(ngModel)]="comments[i]" class="form-control mr-sm-2 searchbarcont" type="Text" placeholder="Dale tus tips gamer!" aria-label="Search">
-                                                    <button class="btn btn-outline-dark my-2 my-sm-0" type="submit" (click)="makeCommentI(publi[5],i)">Comentar</button>
-                                                    <div class="dropdown-container">
-                                                        <a class="btn btn-outline-dark my-2 my-sm-0 dropdown-toggle" title="Ver más" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                                                            <svg width="1.4em" height="1.4em" viewBox="0 0 20 20" class="bi bi-collection-play" fill="#000" xmlns="http://www.w3.org/2000/svg">
-                                                                        <path fill-rule="evenodd"
-                                                                            d="M10,2.172c-4.324,0-7.828,3.504-7.828,7.828S5.676,17.828,10,17.828c4.324,0,7.828-3.504,7.828-7.828S14.324,2.172,10,2.172M10,17.004c-3.863,0-7.004-3.141-7.004-7.003S6.137,2.997,10,2.997c3.862,0,7.004,3.141,7.004,7.004S13.862,17.004,10,17.004M10,8.559c-0.795,0-1.442,0.646-1.442,1.442S9.205,11.443,10,11.443s1.441-0.647,1.441-1.443S10.795,8.559,10,8.559 M10,10.619c-0.34,0-0.618-0.278-0.618-0.618S9.66,9.382,10,9.382S10.618,9.661,10.618,10S10.34,10.619,10,10.619 M14.12,8.559c-0.795,0-1.442,0.646-1.442,1.442s0.647,1.443,1.442,1.443s1.442-0.647,1.442-1.443S14.915,8.559,14.12,8.559 M14.12,10.619c-0.34,0-0.618-0.278-0.618-0.618s0.278-0.618,0.618-0.618S14.738,9.661,14.738,10S14.46,10.619,14.12,10.619 M5.88,8.559c-0.795,0-1.442,0.646-1.442,1.442s0.646,1.443,1.442,1.443S7.322,10.796,7.322,10S6.675,8.559,5.88,8.559 M5.88,10.619c-0.34,0-0.618-0.278-0.618-0.618S5.54,9.382,5.88,9.382S6.498,9.661,6.498,10S6.22,10.619,5.88,10.619">
-                                                                        </path>
-                                                                    </svg>
-                                                        </a>
-                                                        <div class=" dropdown dropdown-menu">
-                                                            <a class="dropdown-item menu-item" (click)="showPublicacion(publi)" data-toggle="modal" data-target="#exampleModalLongCon">Ver
-                                                                        publicación</a>
-                                                            <a class="dropdown-item menu-item" (click)="reportarPublicacion(publi[5])">Reportar</a>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+          </div>
+          <ng-container *ngFor="let clanActual of myClans; let i = index">
+            <div class="option-container">
+              <a [routerLink]="['/clans/',clanActual.nombre_clan]">{{clanActual.nombre_clan}}</a><br>
+              <!-- <a (click)="mostrarFeedClanActual(i)">{{clanActual.nombre_clan}}</a><br> -->
             </div>
-            <div class="chats">
-                <h3>Chats</h3>
-                <div class="chatsBlock">
-                    <ng-container *ngFor="let personaActual of MyfriendsChating; let i = index">
-                        <div class="left_after_base">
-                            <a href="" class="information">
-                                <div class="friend-top">
-                                    <div class="friendFigure" style="background-image: url( https://i.ibb.co/H7rLhQr/pic-profile.png );background-size: contain;background-repeat: no-repeat;">
-                                    </div>
-                                    <div class="friendName">{{personaActual.nombre_usuario}}</div>
-                                </div>
-                            </a>
-                        </div>
-                    </ng-container>
-                </div>
-                <div class="btnSeeMore">
-                    <button class="btn" (click)="redirectChat()">Todos mis chats</button>
-                </div>
-            </div>
+          </ng-container>
         </div>
+      </div>
+      <div class="publications">
+        <div class="uploadPublication">
+          <img [src]="profilepic" alt="pic-profile">
+          <input [(ngModel)]="post.contenido" class="form-control mr-sm-2 searchbarcont" type="Text"
+            placeholder="¿Qué vamos a jugar hoy?" aria-label="Search">
+          <input #file type="file" id="file" style="display:none;" (change)="handleFileInput($event.target.files)">
+          <button class="btn" (click)="file.click()" title="Subir Multimedia">
+            <svg width="1.4em" height="1.4em" viewBox="0 0 16 16" class="bi bi-collection-play" fill="currentColor"
+              xmlns="http://www.w3.org/2000/svg">
+              <path fill-rule="evenodd"
+                d="M14.5 13.5h-13A.5.5 0 0 1 1 13V6a.5.5 0 0 1 .5-.5h13a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-.5.5zm-13 1A1.5 1.5 0 0 1 0 13V6a1.5 1.5 0 0 1 1.5-1.5h13A1.5 1.5 0 0 1 16 6v7a1.5 1.5 0 0 1-1.5 1.5h-13zM2 3a.5.5 0 0 0 .5.5h11a.5.5 0 0 0 0-1h-11A.5.5 0 0 0 2 3zm2-2a.5.5 0 0 0 .5.5h7a.5.5 0 0 0 0-1h-7A.5.5 0 0 0 4 1z" />
+              <path fill-rule="evenodd"
+                d="M6.258 6.563a.5.5 0 0 1 .507.013l4 2.5a.5.5 0 0 1 0 .848l-4 2.5A.5.5 0 0 1 6 12V7a.5.5 0 0 1 .258-.437z" />
+            </svg>
+          </button>
+          <button class="btn btn-outline-dark my-2 my-sm-0" type="submit" (click)="makePost()">Publicar</button>
+        </div>
+        <div class="InfinityScrollLayout">
+          <div class="CentralFeed">
+            <div class="feedPublications">
+              <div class="contents">
+                <div *ngIf="publications.length === 0" class="empty">
+                  <h3>
+                    Todo se ve muy solo por aca
+                  </h3>
+                </div>
+                <div class="container mt-2 mb-3" *ngFor="let publi of publications; index as i">
+                  <div class="row d-flex justify-content-center" *ngIf="!publi[4]">
+                    <div class="">
+                      <div class="d-flex flex-row">
+                      </div>
+                      <div class="row news-card p-3" style="background-color: #23314a;">
+                        <div class="col-md-4">
+                          <div class="feed-image" style="text-align: center;">
+                            <img class="news-feed-image rounded img-fluid img-responsive" [src]=publi[3]>
+                            <h5>{{publi[0]}}</h5>
+                            <p style="font-size:13px;">{{publi[2] | date: 'hh:mm a dd-MM-yyyy'}}</p>
+                          </div>
+                        </div>
+                        <div class="col">
+                          <div class="news-feed-text">
+                            <h6>{{publi[1]}}</h6>
+                          </div>
+                        </div>
+                        <div class="uploadComment">
+                          <button class="btn like" (click)="darMeGusta(showPub.id)" title="Dar Like">
+                            <svg width="1.4em" height="1.4em" viewBox="0 0 20 20" class="bi bi-collection-play"
+                              fill="#000" xmlns="http://www.w3.org/2000/svg">
+                              <path fill-rule="evenodd"
+                                d="M9.719,17.073l-6.562-6.51c-0.27-0.268-0.504-0.567-0.696-0.888C1.385,7.89,1.67,5.613,3.155,4.14c0.864-0.856,2.012-1.329,3.233-1.329c1.924,0,3.115,1.12,3.612,1.752c0.499-0.634,1.689-1.752,3.612-1.752c1.221,0,2.369,0.472,3.233,1.329c1.484,1.473,1.771,3.75,0.693,5.537c-0.19,0.32-0.425,0.618-0.695,0.887l-6.562,6.51C10.125,17.229,9.875,17.229,9.719,17.073 M6.388,3.61C5.379,3.61,4.431,4,3.717,4.707C2.495,5.92,2.259,7.794,3.145,9.265c0.158,0.265,0.351,0.51,0.574,0.731L10,16.228l6.281-6.232c0.224-0.221,0.416-0.466,0.573-0.729c0.887-1.472,0.651-3.346-0.571-4.56C15.57,4,14.621,3.61,13.612,3.61c-1.43,0-2.639,0.786-3.268,1.863c-0.154,0.264-0.536,0.264-0.69,0C9.029,4.397,7.82,3.61,6.388,3.61" />
+                            </svg>
+                          </button>
+                          <div class="pic-container1">
+                            <img [src]="profilepic" alt="pic-profile">
+                          </div>
+                          <input [(ngModel)]="comments[i]" class="form-control mr-sm-2 searchbarcont" type="Text"
+                            placeholder="Dale tus tips gamer!" aria-label="Search">
+                          <button class="btn" type="submit" (click)="makeCommentI(publi[5], i)">Comentar</button>
+                          <div class="dropdown-container">
+                            <a class="btn btn-outline-dark my-2 my-sm-0 dropdown-toggle" title="Ver más"
+                              data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                              <svg width="1.4em" height="1.4em" viewBox="0 0 20 20" class="bi bi-collection-play"
+                                fill="#000" xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd"
+                                  d="M10,2.172c-4.324,0-7.828,3.504-7.828,7.828S5.676,17.828,10,17.828c4.324,0,7.828-3.504,7.828-7.828S14.324,2.172,10,2.172M10,17.004c-3.863,0-7.004-3.141-7.004-7.003S6.137,2.997,10,2.997c3.862,0,7.004,3.141,7.004,7.004S13.862,17.004,10,17.004M10,8.559c-0.795,0-1.442,0.646-1.442,1.442S9.205,11.443,10,11.443s1.441-0.647,1.441-1.443S10.795,8.559,10,8.559 M10,10.619c-0.34,0-0.618-0.278-0.618-0.618S9.66,9.382,10,9.382S10.618,9.661,10.618,10S10.34,10.619,10,10.619 M14.12,8.559c-0.795,0-1.442,0.646-1.442,1.442s0.647,1.443,1.442,1.443s1.442-0.647,1.442-1.443S14.915,8.559,14.12,8.559 M14.12,10.619c-0.34,0-0.618-0.278-0.618-0.618s0.278-0.618,0.618-0.618S14.738,9.661,14.738,10S14.46,10.619,14.12,10.619 M5.88,8.559c-0.795,0-1.442,0.646-1.442,1.442s0.646,1.443,1.442,1.443S7.322,10.796,7.322,10S6.675,8.559,5.88,8.559 M5.88,10.619c-0.34,0-0.618-0.278-0.618-0.618S5.54,9.382,5.88,9.382S6.498,9.661,6.498,10S6.22,10.619,5.88,10.619">
+                                </path>
+                              </svg>
+                            </a>
+                            <div class=" dropdown dropdown-menu">
+                              <a class="dropdown-item menu-item" (click)="showPublicacion(publi)" data-toggle="modal"
+                                data-target="#exampleModalLongCon">Ver publicación</a>
+                              <a class="dropdown-item menu-item" (click)="reportarPublicacion(publi[5])">Reportar</a>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row d-flex justify-content-center" *ngIf="publi[4]">
+                    <div class="">
+                      <div class="d-flex flex-row">
+                      </div>
+                      <div class="row news-card p-3"
+                        style="background-color: #23314a; border-bottom-left-radius: 0%;border-bottom-right-radius: 0%;">
+                        <div class="col-md-4">
+                          <div class="feed-image" style="text-align: center;">
+                            <div>
+                              <img class="news-feed-image rounded img-fluid img-responsive" [src]=publi[3]>
+                            </div>
+                            <h5>{{publi[0]}}</h5>
+                            <p style="font-size:13px;">{{publi[2] | date: 'hh:mm a dd-MM-yyyy'}}</p>
+                          </div>
+                        </div>
+                        <div class="col-md-8">
+                          <div class="news-feed-text">
+                            <img class="news-feed-image rounded img-fluid img-responsive" [src]=publi[4]>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row news-card p-3" style="background-color: #23314a; border-radius:0%;">
+                        <h6>{{publi[1]}}</h6>
+                        <div class="uploadComment">
+                          <button class="btn like" (click)="darMeGusta(showPub.id)" title="Dar Like">
+                            <svg width="1.4em" height="1.4em" viewBox="0 0 20 20" class="bi bi-collection-play"
+                              fill="#000" xmlns="http://www.w3.org/2000/svg">
+                              <path fill-rule="evenodd"
+                                d="M9.719,17.073l-6.562-6.51c-0.27-0.268-0.504-0.567-0.696-0.888C1.385,7.89,1.67,5.613,3.155,4.14c0.864-0.856,2.012-1.329,3.233-1.329c1.924,0,3.115,1.12,3.612,1.752c0.499-0.634,1.689-1.752,3.612-1.752c1.221,0,2.369,0.472,3.233,1.329c1.484,1.473,1.771,3.75,0.693,5.537c-0.19,0.32-0.425,0.618-0.695,0.887l-6.562,6.51C10.125,17.229,9.875,17.229,9.719,17.073 M6.388,3.61C5.379,3.61,4.431,4,3.717,4.707C2.495,5.92,2.259,7.794,3.145,9.265c0.158,0.265,0.351,0.51,0.574,0.731L10,16.228l6.281-6.232c0.224-0.221,0.416-0.466,0.573-0.729c0.887-1.472,0.651-3.346-0.571-4.56C15.57,4,14.621,3.61,13.612,3.61c-1.43,0-2.639,0.786-3.268,1.863c-0.154,0.264-0.536,0.264-0.69,0C9.029,4.397,7.82,3.61,6.388,3.61" />
+                            </svg>
+                          </button>
+                          <div class="pic-container1">
+                            <img [src]="profilepic" alt="pic-profile">
+                          </div>
+                          <input [(ngModel)]="comments[i]" class="form-control mr-sm-2 searchbarcont" type="Text"
+                            placeholder="Dale tus tips gamer!" aria-label="Search">
+                          <button class="btn" type="submit" (click)="makeCommentI(publi[5], i)">Comentar</button>
+                          <div class="dropdown-container">
+                            <a class="btn btn-outline-dark my-2 my-sm-0 dropdown-toggle" title="Ver más"
+                              data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                              <svg width="1.4em" height="1.4em" viewBox="0 0 20 20" class="bi bi-collection-play"
+                                fill="#000" xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd"
+                                  d="M10,2.172c-4.324,0-7.828,3.504-7.828,7.828S5.676,17.828,10,17.828c4.324,0,7.828-3.504,7.828-7.828S14.324,2.172,10,2.172M10,17.004c-3.863,0-7.004-3.141-7.004-7.003S6.137,2.997,10,2.997c3.862,0,7.004,3.141,7.004,7.004S13.862,17.004,10,17.004M10,8.559c-0.795,0-1.442,0.646-1.442,1.442S9.205,11.443,10,11.443s1.441-0.647,1.441-1.443S10.795,8.559,10,8.559 M10,10.619c-0.34,0-0.618-0.278-0.618-0.618S9.66,9.382,10,9.382S10.618,9.661,10.618,10S10.34,10.619,10,10.619 M14.12,8.559c-0.795,0-1.442,0.646-1.442,1.442s0.647,1.443,1.442,1.443s1.442-0.647,1.442-1.443S14.915,8.559,14.12,8.559 M14.12,10.619c-0.34,0-0.618-0.278-0.618-0.618s0.278-0.618,0.618-0.618S14.738,9.661,14.738,10S14.46,10.619,14.12,10.619 M5.88,8.559c-0.795,0-1.442,0.646-1.442,1.442s0.646,1.443,1.442,1.443S7.322,10.796,7.322,10S6.675,8.559,5.88,8.559 M5.88,10.619c-0.34,0-0.618-0.278-0.618-0.618S5.54,9.382,5.88,9.382S6.498,9.661,6.498,10S6.22,10.619,5.88,10.619">
+                                </path>
+                              </svg>
+                            </a>
+                            <div class=" dropdown dropdown-menu">
+                              <a class="dropdown-item menu-item" (click)="showPublicacion(publi)" data-toggle="modal"
+                                data-target="#exampleModalLongCon">Ver publicación</a>
+                              <a class="dropdown-item menu-item" (click)="reportarPublicacion(publi[5])">Reportar</a>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
+  </div>
 </body>
 
 
-<div class="modal fade" id="exampleModalLongSin" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <div class="modal-header" style="background-color:#000;">
-                <h5 class="modal-title" id="exampleModalLongTitle" style="color:#fff">{{showPub.person.nombre_usuario}}
-                </h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
+<div class="modal fade" id="exampleModalLongSin" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle"
+  aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header" style="background-color:#000;">
+        <h5 class="modal-title" id="exampleModalLongTitle" style="color:#fff">{{showPub.person.nombre_usuario}}
+        </h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="row d-flex justify-content-center">
+          <div class="">
+            <div class="row news-card p-3" style="color:#000; margin:0;">
+              <div class="col-md-4">
+                <div class="feed-image" style="text-align: center;">
+                  <img class="news-feed-image rounded img-fluid img-responsive" [src]=showPub.person.foto_perfil>
+                  <p style="font-size:15px;">{{showPub.fecha | date: 'hh:mm a'}}<br>
+                    {{showPub.fecha | date: 'dd-MM-yyyy'}}</p>
+                </div>
+              </div>
+              <div class="col">
+                <div class="news-feed-text">
+                  <h6>{{showPub.contenido}}</h6>
+                </div>
+              </div>
+              <div class="uploadComment">
+                <button class="btn like" (click)="darMeGusta(showPub.id)" title="Dar Like">
+                  <svg width="1.4em" height="1.4em" viewBox="0 0 20 20" class="bi bi-collection-play" fill="#000"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd"
+                      d="M9.719,17.073l-6.562-6.51c-0.27-0.268-0.504-0.567-0.696-0.888C1.385,7.89,1.67,5.613,3.155,4.14c0.864-0.856,2.012-1.329,3.233-1.329c1.924,0,3.115,1.12,3.612,1.752c0.499-0.634,1.689-1.752,3.612-1.752c1.221,0,2.369,0.472,3.233,1.329c1.484,1.473,1.771,3.75,0.693,5.537c-0.19,0.32-0.425,0.618-0.695,0.887l-6.562,6.51C10.125,17.229,9.875,17.229,9.719,17.073 M6.388,3.61C5.379,3.61,4.431,4,3.717,4.707C2.495,5.92,2.259,7.794,3.145,9.265c0.158,0.265,0.351,0.51,0.574,0.731L10,16.228l6.281-6.232c0.224-0.221,0.416-0.466,0.573-0.729c0.887-1.472,0.651-3.346-0.571-4.56C15.57,4,14.621,3.61,13.612,3.61c-1.43,0-2.639,0.786-3.268,1.863c-0.154,0.264-0.536,0.264-0.69,0C9.029,4.397,7.82,3.61,6.388,3.61" />
+                  </svg>
                 </button>
-            </div>
-            <div class="modal-body">
-                <div class="row d-flex justify-content-center">
-                    <div class="">
-                        <div class="row news-card p-3" style="color:#000; margin:0;">
-                            <div class="col-md-4">
-                                <div class="feed-image" style="text-align: center;">
-                                    <img class="news-feed-image rounded img-fluid img-responsive" [src]=showPub.person.foto_perfil>
-                                    <p style="font-size:15px;">{{showPub.fecha | date: 'hh:mm a'}}<br> {{showPub.fecha | date: 'dd-MM-yyyy'}}</p>
-                                </div>
-                            </div>
-                            <div class="col">
-                                <div class="news-feed-text">
-                                    <h6>{{showPub.contenido}}</h6>
-                                </div>
-                            </div>
-                            <div class="uploadComment">
-                                <button class="btn like" (click)="darMeGusta(showPub.id)" title="Dar Like">
-                                    <svg width="1.4em" height="1.4em" viewBox="0 0 20 20" class="bi bi-collection-play"
-                                        fill="#000" xmlns="http://www.w3.org/2000/svg">
-                                        <path fill-rule="evenodd"
-                                            d="M9.719,17.073l-6.562-6.51c-0.27-0.268-0.504-0.567-0.696-0.888C1.385,7.89,1.67,5.613,3.155,4.14c0.864-0.856,2.012-1.329,3.233-1.329c1.924,0,3.115,1.12,3.612,1.752c0.499-0.634,1.689-1.752,3.612-1.752c1.221,0,2.369,0.472,3.233,1.329c1.484,1.473,1.771,3.75,0.693,5.537c-0.19,0.32-0.425,0.618-0.695,0.887l-6.562,6.51C10.125,17.229,9.875,17.229,9.719,17.073 M6.388,3.61C5.379,3.61,4.431,4,3.717,4.707C2.495,5.92,2.259,7.794,3.145,9.265c0.158,0.265,0.351,0.51,0.574,0.731L10,16.228l6.281-6.232c0.224-0.221,0.416-0.466,0.573-0.729c0.887-1.472,0.651-3.346-0.571-4.56C15.57,4,14.621,3.61,13.612,3.61c-1.43,0-2.639,0.786-3.268,1.863c-0.154,0.264-0.536,0.264-0.69,0C9.029,4.397,7.82,3.61,6.388,3.61" />
-                                    </svg>
-                                </button>
-                                <input [(ngModel)]="comment.comentario" class="form-control mr-sm-2 searchbarcont" type="Text" placeholder="Dale tus tips gamer!" aria-label="Search">
-                                <button class="btn btn-outline-dark my-2 my-sm-0" type="submit" (click)="makeComment(showPub.id)">Comentar</button>
-                                <div class="dropdown-container">
-                                    <a class="btn btn-outline-dark my-2 my-sm-0 dropdown-toggle" title="Ver más" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                                        <svg width="1.4em" height="1.4em" viewBox="0 0 20 20" class="bi bi-collection-play" fill="#000" xmlns="http://www.w3.org/2000/svg">
-                                            <path fill-rule="evenodd"
-                                                d="M10,2.172c-4.324,0-7.828,3.504-7.828,7.828S5.676,17.828,10,17.828c4.324,0,7.828-3.504,7.828-7.828S14.324,2.172,10,2.172M10,17.004c-3.863,0-7.004-3.141-7.004-7.003S6.137,2.997,10,2.997c3.862,0,7.004,3.141,7.004,7.004S13.862,17.004,10,17.004M10,8.559c-0.795,0-1.442,0.646-1.442,1.442S9.205,11.443,10,11.443s1.441-0.647,1.441-1.443S10.795,8.559,10,8.559 M10,10.619c-0.34,0-0.618-0.278-0.618-0.618S9.66,9.382,10,9.382S10.618,9.661,10.618,10S10.34,10.619,10,10.619 M14.12,8.559c-0.795,0-1.442,0.646-1.442,1.442s0.647,1.443,1.442,1.443s1.442-0.647,1.442-1.443S14.915,8.559,14.12,8.559 M14.12,10.619c-0.34,0-0.618-0.278-0.618-0.618s0.278-0.618,0.618-0.618S14.738,9.661,14.738,10S14.46,10.619,14.12,10.619 M5.88,8.559c-0.795,0-1.442,0.646-1.442,1.442s0.646,1.443,1.442,1.443S7.322,10.796,7.322,10S6.675,8.559,5.88,8.559 M5.88,10.619c-0.34,0-0.618-0.278-0.618-0.618S5.54,9.382,5.88,9.382S6.498,9.661,6.498,10S6.22,10.619,5.88,10.619">
-                                            </path>
-                                        </svg>
-                                    </a>
-                                    <div class=" dropdown dropdown-menu">
-                                        <a class="dropdown-item menu-item" (click)="reportarPublicacion(showPub.id)">Reportar</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <div class="num-comentarios">
-                    <h5>Comentarios <span class="badge">
-                            <!--numero comentarios-->{{pubComments.length}}</span></h5>
-                </div>
-                <div class="likes">
-                    <h5>
-                        <svg width="1.4em" height="1.4em" viewBox="0 0 20 20" class="bi bi-collection-play" fill="#000" xmlns="http://www.w3.org/2000/svg">
-                            <path fill-rule="evenodd"
-                                d="M9.719,17.073l-6.562-6.51c-0.27-0.268-0.504-0.567-0.696-0.888C1.385,7.89,1.67,5.613,3.155,4.14c0.864-0.856,2.012-1.329,3.233-1.329c1.924,0,3.115,1.12,3.612,1.752c0.499-0.634,1.689-1.752,3.612-1.752c1.221,0,2.369,0.472,3.233,1.329c1.484,1.473,1.771,3.75,0.693,5.537c-0.19,0.32-0.425,0.618-0.695,0.887l-6.562,6.51C10.125,17.229,9.875,17.229,9.719,17.073 M6.388,3.61C5.379,3.61,4.431,4,3.717,4.707C2.495,5.92,2.259,7.794,3.145,9.265c0.158,0.265,0.351,0.51,0.574,0.731L10,16.228l6.281-6.232c0.224-0.221,0.416-0.466,0.573-0.729c0.887-1.472,0.651-3.346-0.571-4.56C15.57,4,14.621,3.61,13.612,3.61c-1.43,0-2.639,0.786-3.268,1.863c-0.154,0.264-0.536,0.264-0.69,0C9.029,4.397,7.82,3.61,6.388,3.61" />
-                        </svg>
-                        <span class="badge">
-                            <!--numero likes-->{{likes}}</span>
-                    </h5>
-                </div>
-                <div class="comentarios-container" *ngFor="let com of pubComments">
-                    <div class="comentario">
-                        <div class="nombre-comentario">
-                            <a [routerLink]="['/profile',com.person.persona_id]">{{com.person.nombre_usuario}}:</a> "{{com.comentario}}"
-                        </div>
-                        <div class="fecha-comentario">
-                            <p>{{com.fecha | date: 'hh:mm a dd-MM-yyyy'}}</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class="modal fade" id="exampleModalLongCon" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <div class="modal-header" style="background-color:#000;">
-                <h5 class="modal-title" id="exampleModalLongTitle" style="color:#fff">{{showPub.person.nombre_usuario}}
-                </h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <div class="row d-flex justify-content-center">
-                    <div class="">
-                        <div class="row news-card p-3" style="color:#000; margin:0;">
-                            <div class="col-md-4">
-                                <div class="feed-image" style="text-align: center;">
-                                    <img class="news-feed-image rounded img-fluid img-responsive" [src]=showPub.person.foto_perfil>
-                                    <p style="font-size:15px;">{{showPub.fecha | date: 'hh:mm a'}}<br> {{showPub.fecha | date: 'dd-MM-yyyy'}}</p>
-                                </div>
-                            </div>
-                            <div class="col">
-                                <div class="news-feed-text">
-                                    <img class="news-feed-image rounded img-fluid img-responsive" [src]=showPub.imagen>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row news-card p-3" style="color:#000;margin:0;">
-                            <h6>{{showPub.contenido}}</h6>
-                            <div class="uploadComment">
-                                <button class="btn like" (click)="darMeGusta(showPub.id)" title="Dar Like">
-                                    <svg width="1.4em" height="1.4em" viewBox="0 0 20 20" class="bi bi-collection-play"
-                                        fill="#000" xmlns="http://www.w3.org/2000/svg">
-                                        <path fill-rule="evenodd"
-                                            d="M9.719,17.073l-6.562-6.51c-0.27-0.268-0.504-0.567-0.696-0.888C1.385,7.89,1.67,5.613,3.155,4.14c0.864-0.856,2.012-1.329,3.233-1.329c1.924,0,3.115,1.12,3.612,1.752c0.499-0.634,1.689-1.752,3.612-1.752c1.221,0,2.369,0.472,3.233,1.329c1.484,1.473,1.771,3.75,0.693,5.537c-0.19,0.32-0.425,0.618-0.695,0.887l-6.562,6.51C10.125,17.229,9.875,17.229,9.719,17.073 M6.388,3.61C5.379,3.61,4.431,4,3.717,4.707C2.495,5.92,2.259,7.794,3.145,9.265c0.158,0.265,0.351,0.51,0.574,0.731L10,16.228l6.281-6.232c0.224-0.221,0.416-0.466,0.573-0.729c0.887-1.472,0.651-3.346-0.571-4.56C15.57,4,14.621,3.61,13.612,3.61c-1.43,0-2.639,0.786-3.268,1.863c-0.154,0.264-0.536,0.264-0.69,0C9.029,4.397,7.82,3.61,6.388,3.61" />
-                                    </svg>
-                                </button>
-                                <input [(ngModel)]="comment.comentario" class="form-control mr-sm-2 searchbarcont" type="Text" placeholder="Dale tus tips gamer!" aria-label="Search">
-                                <button class="btn btn-outline-dark my-2 my-sm-0" type="submit" (click)="makeComment(showPub.id)">Comentar</button>
-                                <div class="dropdown-container">
-                                    <a class="btn btn-outline-dark my-2 my-sm-0 dropdown-toggle" title="Ver más" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                                        <svg width="1.4em" height="1.4em" viewBox="0 0 20 20" class="bi bi-collection-play" fill="#000" xmlns="http://www.w3.org/2000/svg">
-                                            <path fill-rule="evenodd"
-                                                d="M10,2.172c-4.324,0-7.828,3.504-7.828,7.828S5.676,17.828,10,17.828c4.324,0,7.828-3.504,7.828-7.828S14.324,2.172,10,2.172M10,17.004c-3.863,0-7.004-3.141-7.004-7.003S6.137,2.997,10,2.997c3.862,0,7.004,3.141,7.004,7.004S13.862,17.004,10,17.004M10,8.559c-0.795,0-1.442,0.646-1.442,1.442S9.205,11.443,10,11.443s1.441-0.647,1.441-1.443S10.795,8.559,10,8.559 M10,10.619c-0.34,0-0.618-0.278-0.618-0.618S9.66,9.382,10,9.382S10.618,9.661,10.618,10S10.34,10.619,10,10.619 M14.12,8.559c-0.795,0-1.442,0.646-1.442,1.442s0.647,1.443,1.442,1.443s1.442-0.647,1.442-1.443S14.915,8.559,14.12,8.559 M14.12,10.619c-0.34,0-0.618-0.278-0.618-0.618s0.278-0.618,0.618-0.618S14.738,9.661,14.738,10S14.46,10.619,14.12,10.619 M5.88,8.559c-0.795,0-1.442,0.646-1.442,1.442s0.646,1.443,1.442,1.443S7.322,10.796,7.322,10S6.675,8.559,5.88,8.559 M5.88,10.619c-0.34,0-0.618-0.278-0.618-0.618S5.54,9.382,5.88,9.382S6.498,9.661,6.498,10S6.22,10.619,5.88,10.619">
-                                            </path>
-                                        </svg>
-                                    </a>
-                                    <div class=" dropdown dropdown-menu">
-                                        <a class="dropdown-item menu-item" (click)="reportarPublicacion(showPub.id)">Reportar</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <div class="num-comentarios">
-                    <h5>Comentarios <span class="badge">
-                            <!--numero comentarios-->{{pubComments.length}}</span></h5>
-                </div>
-                <div class="likes">
-                    <h5>
-                        <svg width="1.4em" height="1.4em" viewBox="0 0 20 20" class="bi bi-collection-play" fill="#000" xmlns="http://www.w3.org/2000/svg">
-                            <path fill-rule="evenodd"
-                                d="M9.719,17.073l-6.562-6.51c-0.27-0.268-0.504-0.567-0.696-0.888C1.385,7.89,1.67,5.613,3.155,4.14c0.864-0.856,2.012-1.329,3.233-1.329c1.924,0,3.115,1.12,3.612,1.752c0.499-0.634,1.689-1.752,3.612-1.752c1.221,0,2.369,0.472,3.233,1.329c1.484,1.473,1.771,3.75,0.693,5.537c-0.19,0.32-0.425,0.618-0.695,0.887l-6.562,6.51C10.125,17.229,9.875,17.229,9.719,17.073 M6.388,3.61C5.379,3.61,4.431,4,3.717,4.707C2.495,5.92,2.259,7.794,3.145,9.265c0.158,0.265,0.351,0.51,0.574,0.731L10,16.228l6.281-6.232c0.224-0.221,0.416-0.466,0.573-0.729c0.887-1.472,0.651-3.346-0.571-4.56C15.57,4,14.621,3.61,13.612,3.61c-1.43,0-2.639,0.786-3.268,1.863c-0.154,0.264-0.536,0.264-0.69,0C9.029,4.397,7.82,3.61,6.388,3.61" />
-                        </svg>
-                        <span class="badge">
-                            <!--numero likes-->{{likes}}</span>
-                    </h5>
-                </div>
-                <div class="comentarios-container" *ngFor="let com of pubComments">
-                    <div class="comentario">
-                        <div class="nombre-comentario">
-                            <a [routerLink]="['/profile',com.person.persona_id]">{{com.person.nombre_usuario}}:</a> "{{com.comentario}}"
-                        </div>
-                        <div class="fecha-comentario">
-                            <p>{{com.fecha | date: 'hh:mm a dd-MM-yyyy'}}</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<div class="modal fade" id="exampleModalLongSin2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title" id="myModalLabel">Fundación de un nuevo clan </h4>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modificarVideoJuego">
-                <div class="modal-body">
-                    <p>Nombre del clan </p>
-                    <input [(ngModel)]="nuevoClan.nombre_clan" type="text">
-                    <p>Descripción del clan </p>
-                    <input [(ngModel)]="nuevoClan.descripcion" type="text">
-                    <p>¿Es un clan libre? </p>
-                    <div>
-                        <input [(ngModel)]="nuevoClan.esPrivado" type="radio" id="Si" name="drone" value="true" checked>
-                        <label for="huey">Si</label>
-                    </div>
-                    <div>
-                        <input [(ngModel)]="nuevoClan.esPrivado" type="radio" id="No" name="drone" value="">
-                        <label for="dewey">No</label>
-                    </div>
-                </div>
-                <input #file type="file" id="file" style="display:none;" (change)="handleFileInput($event.target.files)">
-                <button class="btn" (click)="file.click()" title="Subir logo clan">
-                    <svg width="1.4em" height="1.4em" viewBox="0 0 16 16" class="bi bi-collection-play"
-                        fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                        <path fill-rule="evenodd"
-                            d="M14.5 13.5h-13A.5.5 0 0 1 1 13V6a.5.5 0 0 1 .5-.5h13a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-.5.5zm-13 1A1.5 1.5 0 0 1 0 13V6a1.5 1.5 0 0 1 1.5-1.5h13A1.5 1.5 0 0 1 16 6v7a1.5 1.5 0 0 1-1.5 1.5h-13zM2 3a.5.5 0 0 0 .5.5h11a.5.5 0 0 0 0-1h-11A.5.5 0 0 0 2 3zm2-2a.5.5 0 0 0 .5.5h7a.5.5 0 0 0 0-1h-7A.5.5 0 0 0 4 1z" />
-                        <path fill-rule="evenodd"
-                            d="M6.258 6.563a.5.5 0 0 1 .507.013l4 2.5a.5.5 0 0 1 0 .848l-4 2.5A.5.5 0 0 1 6 12V7a.5.5 0 0 1 .258-.437z" />
+                <input [(ngModel)]="comment.comentario" class="form-control mr-sm-2 searchbarcont" type="Text"
+                  placeholder="Dale tus tips gamer!" aria-label="Search">
+                <button class="btn btn-outline-dark my-2 my-sm-0" type="submit"
+                  (click)="makeComment(showPub.id)">Comentar</button>
+                <div class="dropdown-container">
+                  <a class="btn btn-outline-dark my-2 my-sm-0 dropdown-toggle" title="Ver más" data-toggle="dropdown"
+                    role="button" aria-haspopup="true" aria-expanded="false">
+                    <svg width="1.4em" height="1.4em" viewBox="0 0 20 20" class="bi bi-collection-play" fill="#000"
+                      xmlns="http://www.w3.org/2000/svg">
+                      <path fill-rule="evenodd"
+                        d="M10,2.172c-4.324,0-7.828,3.504-7.828,7.828S5.676,17.828,10,17.828c4.324,0,7.828-3.504,7.828-7.828S14.324,2.172,10,2.172M10,17.004c-3.863,0-7.004-3.141-7.004-7.003S6.137,2.997,10,2.997c3.862,0,7.004,3.141,7.004,7.004S13.862,17.004,10,17.004M10,8.559c-0.795,0-1.442,0.646-1.442,1.442S9.205,11.443,10,11.443s1.441-0.647,1.441-1.443S10.795,8.559,10,8.559 M10,10.619c-0.34,0-0.618-0.278-0.618-0.618S9.66,9.382,10,9.382S10.618,9.661,10.618,10S10.34,10.619,10,10.619 M14.12,8.559c-0.795,0-1.442,0.646-1.442,1.442s0.647,1.443,1.442,1.443s1.442-0.647,1.442-1.443S14.915,8.559,14.12,8.559 M14.12,10.619c-0.34,0-0.618-0.278-0.618-0.618s0.278-0.618,0.618-0.618S14.738,9.661,14.738,10S14.46,10.619,14.12,10.619 M5.88,8.559c-0.795,0-1.442,0.646-1.442,1.442s0.646,1.443,1.442,1.443S7.322,10.796,7.322,10S6.675,8.559,5.88,8.559 M5.88,10.619c-0.34,0-0.618-0.278-0.618-0.618S5.54,9.382,5.88,9.382S6.498,9.661,6.498,10S6.22,10.619,5.88,10.619">
+                      </path>
                     </svg>
+                  </a>
+                  <div class=" dropdown dropdown-menu">
+                    <a class="dropdown-item menu-item" (click)="reportarPublicacion(showPub.id)">Reportar</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <div class="num-comentarios">
+          <h5>Comentarios <span class="badge">
+              <!--numero comentarios-->{{pubComments.length}}</span></h5>
+        </div>
+        <div class="likes">
+          <h5>
+            <svg width="1.4em" height="1.4em" viewBox="0 0 20 20" class="bi bi-collection-play" fill="#000"
+              xmlns="http://www.w3.org/2000/svg">
+              <path fill-rule="evenodd"
+                d="M9.719,17.073l-6.562-6.51c-0.27-0.268-0.504-0.567-0.696-0.888C1.385,7.89,1.67,5.613,3.155,4.14c0.864-0.856,2.012-1.329,3.233-1.329c1.924,0,3.115,1.12,3.612,1.752c0.499-0.634,1.689-1.752,3.612-1.752c1.221,0,2.369,0.472,3.233,1.329c1.484,1.473,1.771,3.75,0.693,5.537c-0.19,0.32-0.425,0.618-0.695,0.887l-6.562,6.51C10.125,17.229,9.875,17.229,9.719,17.073 M6.388,3.61C5.379,3.61,4.431,4,3.717,4.707C2.495,5.92,2.259,7.794,3.145,9.265c0.158,0.265,0.351,0.51,0.574,0.731L10,16.228l6.281-6.232c0.224-0.221,0.416-0.466,0.573-0.729c0.887-1.472,0.651-3.346-0.571-4.56C15.57,4,14.621,3.61,13.612,3.61c-1.43,0-2.639,0.786-3.268,1.863c-0.154,0.264-0.536,0.264-0.69,0C9.029,4.397,7.82,3.61,6.388,3.61" />
+            </svg>
+            <span class="badge">
+              <!--numero likes-->{{likes}}</span>
+          </h5>
+        </div>
+        <div class="comentarios-container" *ngFor="let com of pubComments">
+          <div class="comentario">
+            <div class="nombre-comentario">
+              <a [routerLink]="['/profile',com.person.persona_id]">{{com.person.nombre_usuario}}:</a>
+              "{{com.comentario}}"
+            </div>
+            <div class="fecha-comentario">
+              <p>{{com.fecha | date: 'hh:mm a dd-MM-yyyy'}}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="exampleModalLongCon" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle"
+  aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header" style="background-color:#000;">
+        <h5 class="modal-title" id="exampleModalLongTitle" style="color:#fff">{{showPub.person.nombre_usuario}}
+        </h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="row d-flex justify-content-center">
+          <div class="">
+            <div class="row news-card p-3" style="color:#000; margin:0;">
+              <div class="col-md-4">
+                <div class="feed-image" style="text-align: center;">
+                  <img class="news-feed-image rounded img-fluid img-responsive" [src]=showPub.person.foto_perfil>
+                  <p style="font-size:15px;">{{showPub.fecha | date: 'hh:mm a'}}<br>
+                    {{showPub.fecha | date: 'dd-MM-yyyy'}}</p>
+                </div>
+              </div>
+              <div class="col">
+                <div class="news-feed-text">
+                  <img class="news-feed-image rounded img-fluid img-responsive" [src]=showPub.imagen>
+                </div>
+              </div>
+            </div>
+            <div class="row news-card p-3" style="color:#000;margin:0;">
+              <h6>{{showPub.contenido}}</h6>
+              <div class="uploadComment">
+                <button class="btn like" (click)="darMeGusta(showPub.id)" title="Dar Like">
+                  <svg width="1.4em" height="1.4em" viewBox="0 0 20 20" class="bi bi-collection-play" fill="#000"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd"
+                      d="M9.719,17.073l-6.562-6.51c-0.27-0.268-0.504-0.567-0.696-0.888C1.385,7.89,1.67,5.613,3.155,4.14c0.864-0.856,2.012-1.329,3.233-1.329c1.924,0,3.115,1.12,3.612,1.752c0.499-0.634,1.689-1.752,3.612-1.752c1.221,0,2.369,0.472,3.233,1.329c1.484,1.473,1.771,3.75,0.693,5.537c-0.19,0.32-0.425,0.618-0.695,0.887l-6.562,6.51C10.125,17.229,9.875,17.229,9.719,17.073 M6.388,3.61C5.379,3.61,4.431,4,3.717,4.707C2.495,5.92,2.259,7.794,3.145,9.265c0.158,0.265,0.351,0.51,0.574,0.731L10,16.228l6.281-6.232c0.224-0.221,0.416-0.466,0.573-0.729c0.887-1.472,0.651-3.346-0.571-4.56C15.57,4,14.621,3.61,13.612,3.61c-1.43,0-2.639,0.786-3.268,1.863c-0.154,0.264-0.536,0.264-0.69,0C9.029,4.397,7.82,3.61,6.388,3.61" />
+                  </svg>
                 </button>
-                <button (click)="createClan(nuevoClan)"> Fundar Clan</button>
+                <input [(ngModel)]="comment.comentario" class="form-control mr-sm-2 searchbarcont" type="Text"
+                  placeholder="Dale tus tips gamer!" aria-label="Search">
+                <button class="btn btn-outline-dark my-2 my-sm-0" type="submit"
+                  (click)="makeComment(showPub.id)">Comentar</button>
+                <div class="dropdown-container">
+                  <a class="btn btn-outline-dark my-2 my-sm-0 dropdown-toggle" title="Ver más" data-toggle="dropdown"
+                    role="button" aria-haspopup="true" aria-expanded="false">
+                    <svg width="1.4em" height="1.4em" viewBox="0 0 20 20" class="bi bi-collection-play" fill="#000"
+                      xmlns="http://www.w3.org/2000/svg">
+                      <path fill-rule="evenodd"
+                        d="M10,2.172c-4.324,0-7.828,3.504-7.828,7.828S5.676,17.828,10,17.828c4.324,0,7.828-3.504,7.828-7.828S14.324,2.172,10,2.172M10,17.004c-3.863,0-7.004-3.141-7.004-7.003S6.137,2.997,10,2.997c3.862,0,7.004,3.141,7.004,7.004S13.862,17.004,10,17.004M10,8.559c-0.795,0-1.442,0.646-1.442,1.442S9.205,11.443,10,11.443s1.441-0.647,1.441-1.443S10.795,8.559,10,8.559 M10,10.619c-0.34,0-0.618-0.278-0.618-0.618S9.66,9.382,10,9.382S10.618,9.661,10.618,10S10.34,10.619,10,10.619 M14.12,8.559c-0.795,0-1.442,0.646-1.442,1.442s0.647,1.443,1.442,1.443s1.442-0.647,1.442-1.443S14.915,8.559,14.12,8.559 M14.12,10.619c-0.34,0-0.618-0.278-0.618-0.618s0.278-0.618,0.618-0.618S14.738,9.661,14.738,10S14.46,10.619,14.12,10.619 M5.88,8.559c-0.795,0-1.442,0.646-1.442,1.442s0.646,1.443,1.442,1.443S7.322,10.796,7.322,10S6.675,8.559,5.88,8.559 M5.88,10.619c-0.34,0-0.618-0.278-0.618-0.618S5.54,9.382,5.88,9.382S6.498,9.661,6.498,10S6.22,10.619,5.88,10.619">
+                      </path>
+                    </svg>
+                  </a>
+                  <div class=" dropdown dropdown-menu">
+                    <a class="dropdown-item menu-item" (click)="reportarPublicacion(showPub.id)">Reportar</a>
+                  </div>
+                </div>
+              </div>
             </div>
+          </div>
         </div>
+      </div>
+      <div class="modal-footer">
+        <div class="num-comentarios">
+          <h5>Comentarios <span class="badge">
+              <!--numero comentarios-->{{pubComments.length}}</span></h5>
+        </div>
+        <div class="likes">
+          <h5>
+            <svg width="1.4em" height="1.4em" viewBox="0 0 20 20" class="bi bi-collection-play" fill="#000"
+              xmlns="http://www.w3.org/2000/svg">
+              <path fill-rule="evenodd"
+                d="M9.719,17.073l-6.562-6.51c-0.27-0.268-0.504-0.567-0.696-0.888C1.385,7.89,1.67,5.613,3.155,4.14c0.864-0.856,2.012-1.329,3.233-1.329c1.924,0,3.115,1.12,3.612,1.752c0.499-0.634,1.689-1.752,3.612-1.752c1.221,0,2.369,0.472,3.233,1.329c1.484,1.473,1.771,3.75,0.693,5.537c-0.19,0.32-0.425,0.618-0.695,0.887l-6.562,6.51C10.125,17.229,9.875,17.229,9.719,17.073 M6.388,3.61C5.379,3.61,4.431,4,3.717,4.707C2.495,5.92,2.259,7.794,3.145,9.265c0.158,0.265,0.351,0.51,0.574,0.731L10,16.228l6.281-6.232c0.224-0.221,0.416-0.466,0.573-0.729c0.887-1.472,0.651-3.346-0.571-4.56C15.57,4,14.621,3.61,13.612,3.61c-1.43,0-2.639,0.786-3.268,1.863c-0.154,0.264-0.536,0.264-0.69,0C9.029,4.397,7.82,3.61,6.388,3.61" />
+            </svg>
+            <span class="badge">
+              <!--numero likes-->{{likes}}</span>
+          </h5>
+        </div>
+        <div class="comentarios-container" *ngFor="let com of pubComments">
+          <div class="comentario">
+            <div class="nombre-comentario">
+              <a [routerLink]="['/profile',com.person.persona_id]">{{com.person.nombre_usuario}}:</a>
+              "{{com.comentario}}"
+            </div>
+            <div class="fecha-comentario">
+              <p>{{com.fecha | date: 'hh:mm a dd-MM-yyyy'}}</p>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
+  </div>
+</div>
+<!--CREAR CLAN-->
+<div class="modal fade" id="exampleModalLongSin2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header" style="background-color: black; color: white;">
+        <h4 class="modal-title" id="myModalLabel">Fundación de un nuevo clan </h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="item">
+          <h4 class="col">Nombre del Clan</h4>
+          <div class="col">
+            <input type="text" class="form-control" autocomplete="off" placeholder="Nuevo nombre" name="name" required
+              [(ngModel)]="nuevoClan.nombre_clan" />
+          </div>
+        </div>
+        <div class="item">
+          <h4 class="col">Descripción del Clan</h4>
+          <div class="col">
+            <input type="text" class="form-control" autocomplete="off" placeholder="Describeme!" name="name" required
+              [(ngModel)]="nuevoClan.descripcion" />
+          </div>
+        </div>
+        <div class="item">
+          <h4 class="col">¿Quieres que sea un clan abierto?</h4>
+          <div class="col" style="text-align: center;">
+            <input [(ngModel)]="nuevoClan.esPrivado" type="radio" id="Si" name="drone" value="true" checked>
+            <label for="huey">Si</label>
+            <input style="margin-left: 10px;" [(ngModel)]="nuevoClan.esPrivado" type="radio" id="No" name="drone"
+              value="">
+            <label for="dewey">No</label>
+          </div>
+        </div>
+        <div class="item">
+          <h4 class="col">Elige la imagen de tu clan!</h4>
+          <div class="file" style="text-align: right;">
+            <input #file type="file" id="file" style="display:none;" (change)="handleFileInput($event.target.files)">
+            <button class="btn" (click)="file.click()" title="Subir logo clan">
+              <svg width="1.4em" height="1.4em" viewBox="0 0 16 16" class="bi bi-collection-play" fill="currentColor"
+                xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd"
+                  d="M14.5 13.5h-13A.5.5 0 0 1 1 13V6a.5.5 0 0 1 .5-.5h13a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-.5.5zm-13 1A1.5 1.5 0 0 1 0 13V6a1.5 1.5 0 0 1 1.5-1.5h13A1.5 1.5 0 0 1 16 6v7a1.5 1.5 0 0 1-1.5 1.5h-13zM2 3a.5.5 0 0 0 .5.5h11a.5.5 0 0 0 0-1h-11A.5.5 0 0 0 2 3zm2-2a.5.5 0 0 0 .5.5h7a.5.5 0 0 0 0-1h-7A.5.5 0 0 0 4 1z" />
+                <path fill-rule="evenodd"
+                  d="M6.258 6.563a.5.5 0 0 1 .507.013l4 2.5a.5.5 0 0 1 0 .848l-4 2.5A.5.5 0 0 1 6 12V7a.5.5 0 0 1 .258-.437z" />
+              </svg>
+            </button>
+          </div>
+          <div class="image-img">
+            <img id="blah" [src]="imageSrc || 'http://placehold.it/180'" alt="your image" />
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn" (click)="createClan(nuevoClan)"> Fundar Clan</button>
+      </div>
+    </div>
+  </div>
 </div>
 
-<!-- 
+<!--
  -->
-<div class="modal fade" id="exampleModalLongSin3" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title" id="myModalLabel">Miembros del clan </h4>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                 <span aria-hidden="true">&times;</span>
-             </button>
+<div class="modal fade" id="exampleModalLongSin3" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title" id="myModalLabel">Miembros del clan </h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modificarVideoJuego">
+        <div class="modal-body">
+          <div *ngFor="let miembroActual of miembrosClan">
+            <div>
+              <h4>{{miembroActual.nombre_usuario}}
+                <button class="btn" (click)="desterrar(miembroActual)"> Desterrar </button>
+              </h4>
             </div>
-            <div class="modificarVideoJuego">
-                <div class="modal-body">
-                    <div *ngFor="let miembroActual of miembrosClan">
-                        <div>
-                            {{miembroActual.nombre_usuario}}
-                            <button class="btn" (click)="desterrar(miembroActual)"> Desterrar </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
+          </div>
         </div>
+      </div>
     </div>
+  </div>
 </div>
 
-<!-- 
+<!--
  -->
-<div class="modal fade" id="exampleModalLongSin4" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title" id="myModalLabel">Refugiados</h4>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                 <span aria-hidden="true">&times;</span>
-             </button>
+<div class="modal fade" id="exampleModalLongSin4" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title" id="myModalLabel">Refugiados</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modificarVideoJuego">
+        <div class="modal-body">
+          <div *ngFor="let refugiadoActual of refugiados">
+            <div>
+              {{refugiadoActual.nombre_usuario}}
+              <button class="btn" (click)="abandonarRefujiado(refugiadoActual)"> Abandonar </button>
+              <button class="btn" (click)="darAsilo(refugiadoActual)"> Incorporar a la batalla </button>
             </div>
-            <div class="modificarVideoJuego">
-                <div class="modal-body">
-                    <div *ngFor="let refugiadoActual of refugiados">
-                        <div>
-                            {{refugiadoActual.nombre_usuario}}
-                            <button class="btn" (click)="abandonarRefujiado(refugiadoActual)"> Abandonar </button>
-                            <button class="btn" (click)="darAsilo(refugiadoActual)"> Incorporar a la batalla </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
+          </div>
         </div>
+      </div>
     </div>
+  </div>
 </div>
 
 </html>

@@ -185,7 +185,6 @@ table{
   float: left;
   overflow-x: scroll;
   overflow-y: hidden;
-  margin-bottom: 5%;
 }
 
 .game-container-outer::-webkit-scrollbar {

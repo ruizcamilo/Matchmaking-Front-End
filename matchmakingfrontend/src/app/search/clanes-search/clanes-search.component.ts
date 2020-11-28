@@ -21,6 +21,7 @@ export class ClanesSearchComponent implements OnInit {
   isMember: boolean;
   isRequestSend: boolean[];
   yo: string;
+  done = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -28,7 +29,7 @@ export class ClanesSearchComponent implements OnInit {
     private clanService: ClanService,
     private sanitizer: DomSanitizer,
     private userService: UserService,
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.yo = sessionStorage.getItem('gamertag');
@@ -45,15 +46,15 @@ export class ClanesSearchComponent implements OnInit {
       for (let index = 0; index < clans.length; index++) {
         let nombre_clan = clans[index].nombre_clan;
         let descripcion = clans[index].descripcion;
-        
+
         this.clanService.isRequestSend(nombre_clan).subscribe(async (vars) => {
           let isRequest: boolean;
-          if(vars)
+          if (vars)
             isRequest = true;
           else
             isRequest = false;
 
-          if(clans[index].foto_clan != ''){
+          if (clans[index].foto_clan != '') {
             await this.userService.downloadFile(clans[index].foto_clan).toPromise().then(async data => {
               let objectURL = 'data:image/png;base64,' + data;
               let fotoperfil = this.sanitizer.bypassSecurityTrustUrl(objectURL);
@@ -93,6 +94,7 @@ export class ClanesSearchComponent implements OnInit {
             this.myClans.push(this.clanes[i]);
           }
         });
+      this.done = true;
     }
   }
 
@@ -104,11 +106,11 @@ export class ClanesSearchComponent implements OnInit {
         return this.isMember;
       }
     }
-      return this.isMember;
+    return this.isMember;
   }
 
   joinClan(nombre_clan: string) {
-    this.clanService.requestToClan(nombre_clan).subscribe((vars) => {});
+    this.clanService.requestToClan(nombre_clan).subscribe((vars) => { });
     console.log(nombre_clan);
   }
 
@@ -117,13 +119,13 @@ export class ClanesSearchComponent implements OnInit {
     this.router.navigate([ruta]);
   }
 
-  async SolicitudEnviada(Clan: string): Promise<boolean>{
+  async SolicitudEnviada(Clan: string): Promise<boolean> {
     let varRetornar: boolean;
     this.clanService.isRequestSend(Clan).subscribe(async (vars) => {
-      if(vars){
+      if (vars) {
         varRetornar = true;
       }
-      else{
+      else {
         varRetornar = false;
       }
     });

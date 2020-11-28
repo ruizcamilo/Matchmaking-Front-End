@@ -83,6 +83,7 @@ export class SquadService {
   }
   sendInvitations(invitedFriends: string[], nombreSquad:string, idSquad){
     const url = `${environment.logedInServiceBaseUrl}/squads/invitations`;
+    console.log('send INvitations:', url);
     return this.http
     .post<string>(url, invitedFriends, {
       headers: new HttpHeaders({
@@ -123,12 +124,18 @@ export class SquadService {
     const url = `${environment.logedInServiceBaseUrl}/squads/exit/`;
     return this.put(url, squad);
   }
-  acceptSquad(s: Squad) { //revisar
+  acceptSquad(invitation: any) {
     const url = `${environment.logedInServiceBaseUrl}/squads/acceptInvite`;
-    return this.put(url, s);
+    return this.put(url, invitation);
   }
-  rejectSquad(id_squad: any) { //revisar
-    const url = `${environment.logedInServiceBaseUrl}/squads/rejectInvite/${id_squad}`;
-    return this.delete(url);
+  rejectSquad(invitation: any) {
+    const url = `${environment.logedInServiceBaseUrl}/squads/declineInvitation`;
+    return this.put(url,invitation);
+  }
+  kickFromSquad(member: any, squad: Squad) {
+    console.log (member);
+    console.log(squad);
+    const url = `${environment.logedInServiceBaseUrl}/squads/dump/${member.persona_id}`;
+    return this.put(url,squad);
   }
 }

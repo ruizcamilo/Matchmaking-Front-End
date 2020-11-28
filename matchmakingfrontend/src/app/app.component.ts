@@ -46,18 +46,20 @@ export class AppComponent implements DoCheck{
   }
 
   getNotificaciones(){
+    this.solicitudes = [];
     this.personService.getFriendRequestsNotifications().subscribe(
       (friNotif: Person[]) =>  {
         for (const notif of friNotif) {
           this.solicitudes.push([notif, 'friend']);
         }
+        console.log(this.solicitudes);
     });
     this.personService.getSquadInvitations().subscribe(
       (squadNotif: SquadInvitation[]) =>  {
-        console.log(squadNotif);
         for (const notif of squadNotif) {
           this.solicitudes.push([notif, 'squad']);
         }
+        console.log(squadNotif);
     });
   }
 
@@ -69,20 +71,19 @@ export class AppComponent implements DoCheck{
     this.userService.rejectFriendById(mail).subscribe();
   }
 
-  aceptarSquad(id_squad){
-    let auxSquad = new Squad(id_squad, '', [], '', '', '', false);
-    this.squadService.acceptSquad(auxSquad).subscribe(bool => {
+  aceptarSquad(invitation){
+    this.squadService.acceptSquad(invitation).subscribe(bool => {
       if (bool)
       {
-        this.router.navigate(['squad-view', { squadid: id_squad }]);
+        this.router.navigate(['squad-view', { squadid: invitation.idSquad }]);
       }else{
         alert('No se ha podido unir');
       }
     });
   }
 
-  rechazarSquad(id_squad){
-    this.squadService.rejectSquad(id_squad).subscribe();
+  rechazarSquad(invitation){
+    this.squadService.rejectSquad(invitation).subscribe();
   }
 
   logout() {

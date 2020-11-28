@@ -68,7 +68,11 @@
     <div class="results-container" *ngIf="resultados.length != 0 && pressed">
       <div class="player" [ngStyle]="{'width': anchoResult+'px'}">
         <div class="persona" *ngFor="let match of resultados">
-          <div class="header-persona">
+          <div class="header-persona" *ngIf="match[0].person.nombre_usuario.length < 11">
+            <h1>{{match[0].person.nombre_usuario}}</h1>
+            <h3>{{match[0].person.persona_id}}</h3>
+          </div>
+          <div class="header-persona-alter" *ngIf="match[0].person.nombre_usuario.length >= 11">
             <h1>{{match[0].person.nombre_usuario}}</h1>
             <h3>{{match[0].person.persona_id}}</h3>
           </div>
@@ -82,8 +86,10 @@
               <h3>{{match[0].region}}</h3>
             </div>
             <div class="botones-persona">
-              <button type="button" class="btn button-side">Enviar Mensaje</button>
-              <button type="button" class="btn button-side">Ver Perfil</button>
+              <button type="button" class="btn button-side" (click)="goChatByMail(match[0].person.persona_id)">Enviar
+                Mensaje</button>
+              <button type="button" class="btn button-side" [routerLink]="['/profile', match[0].person.persona_id]">Ver
+                Perfil</button>
             </div>
           </div>
         </div>
@@ -143,7 +149,7 @@
       </div>
       <div class="modal-footer"
         *ngIf="(selectedJuegos.length == 0 && consolasEscogidas.length == 0 && !region) || (selectedJuegos.length != 0 && consolasEscogidas.length == 0 && !region) || (selectedJuegos.length == 0 && consolasEscogidas.length != 0 && !region) || (selectedJuegos.length == 0 && consolasEscogidas.length == 0 && region) || (selectedJuegos.length != 0 && consolasEscogidas.length == 0 && region) || (selectedJuegos.length != 0 && consolasEscogidas.length != 0 && !region) || (selectedJuegos.length == 0 && consolasEscogidas.length != 0 && region)">
-        <button disabled type="button" class="btn">¡Paila!</button>
+        <button disabled type="button" class="btn">¡Llene los campos!</button>
         <button type="button" class="btn" data-dismiss="modal">Cerrar</button>
       </div>
     </div>

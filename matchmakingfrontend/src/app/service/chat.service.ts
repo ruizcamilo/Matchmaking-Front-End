@@ -17,7 +17,7 @@ import { Mensaje } from '../model/mensaje';
   providedIn: 'root'
 })
 export class ChatService {
-  
+
   constructor(private afStore: AngularFirestore,private http: HttpClient) { }
 
   private handleError(error: HttpErrorResponse): Observable<any> {
@@ -28,7 +28,7 @@ export class ChatService {
   getToken() {
     return sessionStorage.getItem('token');
   }
-  
+
   private get<T>(url): Observable<T> {
     console.log('get:', url);
     return this.http
@@ -68,7 +68,7 @@ export class ChatService {
       })
       .pipe(catchError(this.handleError));
   }
-  
+
   private put<T>(url, data: T): Observable<T> {
     console.log('put:', url);
     return this.http
@@ -80,7 +80,7 @@ export class ChatService {
       })
       .pipe(catchError(this.handleError));
   }
-  
+
   private delete<T>(url): Observable<T> {
     console.log('delete:', url);
     return this.http
@@ -100,7 +100,7 @@ export class ChatService {
     const url = `${environment.logedInServiceBaseUrl}/chat/create`;
     return this.post2(url, data);
   }
-  
+
   getChats(){
     const url = `${environment.logedInServiceBaseUrl}/chats`;
     return this.get<Chat[]>(url);
@@ -111,7 +111,7 @@ export class ChatService {
   }
   sendMessage(message: Mensaje, idChat: string){
     console.log("--------" + message.mensaje + "--------->" + message.fechayhora + "-----" + message.id + "----" + message.remitente);
-    
+
     const url = `${environment.logedInServiceBaseUrl}/chat/message`;
     return this.post<Mensaje>(url, message, idChat);
   }

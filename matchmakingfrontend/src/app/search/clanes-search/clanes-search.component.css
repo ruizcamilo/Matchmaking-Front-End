@@ -8,7 +8,6 @@ body {
     width: 100%;
     overflow: hidden;
     background-color: #0e141e;
-    background-repeat: repeat;
     float: left;
 }
 
@@ -16,7 +15,7 @@ body {
     margin-top: 80px;
     display: grid;
     grid-template-columns: 3fr 8fr;
-    height: 100%;
+    height: calc(100% - 80px);
     width: 100%;
 }
 
@@ -28,7 +27,7 @@ body {
 
 .derecha {
     height: 100%;
-    /* overflow-y: scroll; */
+    overflow-y: scroll;
 }
 
 .derecha::-webkit-scrollbar {
@@ -147,4 +146,39 @@ a:hover {
 .titleClan {
     font-size: 30px;
     font-weight: bold;
+}
+
+.cont{
+  height: 150px;
+}
+
+.feed-image{
+  height: 100%;
+  width: 100%;
+}
+
+.feed-image img{
+  height: 100%;
+  width: 100%;
+  object-fit: contain;
+}
+
+
+.no-results{
+  color: white;
+  height: 100%;
+  text-align: center;
+  padding: 10%;
+}
+
+.loading{
+  height: 100%;
+  color: white;
+  padding: 10%;
+  text-align: center;
+}
+
+.load{
+  width: 200px;
+  height: 200px;
 }

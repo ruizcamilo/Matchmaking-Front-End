@@ -11,6 +11,7 @@ import { Person } from '../model/person';
 import { UserService } from '../service/user.service';
 import { User } from '../model/user';
 import { stringify } from '@angular/compiler/src/util';
+import { ActivatedRoute, Router } from '@angular/router';
 @Component({
   selector: 'app-chat',
   templateUrl: './chat.component.html',
@@ -21,6 +22,9 @@ export class ChatComponent implements OnInit {
   term: string = '';
   Owner: User;
   primeraVez: boolean = true;
+  newChat: boolean = true;
+  emailEntrante: string = null;
+  mymail:string = '';
   channelList : Chat[] = [];
   displayIntegrantes : string;
   emailActual : string;
@@ -37,18 +41,45 @@ export class ChatComponent implements OnInit {
   myObj = {};
   @ViewChild('scroll') scroll: ElementRef;
   scrolltop: number = null;
-  constructor(private afModule: AngularFireModule,private afAuth: AngularFireAuth ,private afStore: AngularFirestore,private chatService:ChatService, private personService: PersonService, private userService: UserService) { }
+  constructor(
+    private route: ActivatedRoute,
+    private router: Router,
+    private afModule: AngularFireModule,
+    private afAuth: AngularFireAuth ,
+    private afStore: AngularFirestore,
+    private chatService: ChatService,
+    private personService: PersonService,
+    private userService: UserService) { }
 
   ngOnInit(): void {
     this.exists = true;
-    this.getProfile();
+    this.mymail = sessionStorage.getItem('mail');
+    this.route.params.subscribe(params => {
+      console.log("ENTRO PAI");
+      if (params['mail'] != null)
+      {
+        this.emailEntrante = params['mail'];
+        if (this.emailEntrante == this.mymail)
+        {
+          console.log('es mi mail pai, no voy a crear nada');
+          this.emailEntrante = null;
+          this.router.navigate(['chat'], { queryParams: {}});
+        }
+        else{
+          this.getProfile();
+        }
+      }
+      else{
+        this.getProfile();
+      }
+    });
   }
   callChats() {
     this.chatService.getChats().subscribe(async chat => {
       this.channelList = chat;
 
       this.idFirstChat = this.channelList[0].id;
-      for(let chatAux of this.channelList){
+      for (let chatAux of this.channelList){
         this.afStore.collection('Chat').doc(chatAux.id).collection("Mensajes").valueChanges().subscribe(chat => {
           if (this.primeraVez){
             this.primeraVez = false;
@@ -57,12 +88,20 @@ export class ChatComponent implements OnInit {
           }
         });
       }
-
-      this.chatService.getChatById(this.idFirstChat).subscribe(firstChat=>{
-        this.messages = firstChat.mensajes;
-        this.scrolltop = this.scroll.nativeElement.scrollHeight;
-      });
-    });
+      if (this.emailEntrante == null)
+      {
+        this.chatService.getChatById(this.idFirstChat).subscribe(firstChat => {
+          this.messages = firstChat.mensajes;
+          this.scrolltop = this.scroll.nativeElement.scrollHeight;
+        });
+      }
+      else{
+          let newChat = new Chat([this.Owner.correo, this.emailEntrante],[],"","");
+          this.chatService.createChat(newChat).subscribe(response => {
+            this.router.navigate(['chat'], { queryParams: {}});
+          });
+        }
+     });
   }
 
   mandarMensaje(){
@@ -86,7 +125,6 @@ export class ChatComponent implements OnInit {
   }
 
   async getFriends(){
-
     this.personService.getFriends(this.Owner.correo).subscribe(
       (personas: Person[]) => {
       for (let index = 0; index < personas.length; index++) {
@@ -115,10 +153,14 @@ export class ChatComponent implements OnInit {
   }
 
   createChat(){
-    let newChat = new Chat([this.Owner.correo, this.term],[],"","");
-    this.chatService.createChat(newChat).subscribe(data => {
-      window.location.reload();
-    });
+    let regexp = new RegExp(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/);
+    if (regexp.test(this.term))
+    {
+      let newChat = new Chat([this.Owner.correo, this.term], [], '', '');
+      this.chatService.createChat(newChat).subscribe(data => {
+        window.location.reload();
+      });
+    }
   }
 
   scrollToBottom() {

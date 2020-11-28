@@ -38,10 +38,10 @@
 
 .image-img{
   float: left;
-  width: 65%;
+  width: 40%;
 }
 
-.imagen img{
+.image-img img{
   object-fit: cover;
   height: 100%;
   width: 100%;

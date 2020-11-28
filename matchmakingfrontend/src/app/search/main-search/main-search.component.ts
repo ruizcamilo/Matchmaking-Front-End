@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { User } from 'src/app/model/user';
 import { UserService } from 'src/app/service/user.service';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-main-search',
@@ -11,24 +12,34 @@ import { UserService } from 'src/app/service/user.service';
 export class MainSearchComponent implements OnInit {
 
   search: string;
-  usuarios: User[] = [];
+  usuarios: any[] = [];
   yo: string;
+  done = false;
 
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private userService: UserService
-  ){ }
+    private userService: UserService,
+    private sanitizer: DomSanitizer
+  ){
+    this.router.routeReuseStrategy.shouldReuseRoute = () => false;
+  }
 
 
   ngOnInit(): void {
     this.yo = sessionStorage.getItem('gamertag');
-    this.search = this.route.snapshot.paramMap.get("search");
+    this.search = this.route.snapshot.paramMap.get('search');
     try {
       this.userService.searchUser(this.search).subscribe(
         (users: User[]) => {
-          this.usuarios = users;
-          console.log(this.usuarios);
+          for (const us of users) {
+            this.userService.downloadFile(us.foto_perfil).subscribe(data => {
+              let objectURL = 'data:image/png;base64,' + data;
+              let imagen = this.sanitizer.bypassSecurityTrustUrl(objectURL);
+              this.usuarios.push([us,imagen]);
+            });
+          }
+          this.done = true;
         });
     } catch (error) {
       console.error(error);

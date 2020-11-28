@@ -10,6 +10,7 @@ import { UserService } from '../../service/user.service';
 import { PersonService } from '../../service/person.service';
 import { Comment } from '../../model/comment';
 import { NumberSymbol } from '@angular/common';
+import { AngularFireStorage } from '@angular/fire/storage';
 
 @Component({
   selector: 'app-profile',
@@ -43,7 +44,9 @@ export class ProfileComponent implements OnInit {
     private userService: UserService,
     private personService: PersonService,
     private postService: PostService,
-    private sanitizer: DomSanitizer) { }
+    private sanitizer: DomSanitizer,
+    private storage: AngularFireStorage
+    ) { }
 
   ngOnInit(): void {
     this.getProfile();
@@ -131,19 +134,14 @@ export class ProfileComponent implements OnInit {
 
   async makePost() {
     if (this.fileToUpload != null){
-      var uploadImageData = new FormData();
-      uploadImageData.append('file', this.fileToUpload);
-      uploadImageData.append('folder', 'Publicaciones/');
-      this.userService.uploadFile(uploadImageData).subscribe(name => {
-        this.post.imagen = name;
-        this.postService.makePost(this.post).subscribe(data => {
-          window.location.reload();
-          }, error => {
-            console.log(error);
-          });
+      let name = `Publicaciones/`+Date.now()+"-"+this.fileToUpload.name;
+      this.storage.upload(name, this.fileToUpload);
+      this.post.imagen = name;
+      this.postService.makePost(this.post).subscribe(data => {
+        window.location.reload();
         }, error => {
           console.log(error);
-        });
+      });
     }
     else{
       this.postService.makePost(this.post).subscribe(data => {

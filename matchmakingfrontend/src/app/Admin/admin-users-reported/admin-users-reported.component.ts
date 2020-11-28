@@ -34,13 +34,10 @@ export class AdminUsersReportedComponent implements OnInit {
     await this.personService.getUsersResported().subscribe(async (userReported: Person[]) => {
       this.usuariosReported = userReported;
       for (let index = 0; index < userReported.length; index++) {
-        let nombre_usuario = userReported[index].nombre_usuario;
-        console.log("------------------------------------------" + nombre_usuario);
-        
         await this.userService.downloadFile(userReported[index].foto_perfil).toPromise().then(async data => {
           let objectURL = 'data:image/png;base64,' + data;
           let fotoperfil = this.sanitizer.bypassSecurityTrustUrl(objectURL);
-          this.users.push([nombre_usuario, fotoperfil]);
+          this.users.push([userReported[index], fotoperfil]);
         });
       }
     });

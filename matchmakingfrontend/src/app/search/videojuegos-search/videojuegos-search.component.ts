@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { VideoJuego } from 'src/app/model/video-juego';
 import { VideoJuegoService } from '../../service/video-juego.service';
+import { DomSanitizer } from '@angular/platform-browser';
+import { UserService } from 'src/app/service/user.service';
 
 @Component({
   selector: 'app-videojuegos-search',
@@ -11,23 +13,30 @@ import { VideoJuegoService } from '../../service/video-juego.service';
 export class VideojuegosSearchComponent implements OnInit {
 
   search: string;
-  videoJuegos: VideoJuego[] = [
-    {nombre:"Halo The Master Chief Collection", imagen:"https://compass-ssl.xbox.com/assets/92/5d/925d1321-89fe-4537-9303-a64adaf27c07.jpg?n=Halo-MCC_GLP-Page-Hero-1084_1920x1040.jpg"},
-    {nombre:"Assassins Creed Revelations" ,imagen: "https://ubistatic19-a.akamaihd.net/ubicomstatic/es-mx/global/game-info/acr_nakedbox_mobile_165287.jpg"}
-  ];
+  videoJuegos: any[] = [ ];
+  done = false;
 
   constructor(
     private route: ActivatedRoute,
     private router: Router,
     private videoJuegoService: VideoJuegoService,
+    private sanitizer: DomSanitizer,
+    private userService: UserService
   ) {}
 
   ngOnInit(): void {
-    this.search = this.route.snapshot.paramMap.get("search");
+    this.search = this.route.snapshot.paramMap.get('search');
     try {
       this.videoJuegoService.searchGameTitle(this.search).subscribe(
         (games: VideoJuego[]) => {
-          this.videoJuegos = games;
+          for (const us of games) {
+            this.userService.downloadFile(us.imagen).subscribe(data => {
+              let objectURL = 'data:image/png;base64,' + data;
+              let imagen = this.sanitizer.bypassSecurityTrustUrl(objectURL);
+              this.videoJuegos.push([us, imagen]);
+            });
+          }
+          this.done = true;
         });
     } catch (error) {
       console.error(error);

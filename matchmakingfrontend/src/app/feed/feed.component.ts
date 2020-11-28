@@ -8,6 +8,7 @@ import { Person } from '../model/person';
 import { UserService } from '../service/user.service';
 import { Comment } from '../model/comment';
 import { User } from '../model/user';
+import { AngularFireStorage } from '@angular/fire/storage';
 
 
 @Component({
@@ -37,7 +38,8 @@ export class FeedComponent implements OnInit {
     private postService: PostService,
     private personService: PersonService,
     private userService: UserService,
-    private sanitizer: DomSanitizer
+    private sanitizer: DomSanitizer,
+    private storage: AngularFireStorage
   ) { }
 
 
@@ -142,17 +144,12 @@ export class FeedComponent implements OnInit {
   }
 
   async makePost() {
-    if(this.fileToUpload!=null){
-      var uploadImageData = new FormData();
-      uploadImageData.append('file', this.fileToUpload);
-      uploadImageData.append('folder', 'Publicaciones/');
-      this.userService.uploadFile(uploadImageData).subscribe(name => {
-        this.post.imagen=name;
-        this.postService.makePost(this.post).subscribe(data => {
-          window.location.reload();
-          }, error => {
-            console.log(error);
-          });
+    if (this.fileToUpload != null){
+      let name = `Publicaciones/` + Date.now() + '-' + this.fileToUpload.name;
+      this.storage.upload(name, this.fileToUpload);
+      this.post.imagen = name;
+      this.postService.makePost(this.post).subscribe(data => {
+        window.location.reload();
         }, error => {
           console.log(error);
         });

@@ -5,6 +5,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { VideoJuegoService } from '../../service/video-juego.service';
 import { VideoJuego } from 'src/app/model/video-juego';
 import { PersonService } from 'src/app/service/person.service';
+import { AngularFireStorage } from '@angular/fire/storage';
 
 @Component({
   selector: 'app-edit-profile',
@@ -43,7 +44,8 @@ export class EditProfileComponent implements OnInit {
     private router: Router,
     private userService: UserService,
     private gameService: VideoJuegoService,
-    private personService: PersonService
+    private personService: PersonService,
+    private storage: AngularFireStorage
   ) {}
 
   ngOnInit(): void {
@@ -90,25 +92,31 @@ export class EditProfileComponent implements OnInit {
 
   async update() {
     this.userSend.plataformas = this.consolasEscogidas;
-    var uploadImageData = new FormData();
-    uploadImageData.append('file', this.fileToUpload);
-    uploadImageData.append('folder', 'Fotosperfil/');
-    this.userSend.foto_perfil = 'Fotosperfil/' + this.fileToUpload;
-    this.userService.uploadFile(uploadImageData).subscribe(name => {
+    if (this.fileToUpload != null) {
+      let name = `Fotosperfil/`+Date.now()+"-"+this.fileToUpload.name;
+      this.storage.upload(name, this.fileToUpload);
       this.userSend.foto_perfil = name;
-      this.userService.updateUser(this.userSend).subscribe(data => {
-        this.personService.setFavorites(this.juegosEscogidos).subscribe();
+    }
+    this.userService.updateUser(this.userSend).subscribe(data => {
+      this.personService.setFavorites(this.juegosEscogidos).subscribe(data => {
+        sessionStorage.setItem('gamertag', this.userSend.nombre_usuario);
         this.router.navigate(['/profile']);
-        }, error => {
-          console.log(error);
-        });
+      });
       }, error => {
         console.log(error);
       });
   }
 
   gameSelection(juego) {
-    if (this.juegosEscogidos.includes(juego)) {
+    let found = false;
+    for (const jeux of this.juegosEscogidos)
+    {
+      if (jeux.nombre == juego.nombre)
+      {
+        found = true;
+      }
+    }
+    if (found) {
       this.juegosEscogidos.splice(this.juegosEscogidos.indexOf(juego), 1);
     }
     else {

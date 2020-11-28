@@ -8,7 +8,7 @@ html {
     width: 25ch;
     border-bottom: 2px solid #ff962c;
     margin-top: 10%;
-    margin-left: 7ch;
+    margin-left: 15%;
     margin-bottom: 10%;
     cursor: pointer;
 }
@@ -16,11 +16,6 @@ html {
 .option-container:hover {
     font-weight: bold;
     color: #ff962c;
-}
-
-.btn:hover {
-    background-color: #dd8e00;
-    color: white;
 }
 
 body {
@@ -48,24 +43,25 @@ h3 {
 .friendsPlaying {
     margin-top: 80px;
     width: 100%;
-    height: 100%;
+    height: calc(100% - 80px);
     background-color: #0e141e;
 }
 
 .feedHome {
     display: grid;
-    grid-template-columns: 3fr 6fr 3fr;
+    grid-template-columns: 3fr 6fr;
 }
 
 .publications {
     margin-top: 80px;
     width: 100%;
-    height: 100%;
+    height: calc(100% - 80px);
+    padding-right: 5%;
     background-color: #0e141e;
 }
 
 .form-control {
-    width: 380px;
+    width: 400px;
 }
 
 .uploadPublication {
@@ -78,6 +74,7 @@ h3 {
 }
 
 .uploadComment {
+  width: 100%;
     display: flex;
     align-items: center;
     justify-content: space-around;
@@ -270,12 +267,14 @@ input[type="Text"]::placeholder {
     width: 130%;
 }
 
+.option-container a{
+  font-size: 20px;
+  margin-top: 10%;
+  margin-bottom: 10%;
+}
+
 a {
-    font-size: 20px;
-    width: 25ch;
     color: white;
-    margin-top: 10%;
-    margin-bottom: 10%;
     cursor: pointer;
     text-decoration: none;
 }
@@ -289,4 +288,37 @@ a:hover {
 .atajosClan {
     display: grid;
     grid-template-columns: 3fr 6fr 3fr;
+}
+
+.dropdown a{
+  color: black;
+}
+
+.dropdown a:hover{
+  color: #ff962c;
+}
+
+.item{
+  width: 100%;
+  height: 50%;
+}
+
+.file{
+  text-align: center;
+}
+
+.item #file{
+  margin: 5px;
+}
+
+.image-img{
+  height: 100%;
+  width: 50%;
+  margin: 0 25% 0 25%
+}
+
+.image-img img{
+  object-fit: contain;
+  height: 100%;
+  width: 100%;
 }

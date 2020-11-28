@@ -13,13 +13,18 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class GuardAccesGuard implements CanActivate, CanActivateChild {
-  constructor(private router: Router ){};
+  constructor(private router: Router ){}
 
   canActivate(): boolean {
     // If the user is not logged in we'll send them back to the home page
     if (sessionStorage.length == 0) {
       console.log('No estás logueado');
-      this.router.navigate(['/']);
+      this.router.navigate(['/presentation']);
+      return false;
+    }else if (sessionStorage.length == 1 || sessionStorage.length == 2){
+      console.log('No estás logueado');
+      sessionStorage.clear();
+      this.router.navigate(['/presentation']);
       return false;
     }
     return true;

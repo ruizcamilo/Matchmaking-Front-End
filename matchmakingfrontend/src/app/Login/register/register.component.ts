@@ -8,6 +8,7 @@ import { VideoJuegoService } from '../../service/video-juego.service';
 import { VideoJuego } from 'src/app/model/video-juego';
 import { Person } from 'src/app/model/person';
 import { PersonService } from '../../service/person.service';
+import { AngularFireStorage } from '@angular/fire/storage';
 
 @Component({
   selector: 'app-register',
@@ -16,6 +17,11 @@ import { PersonService } from '../../service/person.service';
 })
 export class RegisterComponent implements OnInit {
   prueba: boolean;
+  errorContra = false;
+  errorConex = false;
+  errorFecha = false;
+  errorMail = false;
+  errorMessage: string[] = [];
   fileToUpload: File = null;
   contrasena: string;
   confpassword: string;
@@ -56,50 +62,79 @@ export class RegisterComponent implements OnInit {
     private afAuth: AngularFireAuth,
     private userService: UserService,
     private gameService: VideoJuegoService,
-    private personService: PersonService
+    private personService: PersonService,
+    private storage: AngularFireStorage
   ) { }
 
   ngOnInit(): void {
-    //initConsoles();
     this.gameService.getAllGames().subscribe(allJuegos => this.juegos = allJuegos);
   }
 
   async register() {
+    this.errorContra = false; this.errorConex=false; this.errorFecha = false;
+    let newDate = new Date(this.userSend.fecha_nacimiento);
+    let todayDate = new Date();
+    let regexp = new RegExp(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/);
     if (!this.userSend.correo || !this.contrasena) {
-      alert('Falta llenar algunos campos requeridos');
-    } else {
+      this.errorMessage.push('Falta llenar algunos campos requeridos');
+    }
+    if (!regexp.test(this.userSend.correo))
+    {
+      this.errorMessage.push('Ese no es un mail valido');
+      this.errorMail = true;
+    }
+    if (this.confpassword != this.contrasena){
+      this.errorMessage.push('La contraseña no concuerda');
+      this.errorContra = true;
+    }
+    if (this.userSend.conexion <= 0){
+      this.errorMessage.push('La conexion no puede ser negativa');
+      this.errorConex = true;
+    }
+    if (newDate > todayDate)
+    {
+      this.errorMessage.push('La fecha que ingresaste es en el futuro');
+      this.errorFecha = true;
+    }
+    if (this.errorMessage.length == 0){
       this.userSend.plataformas = this.consolasEscogidas;
       this.afAuth.createUserWithEmailAndPassword(this.userSend.correo, this.contrasena).then(() => this.userSuccess()
-      ).catch(function (error) {
-        alert('Error ingresando el nuevo perfil ' + error);
-      });
+      ).catch(
+        function (error) {
+          alert('Error ingresando el nuevo perfil ' + error);
+        }
+      );
     }
   }
 
   userSuccess() {
-    console.log("Entro");
     this.afAuth.idTokenResult.subscribe((user) => {
       sessionStorage.setItem('token', user.token);
       this.userService.findByToken().subscribe((user: User) => {
         if (this.fileToUpload != null) {
-          const uploadImageData = new FormData();
-          uploadImageData.append('file', this.fileToUpload);
-          uploadImageData.append('folder', 'Fotosperfil/');
-          this.userService.uploadFile(uploadImageData).subscribe(name => {
-            this.userSend.foto_perfil = name;
-            this.userService.register(this.userSend)
-              .subscribe(data => { this.personService.setFavorites(this.juegosEscogidos).subscribe(); });
-          }, error => {
-            console.log(error);
+          let name = `Fotosperfil/`+Date.now()+"-"+this.fileToUpload.name;
+          this.storage.upload(name, this.fileToUpload);
+          this.userSend.foto_perfil = name;
+          this.userService.register(this.userSend)
+            .subscribe(data => {
+              this.personService.setFavorites(this.juegosEscogidos).subscribe(()=>{
+                sessionStorage.setItem('gamertag', this.userSend.nombre_usuario);
+                sessionStorage.setItem('mail', this.userSend.correo);
+                sessionStorage.setItem('isAdmin', 'no');
+                this.router.navigate(['/feed']);
+              });
           });
         }
         else {
-          this.userService.register(this.userSend)
-            .subscribe(data => { this.personService.setFavorites(this.juegosEscogidos).subscribe(); });
+          this.userService.register(this.userSend).subscribe(data => {
+            this.personService.setFavorites(this.juegosEscogidos).subscribe(() => {
+              sessionStorage.setItem('gamertag', this.userSend.nombre_usuario);
+              sessionStorage.setItem('mail', this.userSend.correo);
+              sessionStorage.setItem('isAdmin', 'no');
+              this.router.navigate(['/feed']);
+            });
+          });
         }
-        sessionStorage.setItem('gamertag', this.userSend.nombre_usuario);
-        sessionStorage.setItem('mail', this.userSend.correo);
-        this.router.navigate(['/feed']);
       });
     });
   }
