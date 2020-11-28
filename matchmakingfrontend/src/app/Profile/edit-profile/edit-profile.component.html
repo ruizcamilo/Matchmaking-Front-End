@@ -1,0 +1,117 @@
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
+<div class="row">
+  <div class="col">
+    <div class="left">
+      <form>
+        <div class="form-group">
+          <label class="col-sm-2">¿Cambiamos tu avatar?</label>
+          <input type="file" id="file" (change)="handleFileInput($event.target.files)">
+        </div>
+        <div class="form-group">
+          <label class="col-sm-2">Correo Electronico</label>
+          <div class="col-sm-7">
+            <input type="email" class="form-control solo" placeholder="name@example.com" name="user"
+              [(ngModel)]="userSend.correo" disabled />
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-sm-2">GamerTag</label>
+          <div class="col-sm-7">
+            <input type="text" class="form-control solo" placeholder="Gamertag" name="gtag" required
+              [(ngModel)]="userSend.nombre_usuario" />
+          </div>
+        </div>
+        <div class="input-group">
+          <div class="form-group nombre">
+            <label class="col-sm-2">Nombre</label>
+            <div class="col-sm-12">
+              <input type="text" class="form-control" placeholder="Mario" name="name" required
+                [(ngModel)]="userSend.nombres" />
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-2">Apellido</label>
+            <div class="col-sm-12">
+              <input type="text" class="form-control" placeholder="Verde" name="apellido" required
+                [(ngModel)]="userSend.apellidos" />
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-sm-2">Region</label>
+          <div class="col-sm-12">
+            <select class="form-control" id="continente" name="continente" [(ngModel)]="userSend.region_id" required>
+              <option disabled selected style="background-color:#ff962c;">ACTUAL:{{userSend.region_id}}</option>
+              <option value={{op}} *ngFor="let op of regions">{{op}}</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-sm-2">Conexión</label>
+          <div class="col-sm-7">
+            <input type="number" class="form-control solo" placeholder="Conexión" name="conexion" required
+              [(ngModel)]="userSend.conexion" />
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+  <div class="col">
+    <div class="right">
+      <form>
+        <div class="form-group">
+          <label class="col-sm-2">Plataforma</label>
+          <div class="col-sm-7" id="consoles">
+            <div class="custom-control custom-checkbox" *ngFor="let consola of consolas">
+              <div class="checkbox" (click)="changeStatus(consola.nombre)">
+                <input type="checkbox" class="custom-control-input" [checked]="consola.selected" />
+                <label class="custom-control-label" for="{{ consola.nombre }}">{{consola.nombre}}</label>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-sm">Juegos en los que esta interesado:</label>
+          <form class="form-inline">
+            <input name="search" class="form-control mr-sm-2" type="search" placeholder="Buscar..."
+              [(ngModel)]="search" />
+          </form>
+        </div>
+        <table class="list-group">
+          <ul *ngFor="let juego of juegos | filter:search " (click)="gameSelection(juego)">
+            <li *ngIf="juegoExiste(juego)" class="list-group-item selected-game">{{ juego.nombre }}</li>
+            <li *ngIf="!juegoExiste(juego)" class="list-group-item">{{ juego.nombre }}</li>
+          </ul>
+        </table>
+        <div class="form-group">
+          <div class="col-auto">
+            <button *ngIf="
+            userSend.correo!='' &&
+            userSend.nombre_usuario != '' &&
+            userSend.fecha_nacimiento != '' &&
+            userSend.nombres != '' &&
+            userSend.apellidos != '' &&
+            userSend.region_id != '' &&
+            userSend.conexion != 0 &&
+            consolasEscogidas.length > 0 &&
+            juegosEscogidos.length > 0" type="submit" class="btn" (click)="update()">
+              Editar
+            </button>
+            <button *ngIf="
+            userSend.correo === '' ||
+            userSend.nombre_usuario === '' ||
+            userSend.fecha_nacimiento === '' ||
+            userSend.nombres === '' ||
+            userSend.apellidos === '' ||
+            userSend.region_id === '' ||
+            userSend.conexion === 0 ||
+            consolasEscogidas.length === 0 ||
+            juegosEscogidos.length === 0" type="submit" class="btn btn-secondary">
+              Llena todos los campos
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

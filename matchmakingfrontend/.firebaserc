@@ -1,0 +1,11 @@
+{
+  "targets": {
+    "spring-course-c4e5a": {
+      "hosting": {
+        "matchmakingfrontend": [
+          "spring-course-c4e5a"
+        ]
+      }
+    }
+  }
+}
